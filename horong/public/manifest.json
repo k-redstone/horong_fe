@@ -1,14 +1,25 @@
 {
-  "name": "호롱",
-  "short_name": "asd App",
+  "name": "Horong",
+  "short_name": "Guid for exchange students in Korea",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "192x192",
+      "src": "/images/logo96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logo216.png",
+      "sizes": "216x216",
       "type": "image/png"
     }
   ],
-  "theme_color": "#FFFFFF",
+  "theme_color": "#2b2b2b",
   "background_color": "#FFFFFF",
   "start_url": "/",
   "scope": "/",
