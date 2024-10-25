@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 
 import localFont from 'next/font/local'
-// eslint-disable-next-line no-restricted-imports
 import './globals.css'
+import { Toaster } from 'react-hot-toast'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -70,8 +70,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <p className="w-20 bg-red-200 px-4 pr-2 underline">asd</p>
         {children}
+        <Toaster />
       </body>
     </html>
   )
