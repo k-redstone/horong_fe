@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { fetchExchange } from '@/features/exchange/api/searchExchange.ts'
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 import MapSearchBox from '@/features/exchange/components/MapSearchBox/index.tsx'
+import MoveCurrentPosBtn from '@/features/exchange/components/MoveCurrentPosBtn/index.tsx'
 
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
@@ -53,6 +54,7 @@ export default function GoogleMap() {
               data={item}
             />
           ))}
+        <MoveCurrentPosBtn />
       </Map>
     </APIProvider>
   )
