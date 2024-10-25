@@ -1,10 +1,12 @@
 'use client'
 
 import { APIProvider, Map } from '@vis.gl/react-google-maps'
-// import { useState } from 'react'
+import { useState } from 'react'
+
+import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 
 export default function GoogleMap() {
-  // const [zoom, setZoom] = useState<number>(0)
+  const [zoom, setZoom] = useState<number>(0)
   return (
     <APIProvider
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
@@ -17,7 +19,7 @@ export default function GoogleMap() {
         disableDefaultUI={true}
         defaultCenter={{ lat: 37.558005440695396, lng: 127.00869391175185 }}
         onCameraChanged={(event) => {
-          // setZoom(event.detail.zoom)
+          setZoom(event.detail.zoom)
           console.log(
             'camera changed:',
             event.detail.center,
@@ -26,14 +28,14 @@ export default function GoogleMap() {
           )
         }}
       >
-        {/* {zoom >= 13 &&
+        {zoom >= 13 &&
           data.map((item) => (
             <MapMarker
               key={item.id}
               latitude={item.latitude}
               longitude={item.longitude}
             />
-          ))} */}
+          ))}
       </Map>
     </APIProvider>
   )
