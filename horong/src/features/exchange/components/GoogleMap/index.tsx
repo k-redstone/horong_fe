@@ -6,6 +6,7 @@ import { useState } from 'react'
 
 import { fetchExchange } from '@/features/exchange/api/searchExchange.ts'
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
+import MapSearchBox from '@/features/exchange/components/MapSearchBox/index.tsx'
 
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
@@ -28,6 +29,7 @@ export default function GoogleMap() {
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
       region="KR"
     >
+      <MapSearchBox />
       <Map
         colorScheme={'DARK'}
         mapId={'baae3adccbf5d8d'}
