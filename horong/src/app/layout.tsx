@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from 'next'
 
 import localFont from 'next/font/local'
+<<<<<<< HEAD
+=======
+
+import TanstackQueryProvider from '@/providers/TanstackQueryProvider/index.tsx'
+// eslint-disable-next-line no-restricted-imports
+>>>>>>> 027c630a0245577c6d93fcfe70f105d98e9a0d93
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 
@@ -70,8 +76,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Toaster />
+        <TanstackQueryProvider>
+          <p className="w-20 bg-red-200 px-4 pr-2 underline">asd</p>
+          {children}
+        </TanstackQueryProvider>
       </body>
     </html>
   )
