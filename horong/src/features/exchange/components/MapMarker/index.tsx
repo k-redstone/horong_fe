@@ -5,12 +5,14 @@ import {
 } from '@vis.gl/react-google-maps'
 import { useCallback, useState } from 'react'
 
+import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
+import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
+
 interface MapMarkerProps {
-  latitude: number
-  longitude: number
+  data: ExchangePromise
 }
 
-export default function MapMarker({ latitude, longitude }: MapMarkerProps) {
+export default function MapMarker({ data }: MapMarkerProps) {
   const [markerRef, marker] = useAdvancedMarkerRef()
   const [infoWindowShown, setInfoWindowShown] = useState<boolean>(false)
 
@@ -25,20 +27,21 @@ export default function MapMarker({ latitude, longitude }: MapMarkerProps) {
     <>
       <AdvancedMarker
         ref={markerRef}
-        position={{ lat: latitude, lng: longitude }}
+        position={{ lat: data.latitude, lng: data.longitude }}
         onClick={() => handleMarkerClick()}
       />
       {infoWindowShown && (
         <InfoWindow
           anchor={marker}
           onClose={handleClose}
-          headerContent={<h3>남산환전</h3>}
+          headerContent={<h3>{data.name}</h3>}
         >
           <div className="flex flex-col">
             <span className="py-2">
-              주소: 서울특별시 중구 퇴계로 38 1층 (남창동 169-4)
+              주소: {decodeHtmlEntities(data.address)}
             </span>
-            <span>현재 환율 191.50원</span>
+            <br />
+            <span>{decodeHtmlEntities(data.description)}</span>
           </div>
         </InfoWindow>
       )}

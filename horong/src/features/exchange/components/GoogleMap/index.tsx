@@ -1,12 +1,28 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useState } from 'react'
 
+import { fetchExchange } from '@/features/exchange/api/searchExchange.ts'
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['exchange'],
+    queryFn: () => fetchExchange(),
+  })
+
+  if (!isSuccess) {
+    return (
+      <div>
+        <p>map loading</p>
+      </div>
+    )
+  }
+
   return (
     <APIProvider
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
@@ -32,8 +48,7 @@ export default function GoogleMap() {
           data.map((item) => (
             <MapMarker
               key={item.id}
-              latitude={item.latitude}
-              longitude={item.longitude}
+              data={item}
             />
           ))}
       </Map>
