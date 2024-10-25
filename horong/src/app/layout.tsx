@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 
 import localFont from 'next/font/local'
+
+import TanstackQueryProvider from '@/providers/TanstackQueryProvider/index.tsx'
 // eslint-disable-next-line no-restricted-imports
 import './globals.css'
 
@@ -70,8 +72,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <p className="w-20 bg-red-200 px-4 pr-2 underline">asd</p>
-        {children}
+        <TanstackQueryProvider>
+          <p className="w-20 bg-red-200 px-4 pr-2 underline">asd</p>
+          {children}
+        </TanstackQueryProvider>
       </body>
     </html>
   )
