@@ -55,21 +55,6 @@ const config = [
     },
 
     rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: ['.*'],
-
-          paths: [
-            {
-              name: 'react',
-              importNames: ['default'],
-              message: "'import React from 'react''는 사용하지 않습니다.",
-            },
-          ],
-        },
-      ],
-
       'sort-imports': [
         'error',
         {
