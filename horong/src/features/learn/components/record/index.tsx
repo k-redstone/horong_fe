@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { useRecordVoice } from '@/hooks/useRecordVoice.ts'
-import MicSVG from '@/static/svg/learn/learn-mic-icon.svg'
+import StartSVG from '@/static/svg/learn/learn-start-icon.svg'
 import StopSVG from '@/static/svg/learn/learn-stop-icon.svg'
 
 function VoiceRecordBox() {
@@ -36,16 +36,16 @@ function VoiceRecordBox() {
       {!isRecording ? (
         <button
           onClick={startRecord}
-          className="bg-theme rounded-full p-4 drop-shadow-lg"
+          className="rounded-full bg-white p-4 drop-shadow-lg"
         >
-          <MicSVG className="h-10 w-10" />
+          <StartSVG className="h-12 w-12" />
         </button>
       ) : (
         <button
           onClick={stopRecord}
-          className="animate-pulse rounded-full bg-red-200 p-4 drop-shadow-lg"
+          className="animate-pulse rounded-full bg-black bg-opacity-20 p-4 drop-shadow-lg"
         >
-          <StopSVG className="h-10 w-10" />
+          <StopSVG className="h-12 w-12" />
         </button>
       )}
     </div>
