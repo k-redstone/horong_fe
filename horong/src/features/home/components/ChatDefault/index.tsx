@@ -7,8 +7,10 @@ export default function ChatDefault() {
         <HorongSVG />
       </div>
       <div className="flex flex-col items-center">
-        <p>안녕하세요, 호롱입니다 :D</p>
-        <p>궁금하신게 있으시면 편하게 말씀해주세요 ❤</p>
+        <p className="animate-slide-up">안녕하세요, 호롱입니다 :D</p>
+        <p className="animate-slide-up">
+          궁금하신게 있으시면 편하게 말씀해주세요 ❤
+        </p>
       </div>
     </div>
   )
