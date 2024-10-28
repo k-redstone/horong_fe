@@ -2,31 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #2b2b2b;
+body {
+  color: #fff;
 
   max-width: 360px !important;
   margin: 0 auto;
-  background-color: var(--background) !important;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: #1b1d24;
   font-family: Arial, Helvetica, sans-serif;
-  min-height: 100dvh;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  min-height: 100dvh !important;
 }
