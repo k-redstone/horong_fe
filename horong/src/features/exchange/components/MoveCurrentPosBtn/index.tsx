@@ -7,7 +7,7 @@ export default function MoveCurrentPosBtn() {
       (position) => {
         const { latitude, longitude } = position.coords
         map?.setCenter({ lat: latitude, lng: longitude })
-        map?.setZoom(14)
+        map?.setZoom(16)
       },
       null,
       { enableHighAccuracy: true },
