@@ -1,16 +1,31 @@
+import { useMap } from '@vis.gl/react-google-maps'
 import { useState } from 'react'
 
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
+
 interface ExchangeFilterBoxProps {
   data: ExchangePromise[]
 }
 
 export default function ExchangeFilterBox({ data }: ExchangeFilterBoxProps) {
+  const map = useMap()
   const [currency, setCurrency] = useState<'CNY' | 'JPY'>('CNY')
   const [exchangeType, setExchangeType] = useState<'BUY' | 'SELL'>('BUY')
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
+
+  const handleExchangeClick = (item: ExchangePromise) => {
+    map?.setCenter({ lat: item.latitude, lng: item.longitude })
+    map?.setZoom(16)
+
+    // todo: 이동 후 infoWindow 어떻게 보여줄지
+    // const infoWindow = new google.maps.InfoWindow()
+    // infoWindow.setPosition({ lat: item.latitude, lng: item.longitude })
+    // infoWindow.setHeaderContent(place.name)
+    // infoWindow.setContent(place.formatted_address)
+    // infoWindow.open(map)
+  }
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex gap-x-2">
@@ -54,10 +69,12 @@ export default function ExchangeFilterBox({ data }: ExchangeFilterBoxProps) {
       <div className="flex flex-col gap-y-3">
         {filterExchangeRates(data, { currency, exchangeType, order }).map(
           (filteredItem) => (
-            <ExchangeCard
+            <div
               key={filteredItem.id}
-              data={filteredItem}
-            />
+              onClick={() => handleExchangeClick(filteredItem)}
+            >
+              <ExchangeCard data={filteredItem} />
+            </div>
           ),
         )}
       </div>
