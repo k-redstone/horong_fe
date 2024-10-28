@@ -1,17 +1,22 @@
+'use client'
+
+import HorongSVG from '@/static/svg/common/common-horong.svg'
+import SendSVG from '@/static/svg/home/home-send-icon.svg'
+
 export default function HomePage() {
   return (
-    <div className="h-[50rem] max-w-[22.5rem] bg-[#1B1D24]">
+    <div className="flex flex-col justify-between">
       {/* ~~챗 */}
       <div className="w-full bg-black px-5 py-4 text-center">
         <span className="font-bold text-white">호롱챗</span>
       </div>
       {/* 채팅 영역 */}
-      <div className="flex flex-col gap-y-4 px-3 py-8">
+      <div className="flex grow flex-col gap-y-4 px-3 py-8">
         {/* 시스템 채팅 box */}
         <div className="flex gap-x-2">
           {/* 로고영역 */}
-          <div>
-            <div className="h-10 w-10 bg-white"></div>
+          <div className="h-10 w-10 shrink-0 animate-pulse">
+            <HorongSVG />
           </div>
           {/* 텍스트 영역 */}
           <div className="flex flex-col pr-2.5 text-xs text-white">
@@ -40,8 +45,8 @@ export default function HomePage() {
         {/* 시스템 채팅 box */}
         <div className="flex gap-x-2">
           {/* 로고영역 */}
-          <div>
-            <div className="h-10 w-10 bg-white"></div>
+          <div className="h-10 w-10 shrink-0">
+            <HorongSVG />
           </div>
           {/* 텍스트 영역 */}
           <div className="flex flex-col pr-2.5 text-xs text-white">
@@ -75,16 +80,17 @@ export default function HomePage() {
         <div className="grow rounded-[.625rem] bg-gradient-to-br from-[#22DFEB] to-[#ACBEFF] p-[.0625rem]">
           <div className="flex h-full items-center rounded-[.625rem] bg-[#1B1D24] px-3 py-1 text-xs">
             <textarea
-              className="h-ful w-full resize-none overflow-hidden bg-[#1B1D24] text-white focus:outline-none"
+              id="horong-chat-textarea"
+              className="h-ful w-full resize-none bg-[#1B1D24] text-white focus:outline-none"
               placeholder="메세지를 입력해주세요."
               rows={1}
             />
           </div>
         </div>
         {/* 보내기 버튼 */}
-        <div>
-          <div className="h-8 w-8 rounded-full bg-white"></div>
-        </div>
+        <button type="button">
+          <SendSVG />
+        </button>
       </div>
     </div>
   )
