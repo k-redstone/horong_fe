@@ -14,3 +14,6 @@ body {
 #horong-chat-textarea::-webkit-scrollbar {
   display: none;
 }
+#horong-chat-ListBox::-webkit-scrollbar {
+  display: none;
+}
