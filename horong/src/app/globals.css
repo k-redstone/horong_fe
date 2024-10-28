@@ -4,7 +4,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2b2b2b;
+
+  max-width: 360px !important;
+  margin: 0 auto;
+  background-color: var(--background) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,8 +20,9 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: #1b1d24;
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100dvh;
 }
 
 @layer utilities {
