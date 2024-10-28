@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next'
 
 import localFont from 'next/font/local'
+import { Toaster } from 'react-hot-toast'
 
 import TanstackQueryProvider from '@/providers/TanstackQueryProvider/index.tsx'
-// eslint-disable-next-line no-restricted-imports
+
 import './globals.css'
 
 const geistSans = localFont({
@@ -68,13 +69,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="bg-white"
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`h-full w-full bg-[#1b1d24] ${geistSans.variable} ${geistMono.variable} flex justify-center antialiased`}
       >
         <TanstackQueryProvider>
-          <p className="w-20 bg-red-200 px-4 pr-2 underline">asd</p>
           {children}
+          <Toaster />
         </TanstackQueryProvider>
       </body>
     </html>
