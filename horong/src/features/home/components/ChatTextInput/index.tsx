@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { ChangeEvent, useRef, useState } from 'react'
 
 import { ChatType } from '@/features/home/types/chatType.ts'
@@ -11,23 +12,41 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
   const [inputValue, setInputValue] = useState<string>('')
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
-  const handleChatSubmit = () => {
+  const handleChatSubmit = async () => {
     const userChat: ChatType = {
       type: 'user',
       text: inputValue,
     }
     setChatList((prevChats) => [...prevChats, userChat])
+    try {
+      const payload = {
+        text: inputValue,
+        lang: 'EN',
+      }
+      const resText = await axios.post('/api/translation', payload)
+      // todo: 임시로 시스템 챗도 넣어놓음, 추후 api연동 후 수정
+      console.log(resText)
+      const horongChat: ChatType = {
+        type: 'horong',
+        text: resText.data.result,
+      }
+      setChatList((prevChats) => [...prevChats, horongChat])
 
-    // todo: 임시로 시스템 챗도 넣어놓음, 추후 api연동 후 수정
-    const horongChat: ChatType = {
-      type: 'horong',
-      text: 'horongChat 테스트',
-    }
-    setChatList((prevChats) => [...prevChats, horongChat])
+      if (textareaRef.current) {
+        textareaRef.current.style.height = '1rem'
+      }
+    } catch {
+      const horongChat: ChatType = {
+        type: 'horong',
+        text: '답변 생성 중에 오류가 발생했어요.\n 잠시후 다시 시도해주세요.',
+      }
+      setChatList((prevChats) => [...prevChats, horongChat])
 
-    setInputValue('')
-    if (textareaRef.current) {
-      textareaRef.current.style.height = '1rem'
+      if (textareaRef.current) {
+        textareaRef.current.style.height = '1rem'
+      }
+    } finally {
+      setInputValue('')
     }
   }
 
