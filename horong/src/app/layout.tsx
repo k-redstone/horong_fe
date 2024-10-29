@@ -17,6 +17,11 @@ const geistMono = localFont({
   variable: '--font-geist-mono',
   weight: '100 900',
 })
+const pretendard = localFont({
+  src: './fonts/PretendardVariable.woff2',
+  weight: '45 920',
+  variable: '--font-pretendard',
+})
 
 const APP_NAME = 'Horong'
 const APP_DEFAULT_TITLE = 'Horong - guide app for exchange student in Korea'
@@ -77,7 +82,7 @@ export default function RootLayout({
       className="h-full overscroll-none bg-white"
     >
       <body
-        className={`h-full w-full overflow-hidden bg-grey-90 ${geistSans.variable} ${geistMono.variable} flex min-h-dvh justify-center antialiased`}
+        className={`h-full w-full overflow-hidden bg-grey-90 ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} font-pretendard flex min-h-dvh justify-center antialiased`}
       >
         <TanstackQueryProvider>
           {children}

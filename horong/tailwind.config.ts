@@ -35,6 +35,9 @@ const config: Config = {
         'xs-bold': ['.75rem', { lineHeight: '1rem', fontWeight: 'bold' }],
         '2xs': ['.6875rem', { lineHeight: '.875rem' }],
       },
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)'],
+      },
       animation: {
         'slide-up': 'slide-up 0.5s ease-out forwards',
       },
