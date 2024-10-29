@@ -24,7 +24,10 @@ export default function TanstackQueryProvider({
   useEffect(() => {
     const userAgent = window.navigator.userAgent
     // console.log(userAgent)
-    if (!userAgent.includes('Mobi')) {
+    if (
+      !userAgent.includes('Mobi') &&
+      !sessionStorage.getItem('checkedMobileModal')
+    ) {
       setIsModal(true)
     }
   }, [])

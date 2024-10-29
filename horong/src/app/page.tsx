@@ -6,7 +6,7 @@ import MainTextIcon from '@/static/svg/main-text-icon.svg'
 
 export default function Home() {
   return (
-    <div className="flex w-full flex-col items-center justify-center text-3xl font-bold">
+    <div className="flex w-full flex-col items-center justify-center bg-grey-90 text-3xl font-bold">
       <div className="mb-[6.25rem] flex flex-col items-center justify-center gap-y-10 px-[6.25rem]">
         <LogoIcon className="h-32 w-32" />
 

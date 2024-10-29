@@ -9,6 +9,9 @@ const config: Config = {
         foreground: 'var(--foreground)',
         theme: '#a4c7fe',
 
+        warning: '#F26B76',
+        primary: '#ACBEFF',
+
         'text-disabled': 'rgba(255, 255, 255, 0.38)',
         'text-md': 'rgba(255, 255, 255, 0.6)',
         'text-high': 'rgba(255, 255, 255, 0.87)',
