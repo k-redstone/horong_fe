@@ -24,7 +24,7 @@ const pretendard = localFont({
 })
 
 const APP_NAME = 'Horong'
-const APP_DEFAULT_TITLE = 'guide for exchange student in Korea'
+const APP_DEFAULT_TITLE = 'Horong - guide app for exchange student in Korea'
 const APP_TITLE_TEMPLATE = '%s - Horong PWA App'
 const APP_DESCRIPTION = 'guide app for exchange student in Korea'
 
@@ -63,7 +63,6 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
   },
 }
-
 export const viewport: Viewport = {
   themeColor: '#FFFFFF',
   width: 'device-width',
@@ -72,7 +71,6 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
 }
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -81,10 +79,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="bg-white"
+      className="h-full overscroll-none bg-white"
     >
       <body
-        className={`h-full w-full bg-[#1b1d24] ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} font-pretendard flex justify-center antialiased`}
+        className={`h-full w-full overflow-hidden bg-grey-90 ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} font-pretendard flex min-h-dvh justify-center antialiased`}
       >
         <TanstackQueryProvider>
           {children}
