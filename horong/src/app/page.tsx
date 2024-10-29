@@ -2,13 +2,19 @@ import Link from 'next/link'
 
 import LogoIcon from '@/static/svg/logo-icon.svg'
 import LogoTextIcon from '@/static/svg/logo-text-icon.svg'
+import MainTextIcon from '@/static/svg/main-text-icon.svg'
 
 export default function Home() {
   return (
     <div className="flex w-full flex-col items-center justify-center text-3xl font-bold">
       <div className="mb-[6.25rem] flex flex-col items-center justify-center gap-y-10 px-[6.25rem]">
         <LogoIcon className="h-32 w-32" />
-        <LogoTextIcon className="w-[10.2rem]" />
+
+        <div className="flex w-[10.2rem] flex-col items-center justify-center gap-y-4">
+          {/* 박상우 고쳐 - 번역을 고치세요 */}
+          <MainTextIcon />
+          <LogoTextIcon />
+        </div>
       </div>
 
       <div className="flex w-full flex-col items-center justify-center gap-y-4 px-3 py-6">
