@@ -10,12 +10,12 @@ export default function ChatArea() {
   const [chatList, setChatList] = useState<ChatType[]>([
     {
       type: 'horong',
-      text: '안녕하세요, 호롱입니다 :D \r\n궁금하신게 있으시면 편하게 말씀해주세요 ❤',
+      text: '안녕하세요, 호롱입니다 :D 궁금하신게 있으시면 편하게 말씀해주세요 ❤',
     },
   ])
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="relative flex h-full flex-col">
       {chatList.length == 1 ? (
         <div className="flex grow flex-col justify-center">
           <ChatDefault />
@@ -23,7 +23,9 @@ export default function ChatArea() {
       ) : (
         <ChatListBox data={chatList} />
       )}
-      <ChatTextInput setChatList={setChatList} />
+      <div className="absolute bottom-0 w-full">
+        <ChatTextInput setChatList={setChatList} />
+      </div>
     </div>
   )
 }

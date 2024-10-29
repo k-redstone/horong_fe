@@ -21,7 +21,7 @@ export default function ChatListBox({ data }: ChatListBoxProps) {
     <div
       id="horong-chat-ListBox"
       ref={chatListRef}
-      className="flex h-[calc(100dvh-3.4994rem-3.25rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-8"
+      className="flex max-h-[calc(100dvh-3.4994rem-3.25rem-5.3125rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-8"
     >
       {data.map((item) => {
         if (item.type === 'horong') {

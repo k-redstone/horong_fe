@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { ChatType } from '@/features/home/types/chatType.ts'
 import SendSVG from '@/static/svg/home/home-send-icon.svg'
@@ -9,6 +9,8 @@ interface ChatTextInputProps {
 
 export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
   const [inputValue, setInputValue] = useState<string>('')
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+
   const handleChatSubmit = () => {
     const userChat: ChatType = {
       type: 'user',
@@ -22,7 +24,28 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
       text: 'horongChat 테스트',
     }
     setChatList((prevChats) => [...prevChats, horongChat])
+
     setInputValue('')
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '1rem'
+    }
+  }
+
+  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target
+    setInputValue(value)
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'
+      const currentHeight = textareaRef.current.scrollHeight
+      const currentLines = Math.floor(currentHeight / 16)
+
+      if (currentLines > 5) {
+        textareaRef.current.style.height = `${16 * 5}px` // 최대 3줄 높이
+      } else {
+        textareaRef.current.style.height = `${currentHeight}px`
+      }
+    }
   }
 
   return (
@@ -31,10 +54,12 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
         <div className="flex h-full items-center rounded-[.625rem] bg-[#1B1D24] px-3 py-1 text-xs">
           <textarea
             id="horong-chat-textarea"
-            className="h-ful w-full resize-none bg-[#1B1D24] text-white focus:outline-none"
+            ref={textareaRef}
+            onChange={(event) => handleInputChange(event)}
+            className="w-full resize-none bg-[#1B1D24] text-white focus:outline-none"
             placeholder="메세지를 입력해주세요."
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            // onChange={(e) => setInputValue(e.target.value)}
             rows={1}
           />
         </div>
