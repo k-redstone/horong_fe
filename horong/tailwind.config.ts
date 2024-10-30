@@ -43,6 +43,7 @@ const config: Config = {
       },
       animation: {
         'slide-up': 'slide-up 0.5s ease-out forwards',
+        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         'slide-up': {

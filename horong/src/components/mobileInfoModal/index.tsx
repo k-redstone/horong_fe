@@ -1,5 +1,7 @@
-import LogoIcon from '@/static/svg/logo-icon.svg'
+'use client'
+import Image from 'next/image'
 
+import QRIcon from '@/static/imgs/QR.png'
 interface MobileIndexModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>
   isModal: boolean
@@ -13,9 +15,13 @@ function MobileIndexModal(props: MobileIndexModalProps) {
   }
   return (
     <div
-      className={`${isModal ? 'bottom-0' : 'bottom-[-20rem]'} absolute flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-6 transition-all duration-500 ease-in-out`}
+      className={`${isModal ? 'bottom-0' : 'bottom-[-100dvh]'} absolute flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-12 transition-all duration-500 ease-in-out`}
     >
-      <LogoIcon className="h-[6.25rem] w-[6.25rem]" />
+      <Image
+        src={QRIcon}
+        className="h-[6.25rem] w-[6.25rem]"
+        alt="QR코드"
+      />
       <div className="text-high flex flex-col items-center justify-center gap-y-2 text-lg">
         <p>‘호롱’ 서비스는 모바일 뷰에 최적화되어있어요!</p>
         <p>

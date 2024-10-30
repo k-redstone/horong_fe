@@ -1,3 +1,4 @@
+import GlobalFooterNav from '@/components/globalFooterNav/index.tsx'
 import ChatArea from '@/features/home/components/ChatArea/index.tsx'
 import HomeHeader from '@/features/home/components/HomeHeader/index.tsx'
 
@@ -8,9 +9,8 @@ export default function HomePage() {
       <HomeHeader />
       {/* 채팅영역 */}
       <ChatArea />
-      <div className="h-[5.3125rem] w-full">
-        <p>bottom nav</p>
-      </div>
+
+      <GlobalFooterNav />
     </div>
   )
 }
