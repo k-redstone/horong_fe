@@ -10,7 +10,7 @@ export type ExchangeType = {
 }
 export type exchangeRateType = {
   id: number
-  currency: 'CNY' | 'JPY'
+  currency: 'CNY' | 'JPY' | 'USD'
   exchangeType: 'BUY' | 'SELL'
   amount: number
   updatedAt: string

@@ -4,7 +4,7 @@ import {
 } from '@/features/exchange/types/ExchangeType.ts'
 
 interface FilterInterface {
-  currency: 'CNY' | 'JPY'
+  currency: 'CNY' | 'JPY' | 'USD'
   exchangeType: 'BUY' | 'SELL'
   order: 'asc' | 'desc'
 }

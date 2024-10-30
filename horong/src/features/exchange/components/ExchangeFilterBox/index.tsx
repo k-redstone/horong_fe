@@ -11,7 +11,7 @@ interface ExchangeFilterBoxProps {
 
 export default function ExchangeFilterBox({ data }: ExchangeFilterBoxProps) {
   const map = useMap()
-  const [currency, setCurrency] = useState<'CNY' | 'JPY'>('CNY')
+  const [currency, setCurrency] = useState<'USD' | 'CNY' | 'JPY'>('USD')
   const [exchangeType, setExchangeType] = useState<'BUY' | 'SELL'>('BUY')
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 

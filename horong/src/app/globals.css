@@ -20,3 +20,6 @@ body {
 #horong-chat-ListBox::-webkit-scrollbar {
   display: none;
 }
+#horong-exchange-ListBox::-webkit-scrollbar {
+  display: none;
+}

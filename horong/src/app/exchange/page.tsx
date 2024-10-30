@@ -3,9 +3,9 @@ import GoogleMap from '@/features/exchange/components/GoogleMap/index.tsx'
 
 export default function ExchangePage() {
   return (
-    <div className="w-full">
+    <div className="flex w-full flex-col">
       <GlobalHeader pageName="환전소" />
-      <div className="h-full">
+      <div className="grow">
         <GoogleMap />
       </div>
     </div>

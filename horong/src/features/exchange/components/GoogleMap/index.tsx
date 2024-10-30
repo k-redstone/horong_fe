@@ -5,14 +5,14 @@ import { APIProvider, Map } from '@vis.gl/react-google-maps'
 import { useState } from 'react'
 
 import { fetchExchange } from '@/features/exchange/api/searchExchange.ts'
-import ExchangeFilterBox from '@/features/exchange/components/ExchangeFilterBox/index.tsx'
+import ExchangeModal from '@/features/exchange/components/ExchangeModal/index.tsx'
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 import MapSearchBox from '@/features/exchange/components/MapSearchBox/index.tsx'
 import MoveCurrentPosBtn from '@/features/exchange/components/MoveCurrentPosBtn/index.tsx'
 
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
-
+  const [isModal, setIsModal] = useState<boolean>(false)
   const { data, isSuccess } = useQuery({
     queryKey: ['exchange'],
     queryFn: () => fetchExchange(),
@@ -57,8 +57,17 @@ export default function GoogleMap() {
         <div className="absolute top-4 z-10 flex w-full justify-center">
           <MapSearchBox />
         </div>
-        <MoveCurrentPosBtn />
-        <ExchangeFilterBox data={data} />
+        <div className="absolute bottom-9 right-0">
+          <MoveCurrentPosBtn />
+        </div>
+        <div className="absolute bottom-0 w-full">
+          <ExchangeModal
+            isModal={isModal}
+            setIsModal={setIsModal}
+            data={data}
+          />
+        </div>
+        {/* <ExchangeFilterBox data={data} /> */}
       </Map>
     </APIProvider>
   )

@@ -26,7 +26,7 @@ export default function MapSearchBox() {
 
   const mapAPIisLoaded = useApiIsLoaded()
 
-  const handleClose = useCallback(() => setInfoWindowShown(false), [placeData])
+  const handleClose = useCallback(() => setInfoWindowShown(false), [])
 
   useEffect(() => {
     if (!places || !input.current || !map || !mapAPIisLoaded) return
@@ -42,8 +42,6 @@ export default function MapSearchBox() {
           if (place.geometry?.location) {
             map.setCenter(place.geometry.location)
             map.setZoom(15)
-            console.log(place)
-
             setInfoWindowShown(true)
             setPlaceData(place)
           }
@@ -57,7 +55,7 @@ export default function MapSearchBox() {
       console.error('Google Maps API 로딩 중 오류가 발생했습니다:', error)
       setApiError(true)
     }
-  }, [map, places, infoWindowShown])
+  }, [map, places, infoWindowShown, mapAPIisLoaded, handleClose])
 
   if (apiError) {
     return (
@@ -86,7 +84,7 @@ export default function MapSearchBox() {
           />
           <InfoWindow
             anchor={marker}
-            onClose={handleClose}
+            onClose={() => handleClose()}
             headerContent={<h3 className="text-black">{placeData?.name}</h3>}
           >
             <div className="flex flex-col text-black">
