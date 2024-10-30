@@ -21,9 +21,14 @@ export default function TanstackQueryProvider({
 
   //최초에 접속기기 확인
   const [isModal, setIsModal] = useState<boolean>(false)
+  const [isIOS, setIsIOS] = useState<boolean>(false)
   useEffect(() => {
     const userAgent = window.navigator.userAgent
     // console.log(userAgent)
+
+    if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+      setIsIOS(true)
+    }
     if (
       !userAgent.includes('Mobi') &&
       !sessionStorage.getItem('checkedMobileModal')
@@ -35,6 +40,7 @@ export default function TanstackQueryProvider({
   return (
     <QueryClientProvider client={client}>
       <MobileIndexModal
+        isIOS={isIOS}
         isModal={isModal}
         setIsModal={setIsModal}
       />
