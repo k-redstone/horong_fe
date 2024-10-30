@@ -1,24 +1,38 @@
+'use client'
+
 import {
+  AdvancedMarker,
+  InfoWindow,
+  useAdvancedMarkerRef,
   useApiIsLoaded,
   useMap,
   useMapsLibrary,
 } from '@vis.gl/react-google-maps'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
 
 export default function MapSearchBox() {
   const places = useMapsLibrary('places')
+  const [markerRef, marker] = useAdvancedMarkerRef()
+
   const input = useRef<HTMLInputElement>(null)
   const [apiError, setApiError] = useState<boolean>(false)
+  const [infoWindowShown, setInfoWindowShown] = useState<boolean>(false)
+  const [placeData, setPlaceData] = useState<
+    google.maps.places.PlaceResult | undefined
+  >(undefined)
   const map = useMap()
 
   const mapAPIisLoaded = useApiIsLoaded()
+
+  const handleClose = useCallback(() => setInfoWindowShown(false), [placeData])
 
   useEffect(() => {
     if (!places || !input.current || !map || !mapAPIisLoaded) return
 
     try {
       const searchBox = new google.maps.places.SearchBox(input.current)
-      const infoWindow = new google.maps.InfoWindow()
 
       searchBox.addListener('places_changed', () => {
         const places = searchBox.getPlaces()
@@ -28,12 +42,10 @@ export default function MapSearchBox() {
           if (place.geometry?.location) {
             map.setCenter(place.geometry.location)
             map.setZoom(15)
+            console.log(place)
 
-            // infowindow 설정
-            infoWindow.setPosition(place.geometry.location)
-            infoWindow.setHeaderContent(place.name)
-            infoWindow.setContent(place.formatted_address)
-            infoWindow.open(map)
+            setInfoWindowShown(true)
+            setPlaceData(place)
           }
         }
       })
@@ -45,7 +57,7 @@ export default function MapSearchBox() {
       console.error('Google Maps API 로딩 중 오류가 발생했습니다:', error)
       setApiError(true)
     }
-  }, [map, places])
+  }, [map, places, infoWindowShown])
 
   if (apiError) {
     return (
@@ -57,10 +69,32 @@ export default function MapSearchBox() {
   }
 
   return (
-    <input
-      type="text"
-      ref={input}
-      placeholder="test"
-    />
+    <div className="flex w-[20rem] gap-x-2 rounded-full bg-grey-80 px-3 py-2">
+      <span className="grow">{infoWindowShown ? 'true' : 'false'}</span>
+      <GoogleIconSVG />
+      <input
+        className="grow bg-grey-80 bg-none text-sm focus:outline-none"
+        type="text"
+        ref={input}
+        placeholder="Search here"
+      />
+      {infoWindowShown && (
+        <>
+          <AdvancedMarker
+            ref={markerRef}
+            position={placeData?.geometry?.location}
+          />
+          <InfoWindow
+            anchor={marker}
+            onClose={handleClose}
+            headerContent={<h3 className="text-black">{placeData?.name}</h3>}
+          >
+            <div className="flex flex-col text-black">
+              <span className="py-2">주소: {placeData?.formatted_address}</span>
+            </div>
+          </InfoWindow>
+        </>
+      )}
+    </div>
   )
 }

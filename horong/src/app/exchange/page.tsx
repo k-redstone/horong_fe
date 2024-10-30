@@ -5,7 +5,7 @@ export default function ExchangePage() {
   return (
     <div className="w-full">
       <GlobalHeader pageName="환전소" />
-      <div className="h-[45rem]">
+      <div className="h-full">
         <GoogleMap />
       </div>
     </div>

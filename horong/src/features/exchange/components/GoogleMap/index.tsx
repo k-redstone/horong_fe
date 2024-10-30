@@ -31,7 +31,6 @@ export default function GoogleMap() {
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
       region="KR"
     >
-      <MapSearchBox />
       <Map
         colorScheme={'DARK'}
         mapId={'baae3adccbf5d8d'}
@@ -55,6 +54,9 @@ export default function GoogleMap() {
               data={item}
             />
           ))}
+        <div className="absolute top-4 z-10 flex w-full justify-center">
+          <MapSearchBox />
+        </div>
         <MoveCurrentPosBtn />
         <ExchangeFilterBox data={data} />
       </Map>

@@ -34,9 +34,9 @@ export default function MapMarker({ data }: MapMarkerProps) {
         <InfoWindow
           anchor={marker}
           onClose={handleClose}
-          headerContent={<h3>{data.name}</h3>}
+          headerContent={<h3 className="text-black">{data.name}</h3>}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col text-black">
             <span className="py-2">
               주소: {decodeHtmlEntities(data.address)}
             </span>
