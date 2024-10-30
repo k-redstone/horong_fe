@@ -18,7 +18,7 @@ function MobileIndexModal(props: MobileIndexModalProps) {
   if (isIOS) {
     return (
       <div
-        className={`${isModal ? 'block' : 'hidden'} absolute flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-12`}
+        className={`${isModal ? 'block' : 'hidden'} absolute z-50 flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-12`}
       >
         <Image
           src={QRIcon}
@@ -43,7 +43,7 @@ function MobileIndexModal(props: MobileIndexModalProps) {
   }
   return (
     <div
-      className={`${isModal ? 'bottom-0' : 'bottom-[-100dvh]'} absolute flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-12 transition-all duration-500 ease-in-out`}
+      className={`${isModal ? 'bottom-0' : 'bottom-[-100dvh]'} absolute z-50 flex w-[32.5rem] flex-col items-center justify-center gap-y-3 rounded-md rounded-t-[2.5rem] bg-grey-80 px-8 py-12 transition-all duration-500 ease-in-out`}
     >
       <Image
         src={QRIcon}
