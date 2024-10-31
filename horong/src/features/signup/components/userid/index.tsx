@@ -72,6 +72,8 @@ function SignupId({ setStep }: SignupProps) {
             placeholder={'ID를 입력해주세요'}
           />
           <div className="flex items-center gap-x-2">
+            {isIdAllowed && <SuccessIcon />}
+
             {userId && (
               <button
                 className="focus-visible:outline-primary"
@@ -80,8 +82,6 @@ function SignupId({ setStep }: SignupProps) {
                 <XmarkIcon />
               </button>
             )}
-
-            {isIdAllowed && <SuccessIcon />}
           </div>
         </div>
         {isError && <p className="px-1 text-xs text-warning">{errTxt}</p>}
