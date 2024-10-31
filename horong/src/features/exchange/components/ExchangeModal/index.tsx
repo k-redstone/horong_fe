@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react'
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
 import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
+import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
 import ArrowDownSVG from '@/static/svg/exchange/exchange-arrow-down.svg'
 import ArrowUpSVG from '@/static/svg/exchange/exchange-arrow-up.svg'
@@ -190,12 +191,30 @@ function ExchangeModal(props: ExchangeModalProps) {
           </AdvancedMarker>
           <InfoWindow
             anchor={marker}
+            className="rounded-2xl"
             onClose={() => handleClose()}
-            headerContent={<h3 className="text-black">{placeData?.name}</h3>}
+            maxWidth={300}
+            headerContent={
+              <h3 className="text-xs text-black">{placeData.name}</h3>
+            }
           >
-            <div className="flex flex-col text-black">
-              <span className="py-2">주소: {placeData?.address}</span>
-            </div>
+            <ul className="flex list-inside list-disc flex-col gap-y-2 text-[.625rem] text-black">
+              <li>
+                <span>{decodeHtmlEntities(placeData.address)}</span>
+                <br />
+              </li>
+              {placeData.phone !== '' && (
+                <li>
+                  <span>{decodeHtmlEntities(placeData.phone)}</span>
+                  <br />
+                </li>
+              )}
+              {placeData?.description !== '' && (
+                <li>
+                  <span>{decodeHtmlEntities(placeData?.description)}</span>
+                </li>
+              )}
+            </ul>
           </InfoWindow>
         </>
       )}

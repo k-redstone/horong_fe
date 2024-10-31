@@ -18,13 +18,13 @@ export default function GoogleMap() {
     queryFn: () => fetchExchange(),
   })
 
-  if (!isSuccess) {
-    return (
-      <div>
-        <p>map loading</p>
-      </div>
-    )
-  }
+  // if (!isSuccess) {
+  //   return (
+  //     <div>
+  //       <p>map loading</p>
+  //     </div>
+  //   )
+  // }
 
   return (
     <APIProvider
@@ -47,28 +47,30 @@ export default function GoogleMap() {
           )
         }}
       >
-        <InfowindowProvider>
-          {zoom >= 13 &&
-            data.map((item) => (
-              <MapMarker
-                key={item.id}
-                data={item}
+        {isSuccess && (
+          <InfowindowProvider>
+            {zoom >= 13 &&
+              data.map((item) => (
+                <MapMarker
+                  key={item.id}
+                  data={item}
+                />
+              ))}
+            <div className="absolute top-4 z-10 flex w-full justify-center">
+              <MapSearchBox />
+            </div>
+            <div className="absolute bottom-[6.125rem] right-4">
+              <MoveCurrentPosBtn />
+            </div>
+            <div className="absolute bottom-0 w-full">
+              <ExchangeModal
+                isModal={isModal}
+                setIsModal={setIsModal}
+                data={data}
               />
-            ))}
-          <div className="absolute top-4 z-10 flex w-full justify-center">
-            <MapSearchBox />
-          </div>
-          <div className="absolute bottom-[6.125rem] right-4">
-            <MoveCurrentPosBtn />
-          </div>
-          <div className="absolute bottom-0 w-full">
-            <ExchangeModal
-              isModal={isModal}
-              setIsModal={setIsModal}
-              data={data}
-            />
-          </div>
-        </InfowindowProvider>
+            </div>
+          </InfowindowProvider>
+        )}
       </Map>
     </APIProvider>
   )
