@@ -57,7 +57,7 @@ export default function GoogleMap() {
         <div className="absolute top-4 z-10 flex w-full justify-center">
           <MapSearchBox />
         </div>
-        <div className="absolute bottom-9 right-0">
+        <div className="absolute bottom-[6.125rem] right-4">
           <MoveCurrentPosBtn />
         </div>
         <div className="absolute bottom-0 w-full">
