@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import publicAPI from '@/api/publicAPI/index.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
@@ -18,23 +18,30 @@ function SignupId({ setStep }: SignupProps) {
   const [errTxt, setErrTxt] = useState<string>('')
   const [isError, setIsError] = useState<boolean>(false)
 
-  const changeId = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(e.target.value)
-
-    const response = await publicAPI.get(
-      `/user/userId?userId=${e.target.value}`,
-    )
-
-    if (response.status === 200) {
-      setIsIdAllowed(true)
-      setIsError(false)
-      // console.log('아이디 사용 가능')
-    } else {
-      setIsError(true)
-      setErrTxt(response.data.message)
-      setIsIdAllowed(false)
+  useEffect(() => {
+    async function fetchData() {
+      await publicAPI
+        .get(`/user/userId?userId=${userId}`)
+        .then((res) => {
+          // eslint-disable-next-line no-console
+          console.log(res)
+          setIsError(false)
+          setErrTxt('')
+          setIsIdAllowed(true)
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log('error', err)
+          setIsError(true)
+          setErrTxt(err.response.data.message)
+          setIsIdAllowed(false)
+        })
     }
-  }
+
+    if (userId) {
+      fetchData()
+    }
+  }, [userId])
 
   const clickedXmark = () => {
     setUserId('')
@@ -67,7 +74,7 @@ function SignupId({ setStep }: SignupProps) {
             id="id"
             type="text"
             value={userId}
-            onChange={changeId}
+            onChange={(e) => setUserId(e.target.value)}
             className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
             placeholder={'ID를 입력해주세요'}
           />

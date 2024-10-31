@@ -66,7 +66,7 @@ function SignupPassword({ setStep }: SignupProps) {
       <div className="mb-10 w-full text-lg">비밀번호를 설정해주세요.</div>
 
       {/* 비밀번호 입력 컨테이너   */}
-      <div className="mb-60 flex flex-col justify-center gap-y-4 py-3">
+      <div className="mb-40 flex flex-col justify-center gap-y-4 py-3">
         {/* 비밀번호 */}
         <label
           className="text-high text-xs-bold"
