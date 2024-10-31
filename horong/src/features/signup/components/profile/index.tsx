@@ -1,8 +1,4 @@
-import React from 'react'
-interface SignupProps {
-  setStep: React.Dispatch<React.SetStateAction<number>>
-}
-function SignupProfile({ setStep }: SignupProps) {
+function SignupProfile() {
   return <div>SignupProfile</div>
 }
 
