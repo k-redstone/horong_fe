@@ -88,7 +88,7 @@ function ExchangeModal(props: ExchangeModalProps) {
   ])
   return (
     <div
-      className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[42.75rem]' : `h-[4.625rem]`}`}
+      className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[80dvh]' : `h-[4.625rem]`}`}
     >
       <button
         className="flex w-full flex-col items-center gap-y-5 px-6 py-3"
