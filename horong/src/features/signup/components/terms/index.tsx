@@ -38,7 +38,7 @@ function SignupTerms({ setStep }: SignupProps) {
         <LogoTxtIcon className="w-[8.25rem]" />
         <Image
           src={Progress2}
-          alt="signup_progress1"
+          alt="signup_progress2"
           className="w-[10.3125rem]"
         />
       </div>
