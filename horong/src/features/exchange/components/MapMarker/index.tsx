@@ -36,16 +36,28 @@ export default function MapMarker({ data }: MapMarkerProps) {
         {infoWindowShown && (
           <InfoWindow
             anchor={marker}
+            className="rounded-2xl"
             onClose={handleClose}
-            headerContent={<h3 className="text-black">{data.name}</h3>}
+            maxWidth={300}
+            headerContent={<h3 className="text-xs text-black">{data.name}</h3>}
           >
-            <div className="flex flex-col text-black">
-              <span className="py-2">
-                주소: {decodeHtmlEntities(data.address)}
-              </span>
-              <br />
-              <span>{decodeHtmlEntities(data.description)}</span>
-            </div>
+            <ul className="flex list-inside list-disc flex-col gap-y-2 text-[.625rem] text-black">
+              <li>
+                <span>{decodeHtmlEntities(data.address)}</span>
+                <br />
+              </li>
+              {data.phone !== '' && (
+                <li>
+                  <span>{decodeHtmlEntities(data.phone)}</span>
+                  <br />
+                </li>
+              )}
+              {data.description !== '' && (
+                <li>
+                  <span>{decodeHtmlEntities(data.description)}</span>
+                </li>
+              )}
+            </ul>
           </InfoWindow>
         )}
       </AdvancedMarker>

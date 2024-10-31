@@ -11,6 +11,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
+import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 export default function MapSearchBox() {
   const places = useMapsLibrary('places')
@@ -81,14 +82,19 @@ export default function MapSearchBox() {
           <AdvancedMarker
             ref={markerRef}
             position={placeData?.geometry?.location}
-          />
+          >
+            <MapPinSVG />
+          </AdvancedMarker>
           <InfoWindow
             anchor={marker}
             onClose={() => handleClose()}
-            headerContent={<h3 className="text-black">{placeData?.name}</h3>}
+            maxWidth={300}
+            headerContent={
+              <h3 className="tex-xs text-black">{placeData?.name}</h3>
+            }
           >
-            <div className="flex flex-col text-black">
-              <span className="py-2">주소: {placeData?.formatted_address}</span>
+            <div className="flex flex-col text-[.625rem] text-black">
+              <span className="py-2">{placeData?.formatted_address}</span>
             </div>
           </InfoWindow>
         </>
