@@ -62,7 +62,7 @@ export default function GoogleMap() {
             <div className="absolute bottom-[6.125rem] right-4">
               <MoveCurrentPosBtn />
             </div>
-            <div className="absolute bottom-0 w-full">
+            <div className="absolute bottom-0 z-30 w-full">
               <ExchangeModal
                 isModal={isModal}
                 setIsModal={setIsModal}
