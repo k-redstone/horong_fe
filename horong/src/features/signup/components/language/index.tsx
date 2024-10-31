@@ -31,24 +31,28 @@ function SignupLanguage({ setStep }: SignupProps) {
       {/* 언어선택 라디오버튼 */}
       <div className="mb-10 flex flex-col justify-center gap-y-4 py-3">
         <LanguageRadioBtn
-          className={`${language === 'en' && 'border-primary'}`}
-          language="en"
+          className={`${language === 'ENGLISH' && 'border-primary'}`}
+          language="ENGLISH"
         >
-          {language === 'en' ? <RadioCheckedIcon /> : <RadioUnCheckdIcon />}
+          {language === 'ENGLISH' ? (
+            <RadioCheckedIcon />
+          ) : (
+            <RadioUnCheckdIcon />
+          )}
           영어
         </LanguageRadioBtn>
         <LanguageRadioBtn
-          className={`${language === 'ko-kr' && 'border-primary'}`}
-          language="ko-kr"
+          className={`${language === 'KOREAN' && 'border-primary'}`}
+          language="KOREAN"
         >
-          {language === 'ko-kr' ? <RadioCheckedIcon /> : <RadioUnCheckdIcon />}
+          {language === 'KOREAN' ? <RadioCheckedIcon /> : <RadioUnCheckdIcon />}
           한국어
         </LanguageRadioBtn>
         <LanguageRadioBtn
-          className={`${language === 'zh-hans' && 'border-primary'}`}
-          language="zh-hans"
+          className={`${language === 'CHINESE' && 'border-primary'}`}
+          language="CHINESE"
         >
-          {language === 'zh-hans' ? (
+          {language === 'CHINESE' ? (
             <RadioCheckedIcon />
           ) : (
             <RadioUnCheckdIcon />
@@ -56,10 +60,14 @@ function SignupLanguage({ setStep }: SignupProps) {
           중국어
         </LanguageRadioBtn>
         <LanguageRadioBtn
-          className={`${language === 'ja' && 'border-primary'}`}
-          language="ja"
+          className={`${language === 'JAPANESE' && 'border-primary'}`}
+          language="JAPANESE"
         >
-          {language === 'ja' ? <RadioCheckedIcon /> : <RadioUnCheckdIcon />}
+          {language === 'JAPANESE' ? (
+            <RadioCheckedIcon />
+          ) : (
+            <RadioUnCheckdIcon />
+          )}
           일본어
         </LanguageRadioBtn>
       </div>

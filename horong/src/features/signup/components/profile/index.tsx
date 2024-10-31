@@ -40,10 +40,41 @@ function SignupProfile() {
     }
   }, [nickname])
 
+  //회원정보
+  const userId = useSignupStore((state) => state.userId)
+  const password = useSignupStore((state) => state.password)
+  const language = useSignupStore((state) => state.language)
   const router = useRouter()
+
+  const postSignup = async () => {
+    const formData = new FormData()
+    formData.append('userId', userId)
+    formData.append('password', password)
+    formData.append('nickname', nickname)
+    formData.append('language', language)
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+    await publicAPI.post('/user/signup', formData, config)
+  }
   const submitSignup = () => {
-    toast.success('회원가입이 완료되었습니다.')
-    router.push('/signup/complete')
+    toast.promise(postSignup(), {
+      loading: '회원가입 중...',
+      success: (data) => {
+        // eslint-disable-next-line no-console
+        console.log(data)
+        localStorage.removeItem('signupState')
+        router.push('/signup/complete')
+        return '회원가입이 완료되었습니다.'
+      },
+      error: (err) => {
+        // eslint-disable-next-line no-console
+        console.log(err)
+        return '회원가입에 실패했습니다.'
+      },
+    })
   }
 
   return (
@@ -61,7 +92,21 @@ function SignupProfile() {
       {/* 닉네임 설정 컨테이너 */}
       <div className="mb-28 flex flex-col justify-center gap-y-4 py-3">
         <div className="flex w-full items-center justify-center">
-          <ProfileIcon />
+          <button
+            className="rounded-full"
+            onClick={() =>
+              toast('죄송합니다, 아직 준비중인 기능입니다.', {
+                icon: '🙏',
+                style: {
+                  borderRadius: '12px',
+                  background: '#ACBEFF',
+                  color: '#090A0C',
+                },
+              })
+            }
+          >
+            <ProfileIcon />
+          </button>
         </div>
         <label
           className="text-high text-xs-bold"
