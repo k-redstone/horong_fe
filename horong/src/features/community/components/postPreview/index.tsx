@@ -1,3 +1,5 @@
+'use client'
+
 function PostPreview() {
   return (
     <div className="flex flex-col gap-y-1 rounded-xl border border-grey-60 p-3">
@@ -8,13 +10,13 @@ function PostPreview() {
           하지만 살아있는 사람보다 무섭지 않아.
         </span>
       </div>
-      <p className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <span className="text-2xs opacity-60">큰형님</span>
         <p className="flex grow items-center justify-end gap-x-3">
           <span className="text-2xs opacity-60">0</span>
           <span className="text-2xs opacity-60">10:54</span>
         </p>
-      </p>
+      </div>
     </div>
   )
 }

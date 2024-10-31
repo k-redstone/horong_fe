@@ -24,7 +24,7 @@ function SearchInput({ boardType }: SearchInputProps) {
       >
         <input
           type="text"
-          className={`bg-grey-80 text-xs focus:outline-none ${isFocused ? 'w-full' : 'w-10'}`}
+          className={`w-full bg-grey-80 text-xs focus:outline-none`}
           placeholder="search"
           onFocus={handleFocus}
           onBlur={handleBlur}
