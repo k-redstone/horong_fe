@@ -22,7 +22,9 @@ function SignupLanguage({ setStep }: SignupProps) {
           className="w-[10.3125rem]"
         />
       </div>
-      <div className="mb-20 w-full text-center text-lg">
+      <div className="mb-20 w-full text-lg">
+        안녕하세요, 호롱입니다!
+        <br />
         서비스 내에서 사용할 언어를 선택해주세요.
       </div>
 
@@ -63,7 +65,7 @@ function SignupLanguage({ setStep }: SignupProps) {
       </div>
 
       <button
-        onClick={() => setStep(2)}
+        onClick={() => setStep(1)}
         className="flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100"
       >
         다음으로
