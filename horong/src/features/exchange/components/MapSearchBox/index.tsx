@@ -10,11 +10,13 @@ import {
 } from '@vis.gl/react-google-maps'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
 import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 export default function MapSearchBox() {
   const places = useMapsLibrary('places')
+  const {} = useInfowindow()
   const [markerRef, marker] = useAdvancedMarkerRef()
 
   const input = useRef<HTMLInputElement>(null)
@@ -56,7 +58,7 @@ export default function MapSearchBox() {
       console.error('Google Maps API 로딩 중 오류가 발생했습니다:', error)
       setApiError(true)
     }
-  }, [map, places, infoWindowShown, mapAPIisLoaded, handleClose])
+  }, [map, mapAPIisLoaded, places])
 
   if (apiError) {
     return (
@@ -69,7 +71,6 @@ export default function MapSearchBox() {
 
   return (
     <div className="flex w-[20rem] gap-x-2 rounded-full bg-grey-80 px-3 py-2">
-      <span className="grow">{infoWindowShown ? 'true' : 'false'}</span>
       <GoogleIconSVG />
       <input
         className="grow bg-grey-80 bg-none text-sm focus:outline-none"
@@ -78,13 +79,11 @@ export default function MapSearchBox() {
         placeholder="Search here"
       />
       {infoWindowShown && (
-        <>
-          <AdvancedMarker
-            ref={markerRef}
-            position={placeData?.geometry?.location}
-          >
-            <MapPinSVG />
-          </AdvancedMarker>
+        <AdvancedMarker
+          ref={markerRef}
+          position={placeData?.geometry?.location}
+        >
+          <MapPinSVG />
           <InfoWindow
             anchor={marker}
             onClose={() => handleClose()}
@@ -97,7 +96,7 @@ export default function MapSearchBox() {
               <span className="py-2">{placeData?.formatted_address}</span>
             </div>
           </InfoWindow>
-        </>
+        </AdvancedMarker>
       )}
     </div>
   )

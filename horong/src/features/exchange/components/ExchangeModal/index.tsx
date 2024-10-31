@@ -6,14 +6,16 @@ import {
   useAdvancedMarkerRef,
   useMap,
 } from '@vis.gl/react-google-maps'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
+import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
 import ArrowDownSVG from '@/static/svg/exchange/exchange-arrow-down.svg'
 import ArrowUpSVG from '@/static/svg/exchange/exchange-arrow-up.svg'
 import DashIconSVG from '@/static/svg/exchange/exchange-dash-icon.svg'
+import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 interface ExchangeModalProps {
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,6 +27,14 @@ function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
   const map = useMap()
   const [markerRef, marker] = useAdvancedMarkerRef()
+  const {
+    setPlace,
+    setMarker,
+    setGlobalInfoWindowShow,
+    isGlobalInfowindowShow,
+    placeData: globalplaceData,
+    handleGlobalClose,
+  } = useInfowindow()
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -46,12 +56,35 @@ function ExchangeModal(props: ExchangeModalProps) {
   }
 
   const handleExchangeClick = (item: ExchangePromise) => {
+    if (isGlobalInfowindowShow) {
+      setPlace(undefined)
+      setMarker(null)
+      handleGlobalClose()
+    }
+
     setPlaceData(item)
+    setPlace(item)
     setInfoWindowShown(true)
+    setGlobalInfoWindowShow(true)
     handleModal()
     map?.setZoom(16)
     map?.setCenter({ lat: item.latitude, lng: item.longitude })
   }
+
+  useEffect(() => {
+    if (!infoWindowShown) {
+      handleClose()
+    }
+    if (globalplaceData?.id !== placeData?.id) {
+      handleClose()
+    }
+  }, [
+    handleClose,
+    infoWindowShown,
+    isGlobalInfowindowShow,
+    globalplaceData,
+    placeData?.id,
+  ])
   return (
     <div
       className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[42.75rem]' : `h-[4.625rem]`}`}
@@ -62,7 +95,6 @@ function ExchangeModal(props: ExchangeModalProps) {
       >
         <DashIconSVG />
         <p className="text-md">
-          <span className="grow">{infoWindowShown ? 'true' : 'false'}</span>
           <span>사설 환전소 리스트 </span>
         </p>
       </button>
@@ -153,7 +185,9 @@ function ExchangeModal(props: ExchangeModalProps) {
           <AdvancedMarker
             ref={markerRef}
             position={{ lat: placeData?.latitude, lng: placeData?.longitude }}
-          />
+          >
+            <MapPinSVG />
+          </AdvancedMarker>
           <InfoWindow
             anchor={marker}
             onClose={() => handleClose()}

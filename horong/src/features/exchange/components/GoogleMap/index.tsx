@@ -9,7 +9,7 @@ import ExchangeModal from '@/features/exchange/components/ExchangeModal/index.ts
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 import MapSearchBox from '@/features/exchange/components/MapSearchBox/index.tsx'
 import MoveCurrentPosBtn from '@/features/exchange/components/MoveCurrentPosBtn/index.tsx'
-
+import { InfowindowProvider } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
   const [isModal, setIsModal] = useState<boolean>(false)
@@ -47,27 +47,28 @@ export default function GoogleMap() {
           )
         }}
       >
-        {zoom >= 13 &&
-          data.map((item) => (
-            <MapMarker
-              key={item.id}
-              data={item}
+        <InfowindowProvider>
+          {zoom >= 13 &&
+            data.map((item) => (
+              <MapMarker
+                key={item.id}
+                data={item}
+              />
+            ))}
+          <div className="absolute top-4 z-10 flex w-full justify-center">
+            <MapSearchBox />
+          </div>
+          <div className="absolute bottom-[6.125rem] right-4">
+            <MoveCurrentPosBtn />
+          </div>
+          <div className="absolute bottom-0 w-full">
+            <ExchangeModal
+              isModal={isModal}
+              setIsModal={setIsModal}
+              data={data}
             />
-          ))}
-        <div className="absolute top-4 z-10 flex w-full justify-center">
-          <MapSearchBox />
-        </div>
-        <div className="absolute bottom-[6.125rem] right-4">
-          <MoveCurrentPosBtn />
-        </div>
-        <div className="absolute bottom-0 w-full">
-          <ExchangeModal
-            isModal={isModal}
-            setIsModal={setIsModal}
-            data={data}
-          />
-        </div>
-        {/* <ExchangeFilterBox data={data} /> */}
+          </div>
+        </InfowindowProvider>
       </Map>
     </APIProvider>
   )
