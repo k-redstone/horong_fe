@@ -28,7 +28,7 @@ function SignupId({ setStep }: SignupProps) {
     if (response.status === 200) {
       setIsIdAllowed(true)
       setIsError(false)
-      console.log('아이디 사용 가능')
+      // console.log('아이디 사용 가능')
     } else {
       setIsError(true)
       setErrTxt(response.data.message)
@@ -89,6 +89,7 @@ function SignupId({ setStep }: SignupProps) {
 
       <button
         onClick={() => setStep(3)}
+        disabled={!isIdAllowed}
         className={`${!isIdAllowed && '!bg-grey-50 text-text-disabled'} flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100`}
       >
         다음으로
