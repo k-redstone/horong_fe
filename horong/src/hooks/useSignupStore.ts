@@ -10,8 +10,6 @@ interface SignupStore {
   setPassword: (password: string) => void
   nickname: string
   setNickname: (nickname: string) => void
-  image: File | string
-  setImage: (image: File | string) => void
 }
 
 const useSignupStore = create(
@@ -25,8 +23,6 @@ const useSignupStore = create(
       setPassword: (password) => set({ password }),
       nickname: '',
       setNickname: (nickname) => set({ nickname }),
-      image: '',
-      setImage: (image) => set({ image }),
     }),
     {
       name: 'signupState',
