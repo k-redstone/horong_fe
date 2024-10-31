@@ -29,7 +29,6 @@ export default function TanstackQueryProvider({
     const userAgent = window.navigator.userAgent
 
     checkToken()
-
     if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
       setIsIOS(true)
     }
@@ -49,13 +48,13 @@ export default function TanstackQueryProvider({
       router.push('/home')
     } else if (
       token !== null &&
-      (pathname === '/login' || pathname === '/signup')
+      (pathname.includes('/login') || pathname.includes('/signup'))
     ) {
       router.push('/')
     } else if (
       token === null &&
-      pathname !== '/login' &&
-      pathname !== '/signup' &&
+      !pathname.includes('/login') &&
+      !pathname.includes('/signup') &&
       pathname !== '/'
     ) {
       router.push('/')
