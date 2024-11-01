@@ -3,7 +3,7 @@ import {
   PreviewFreeBoard,
   PreviewNoticeBoard,
   PreviewRegionBoard,
-} from '@/features/community/components/preview/index.tsx'
+} from '@/features/community/components/boardPreview/index.tsx'
 
 function CommunityMainPage() {
   return (
