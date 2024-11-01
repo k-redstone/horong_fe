@@ -70,6 +70,7 @@ export const viewport: Viewport = {
   minimumScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 }
 export default function RootLayout({
   children,
@@ -82,7 +83,7 @@ export default function RootLayout({
       className="h-full overscroll-none bg-white"
     >
       <body
-        className={`h-full w-full overflow-hidden bg-grey-90 ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} font-pretendard flex min-h-dvh justify-center antialiased`}
+        className={`h-full w-full overflow-hidden bg-grey-90 ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} flex min-h-dvh justify-center font-pretendard antialiased`}
       >
         <TanstackQueryProvider>
           {children}

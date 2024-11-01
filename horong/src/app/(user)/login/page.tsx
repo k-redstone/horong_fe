@@ -35,9 +35,9 @@ function Login() {
         password: userPassword,
       })
 
-      console.log(response)
       if (response.status === 200) {
         //토큰 저장
+        localStorage.setItem('token', response.data.result.accessToken)
       }
     },
 
@@ -64,7 +64,7 @@ function Login() {
   }
 
   return (
-    <div className="flex w-full flex-col items-start justify-center">
+    <div className="flex w-full flex-col items-start justify-center overflow-y-scroll">
       <div className="flex w-full flex-col items-center justify-center gap-y-5 pb-20">
         <LogoIcon className="h-20 w-20" />
         <LogoTextIcon className="w-[9.5rem]" />
@@ -75,7 +75,7 @@ function Login() {
       <div className="flex w-full flex-col items-center justify-center gap-y-4 px-5 py-3">
         <div className="flex w-full flex-col items-start justify-center gap-y-2">
           <label className="text-high text-xs-bold">ID</label>
-          <div className="focus-within:border-primary flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high">
+          <div className="flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
             <input
               type="text"
               value={userId}
@@ -97,7 +97,7 @@ function Login() {
 
         <div className="flex w-full flex-col items-start justify-center gap-y-2">
           <label className="text-high text-xs-bold">PASSWORD</label>
-          <div className="focus-within:border-primary flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high">
+          <div className="flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
             <input
               type={isUserPasswordVisible ? 'text' : 'password'}
               value={userPassword}
@@ -130,7 +130,7 @@ function Login() {
 
       {/* 에러텍스트 */}
       {isError && (
-        <p className="text-warning w-full px-5 text-start text-xs">
+        <p className="w-full px-5 text-start text-xs text-warning">
           아이디 또는 비밀번호를 다시 확인해주세요.
         </p>
       )}
@@ -138,7 +138,7 @@ function Login() {
       <div className="flex w-full items-center justify-end px-5 pb-11">
         {isChecked ? (
           <button
-            className="focus-visible:outline-primary flex items-center justify-center gap-x-1"
+            className="flex items-center justify-center gap-x-1 focus-visible:outline-primary"
             onClick={checkSaveLoginInfo}
           >
             <div className="flex aspect-square w-6 items-center justify-center">
@@ -148,7 +148,7 @@ function Login() {
           </button>
         ) : (
           <button
-            className="focus-visible:outline-primary flex items-center justify-center gap-x-1"
+            className="flex items-center justify-center gap-x-1 focus-visible:outline-primary"
             onClick={checkSaveLoginInfo}
           >
             <div className="flex aspect-square w-6 items-center justify-center">
@@ -164,14 +164,14 @@ function Login() {
         <button
           onClick={submitLogin}
           disabled={!userId || !userPassword}
-          className={`flex w-full items-center justify-center rounded-xl py-3 text-md ${userId && userPassword ? 'bg-primary text-grey-100' : 'focus-visible:outline-primary bg-grey-50 text-text-disabled'}`}
+          className={`flex w-full items-center justify-center rounded-xl py-3 text-md ${userId && userPassword ? 'bg-primary text-grey-100' : 'bg-grey-50 text-text-disabled focus-visible:outline-primary'}`}
         >
           로그인
         </button>
 
         <Link
           href="/signup"
-          className="focus-visible:outline-primary flex items-center justify-center text-xs text-text-high hover:underline"
+          className="flex items-center justify-center text-xs text-text-high hover:underline focus-visible:outline-primary"
         >
           아직 회원이 아니시라면? 회원가입
         </Link>

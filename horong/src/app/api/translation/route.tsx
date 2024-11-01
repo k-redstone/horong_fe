@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const response = await axios.post(
-      'https://api-free.deepl.com/v2/translate',
+      'https://api.deepl.com/v2/translate',
       null,
       {
         params,
