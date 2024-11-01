@@ -27,7 +27,11 @@ function SignupPassword({ setStep }: SignupProps) {
   const [confirmPwVisible, setConfirmPwVisible] = useState<boolean>(false)
 
   useEffect(() => {
-    if (password.length < 8 || password.length > 20) {
+    if (
+      !password.match(
+        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
+      )
+    ) {
       setIsError(true)
       setIsPwAllowed(false)
       setConfirmPw('')
@@ -74,7 +78,7 @@ function SignupPassword({ setStep }: SignupProps) {
         >
           PASSWORD
         </label>
-        <div className="flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
+        <div className="relative flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
           <input
             id="pw"
             type={passwordVisible ? 'text' : 'password'}
@@ -83,7 +87,7 @@ function SignupPassword({ setStep }: SignupProps) {
             className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
             placeholder={'비밀번호를 입력해주세요'}
           />
-          <div className="flex items-center gap-x-2">
+          <div className="absolute right-0 mr-4 flex items-center gap-x-2">
             {isPwAllowed && <SuccessIcon />}
 
             {password && (
@@ -114,7 +118,7 @@ function SignupPassword({ setStep }: SignupProps) {
             >
               CONFIRM PASSWORD
             </label>
-            <div className="flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
+            <div className="relative flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
               <input
                 id="confirm-pw"
                 type={confirmPwVisible ? 'text' : 'password'}
@@ -123,7 +127,7 @@ function SignupPassword({ setStep }: SignupProps) {
                 className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
                 placeholder={'비밀번호를 다시 입력해주세요'}
               />
-              <div className="flex items-center gap-x-2">
+              <div className="absolute mr-4 flex items-center gap-x-2">
                 {isPwAllowed && passwordCheck && <SuccessIcon />}
                 {confirmPw && (
                   <>
@@ -149,8 +153,14 @@ function SignupPassword({ setStep }: SignupProps) {
           {isError && <p className="text-warning">{errTxt}</p>}
           {!isPwAllowed && (
             <div className="text-text-md">
-              <p>· 8자 이상 20자 이하여야합니다.</p>
-              <p>· 비밀번호는 영어, 숫자, 특수문자를 모두 포함해야 합니다.</p>
+              <p className={`${password.match(/^.{8,20}$/) && 'text-primary'}`}>
+                · 8자 이상 20자 이하여야합니다.
+              </p>
+              <p
+                className={`${password.match(/^(?=.*[!@#$%^&*])(?=.*[A-Za-z])(?=.*\d).+$/) && 'text-primary'}`}
+              >
+                · 비밀번호는 영어, 숫자, 특수문자를 모두 포함해야 합니다.
+              </p>
             </div>
           )}
         </div>

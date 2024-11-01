@@ -64,7 +64,7 @@ function Login() {
   }
 
   return (
-    <div className="flex w-full flex-col items-start justify-center">
+    <div className="flex w-full flex-col items-start justify-center overflow-y-scroll">
       <div className="flex w-full flex-col items-center justify-center gap-y-5 pb-20">
         <LogoIcon className="h-20 w-20" />
         <LogoTextIcon className="w-[9.5rem]" />

@@ -16,11 +16,13 @@ function Signup() {
       {/* 글로벌헤더  */}
       <GlobalHeader pageName="회원가입" />
 
-      {step === 0 && <SignupLanguage setStep={setStep} />}
-      {step === 1 && <SignupTerms setStep={setStep} />}
-      {step === 2 && <SignupId setStep={setStep} />}
-      {step === 3 && <SignupPassword setStep={setStep} />}
-      {step === 4 && <SignupProfile />}
+      <div className="overflow-y-scroll pb-4">
+        {step === 0 && <SignupLanguage setStep={setStep} />}
+        {step === 1 && <SignupTerms setStep={setStep} />}
+        {step === 2 && <SignupId setStep={setStep} />}
+        {step === 3 && <SignupPassword setStep={setStep} />}
+        {step === 4 && <SignupProfile />}
+      </div>
     </div>
   )
 }
