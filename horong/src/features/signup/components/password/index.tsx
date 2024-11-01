@@ -127,7 +127,7 @@ function SignupPassword({ setStep }: SignupProps) {
                 className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
                 placeholder={'비밀번호를 다시 입력해주세요'}
               />
-              <div className="absolute mr-4 flex items-center gap-x-2">
+              <div className="absolute right-0 mr-4 flex items-center gap-x-2">
                 {isPwAllowed && passwordCheck && <SuccessIcon />}
                 {confirmPw && (
                   <>

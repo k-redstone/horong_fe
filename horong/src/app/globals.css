@@ -2,24 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  overscroll-behavior: none;
-}
-body {
-  color: #fff;
+/* 베이스는 전역 스타일을 추가할 때 */
+@layer base {
+  html {
+    overscroll-behavior: none;
+  }
+  body {
+    color: #fff;
 
-  min-width: 22.5rem;
+    min-width: 22.5rem;
 
-  margin: 0 auto;
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  /* ios 대응 */
+  body.ios {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+
+    padding-right: constant(safe-area-inset-right);
+    padding-right: env(safe-area-inset-right);
+  }
 }
 
-#horong-chat-textarea::-webkit-scrollbar {
-  display: none;
+/* 컴포넌트는 컴포넌트 스타일을 추가할 때 */
+@layer components {
 }
-#horong-chat-ListBox::-webkit-scrollbar {
-  display: none;
-}
-#horong-exchange-ListBox::-webkit-scrollbar {
-  display: none;
+
+/* 유틸리티는 tailwind에 없는 스타일을 추가할 때 */
+@layer utilities {
+  #horong-chat-textarea::-webkit-scrollbar {
+    display: none;
+  }
+  #horong-chat-ListBox::-webkit-scrollbar {
+    display: none;
+  }
+  #horong-exchange-ListBox::-webkit-scrollbar {
+    display: none;
+  }
 }

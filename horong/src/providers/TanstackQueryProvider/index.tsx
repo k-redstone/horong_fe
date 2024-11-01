@@ -30,6 +30,7 @@ export default function TanstackQueryProvider({
 
     checkToken()
     if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+      document.body.classList.add('ios')
       setIsIOS(true)
     }
     if (
