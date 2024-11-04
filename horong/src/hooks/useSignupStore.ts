@@ -15,7 +15,7 @@ interface SignupStore {
 const useSignupStore = create(
   persist<SignupStore>(
     (set) => ({
-      language: 'en',
+      language: 'ENGLISH',
       setLanguage: (language) => set({ language }),
       userId: '',
       setUserId: (userId) => set({ userId }),

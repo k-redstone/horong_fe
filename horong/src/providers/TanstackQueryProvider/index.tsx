@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import MobileIndexModal from '@/components/mobileInfoModal/index.tsx'
+import useLangStore from '@/hooks/useLangStore.ts'
 
 export default function TanstackQueryProvider({
   children,
@@ -25,10 +26,11 @@ export default function TanstackQueryProvider({
   const router = useRouter()
   const [isModal, setIsModal] = useState<boolean>(false)
   const [isIOS, setIsIOS] = useState<boolean>(false)
+
   useEffect(() => {
     const userAgent = window.navigator.userAgent
-
     checkToken()
+
     if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
       document.body.classList.add('ios')
       setIsIOS(true)
@@ -62,6 +64,13 @@ export default function TanstackQueryProvider({
     }
   }
 
+  const setLang = useLangStore((state) => state.setLang)
+  const lang = useLangStore((state) => state.lang)
+  useEffect(() => {
+    if (lang === '') {
+      setLang('ENGLISH')
+    }
+  }, [lang, setLang])
   return (
     <QueryClientProvider client={client}>
       <MobileIndexModal
