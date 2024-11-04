@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import publicAPI from '@/api/publicAPI/index.ts'
+import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
 import Progress5 from '@/static/imgs/signup-progress5-icon.png'
 import ProfileIcon from '@/static/svg/auth/auth-profile-icon.svg'
@@ -17,6 +19,7 @@ function SignupProfile() {
   const [isError, setIsError] = useState<boolean | null>(null)
   const [errTxt, setErrTxt] = useState('')
 
+  const lang = useLangStore((state) => state.lang)
   useEffect(() => {
     async function fetchData() {
       await publicAPI
@@ -61,18 +64,18 @@ function SignupProfile() {
   }
   const submitSignup = () => {
     toast.promise(postSignup(), {
-      loading: '회원가입 중...',
+      loading: AUTH_CONSTANT[lang]['signup-complete-toast-load'],
       success: (data) => {
         // eslint-disable-next-line no-console
         console.log(data)
         localStorage.removeItem('signupState')
         router.push('/signup/complete')
-        return '회원가입이 완료되었습니다.'
+        return AUTH_CONSTANT[lang]['signup-complete-toast-success']
       },
       error: (err) => {
         // eslint-disable-next-line no-console
         console.log(err)
-        return '회원가입에 실패했습니다.'
+        return AUTH_CONSTANT[lang]['signup-complete-toast-fail']
       },
     })
   }
@@ -87,7 +90,9 @@ function SignupProfile() {
           className="w-[10.3125rem]"
         />
       </div>
-      <div className="mb-20 w-full text-lg">프로필을 설정해주세요.</div>
+      <div className="mb-20 w-full text-lg">
+        {AUTH_CONSTANT[lang]['signup-profile-txt1']}
+      </div>
 
       {/* 닉네임 설정 컨테이너 */}
       <div className="mb-28 flex flex-col justify-center gap-y-4 py-3">
@@ -95,7 +100,7 @@ function SignupProfile() {
           <button
             className="rounded-full"
             onClick={() =>
-              toast('죄송합니다, 아직 준비중인 기능입니다.', {
+              toast(AUTH_CONSTANT[lang]['signup-profile-click-toast'], {
                 icon: '🙏',
                 style: {
                   borderRadius: '12px',
@@ -121,7 +126,7 @@ function SignupProfile() {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
-            placeholder={'닉네임을 입력해주세요'}
+            placeholder={AUTH_CONSTANT[lang]['signup-nickname-placeholder']}
           />
           <div className="flex items-center gap-x-2">
             {nickname && (
@@ -137,7 +142,9 @@ function SignupProfile() {
         {isError || isError === null ? (
           <p className="px-1 text-xs text-warning">{errTxt}</p>
         ) : (
-          <p className="px-1 text-xs text-primary">사용 가능한 닉네임입니다.</p>
+          <p className="px-1 text-xs text-primary">
+            {AUTH_CONSTANT[lang]['signup-nickname-success']}
+          </p>
         )}
       </div>
 
@@ -146,7 +153,7 @@ function SignupProfile() {
         disabled={isError === null || isError}
         className={`${(isError === null || isError) && '!bg-grey-50 text-text-disabled'} flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100`}
       >
-        가입하기
+        {AUTH_CONSTANT[lang]['signup-complete-btn']}
       </button>
     </div>
   )

@@ -1,3 +1,4 @@
+import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
 
 interface LanguageRadioBtnProps {
@@ -12,8 +13,10 @@ function LanguageRadioBtn({
   language,
 }: LanguageRadioBtnProps) {
   const setLanguage = useSignupStore((state) => state.setLanguage)
+  const setLang = useLangStore((state) => state.setLang)
   const changeLanguage = () => {
     setLanguage(language)
+    setLang(language)
   }
   return (
     <button
