@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import Progress2 from '@/static/imgs/signup-progress2-icon.png'
 import TermCheckedIcon from '@/static/svg/auth/auth-checked-term-icon.svg'
 import TermUncheckedIcon from '@/static/svg/auth/auth-unchecked-term-icon.svg'
@@ -13,6 +15,8 @@ function SignupTerms({ setStep }: SignupProps) {
   const [serviceChecked, setServiceChecked] = useState(false)
   const [privacyChecked, setPrivacyChecked] = useState(false)
   const [marketingChecked, setMarketingChecked] = useState(false)
+
+  const lang = useLangStore((state) => state.lang)
 
   useEffect(() => {
     if (serviceChecked && privacyChecked && marketingChecked) {
@@ -44,7 +48,7 @@ function SignupTerms({ setStep }: SignupProps) {
       </div>
 
       <div className="mb-40 w-full text-lg">
-        서비스 이용약관에 동의해주세요.
+        {AUTH_CONSTANT[lang]['signup-term-txt1']}
       </div>
 
       {/* 약관동의  */}
@@ -62,7 +66,9 @@ function SignupTerms({ setStep }: SignupProps) {
               className="h-6 w-6 cursor-pointer"
             />
           )}
-          <button onClick={checkAllTerms(allChecked)}>약관 전체동의</button>
+          <button onClick={checkAllTerms(allChecked)}>
+            {AUTH_CONSTANT[lang]['signup-term-radio1']}
+          </button>
         </div>
         <div className="border-t border-t-grey-10" />
         <div className="flex items-center gap-x-4">
@@ -78,8 +84,10 @@ function SignupTerms({ setStep }: SignupProps) {
             />
           )}
           <button onClick={() => setServiceChecked(!serviceChecked)}>
-            서비스 이용약관 동의{' '}
-            <i className="not-italic text-warning">(필수)</i>
+            {AUTH_CONSTANT[lang]['signup-term-radio2']}
+            <i className="not-italic text-warning">
+              {AUTH_CONSTANT[lang]['signup-term-required']}
+            </i>
           </button>
         </div>
         <div className="flex items-center gap-x-4">
@@ -95,8 +103,10 @@ function SignupTerms({ setStep }: SignupProps) {
             />
           )}
           <button onClick={() => setPrivacyChecked(!privacyChecked)}>
-            개인정보 수집 및 이용동의{' '}
-            <i className="not-italic text-warning">(필수)</i>
+            {AUTH_CONSTANT[lang]['signup-term-radio3']}
+            <i className="not-italic text-warning">
+              {AUTH_CONSTANT[lang]['signup-term-required']}
+            </i>
           </button>
         </div>
         <div className="flex items-center gap-x-4">
@@ -112,8 +122,10 @@ function SignupTerms({ setStep }: SignupProps) {
             />
           )}
           <button onClick={() => setMarketingChecked(!marketingChecked)}>
-            위치 정보 이용 동의{' '}
-            <i className="not-italic text-text-disabled">(선택)</i>
+            {AUTH_CONSTANT[lang]['signup-term-radio4']}
+            <i className="not-italic text-text-disabled">
+              {AUTH_CONSTANT[lang]['signup-term-optional']}
+            </i>
           </button>
         </div>
       </div>
@@ -123,7 +135,7 @@ function SignupTerms({ setStep }: SignupProps) {
         disabled={!serviceChecked || !privacyChecked}
         className={`${(!serviceChecked || !privacyChecked) && '!bg-grey-50 text-text-disabled'} flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100`}
       >
-        다음으로
+        {AUTH_CONSTANT[lang]['signup-lang-btn']}
       </button>
     </div>
   )

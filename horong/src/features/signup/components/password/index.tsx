@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
+import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
 import Progress4 from '@/static/imgs/signup-progress4-icon.png'
 import SuccessIcon from '@/static/svg/auth/auth-checked-term-icon.svg'
@@ -26,6 +28,7 @@ function SignupPassword({ setStep }: SignupProps) {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
   const [confirmPwVisible, setConfirmPwVisible] = useState<boolean>(false)
 
+  const lang = useLangStore((state) => state.lang)
   useEffect(() => {
     if (
       !password.match(
@@ -35,7 +38,7 @@ function SignupPassword({ setStep }: SignupProps) {
       setIsError(true)
       setIsPwAllowed(false)
       setConfirmPw('')
-      setErrTxt('· 비밀번호 조건을 확인해주세요.')
+      setErrTxt(AUTH_CONSTANT[lang]['signup-pw-error1'])
       return
     }
 
@@ -47,8 +50,9 @@ function SignupPassword({ setStep }: SignupProps) {
     } else {
       setPasswordCheck(false)
       setIsError(true)
-      setErrTxt('· 비밀번호가 일치하지 않습니다.')
+      setErrTxt(AUTH_CONSTANT[lang]['signup-pw-error2'])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password, confirmPw])
 
   const clickedXmark = () => {
@@ -67,7 +71,9 @@ function SignupPassword({ setStep }: SignupProps) {
         />
       </div>
 
-      <div className="mb-10 w-full text-lg">비밀번호를 설정해주세요.</div>
+      <div className="mb-10 w-full text-lg">
+        {AUTH_CONSTANT[lang]['signup-pw-txt1']}
+      </div>
 
       {/* 비밀번호 입력 컨테이너   */}
       <div className="mb-40 flex flex-col justify-center gap-y-4 py-3">
@@ -85,7 +91,7 @@ function SignupPassword({ setStep }: SignupProps) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
-            placeholder={'비밀번호를 입력해주세요'}
+            placeholder={AUTH_CONSTANT[lang]['pw-placeholder']}
           />
           <div className="absolute right-0 mr-4 flex items-center gap-x-2">
             {isPwAllowed && <SuccessIcon />}
@@ -125,7 +131,9 @@ function SignupPassword({ setStep }: SignupProps) {
                 value={confirmPw}
                 onChange={(e) => setConfirmPw(e.target.value)}
                 className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
-                placeholder={'비밀번호를 다시 입력해주세요'}
+                placeholder={
+                  AUTH_CONSTANT[lang]['signup-pwconfirm-placeholder']
+                }
               />
               <div className="absolute right-0 mr-4 flex items-center gap-x-2">
                 {isPwAllowed && passwordCheck && <SuccessIcon />}
@@ -154,12 +162,12 @@ function SignupPassword({ setStep }: SignupProps) {
           {!isPwAllowed && (
             <div className="text-text-md">
               <p className={`${password.match(/^.{8,20}$/) && 'text-primary'}`}>
-                · 8자 이상 20자 이하여야합니다.
+                {AUTH_CONSTANT[lang]['signup-pw-inform1']}
               </p>
               <p
                 className={`${password.match(/^(?=.*[!@#$%^&*])(?=.*[A-Za-z])(?=.*\d).+$/) && 'text-primary'}`}
               >
-                · 비밀번호는 영어, 숫자, 특수문자를 모두 포함해야 합니다.
+                {AUTH_CONSTANT[lang]['signup-pw-inform2']}
               </p>
             </div>
           )}
@@ -171,7 +179,7 @@ function SignupPassword({ setStep }: SignupProps) {
         disabled={!isPwAllowed || password !== confirmPw}
         className={`${(!isPwAllowed || password !== confirmPw) && '!bg-grey-50 text-text-disabled'} flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100`}
       >
-        다음으로
+        {AUTH_CONSTANT[lang]['signup-lang-btn']}
       </button>
     </div>
   )

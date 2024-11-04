@@ -1,11 +1,25 @@
 import type { Metadata, Viewport } from 'next'
 
+import { Noto_Sans_JP, Noto_Sans_SC } from '@next/font/google'
 import localFont from 'next/font/local'
 import { Toaster } from 'react-hot-toast'
 
 import TanstackQueryProvider from '@/providers/TanstackQueryProvider/index.tsx'
-
 import './globals.css'
+
+const notoSansChinese = Noto_Sans_SC({
+  variable: '--font-noto-sans-sc',
+  weight: ['100', '900'],
+  style: 'normal',
+  subsets: ['cyrillic', 'latin', 'latin-ext', 'vietnamese'],
+})
+
+const notoSansJp = Noto_Sans_JP({
+  variable: '--font-noto-sans-jp',
+  weight: ['100', '900'],
+  style: 'normal',
+  subsets: ['cyrillic', 'latin', 'latin-ext', 'vietnamese'],
+})
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -83,7 +97,7 @@ export default function RootLayout({
       className="h-full overscroll-none bg-white"
     >
       <body
-        className={`h-full w-full overflow-hidden bg-grey-90 ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} flex min-h-dvh justify-center font-pretendard antialiased`}
+        className={`h-full w-full overflow-hidden bg-grey-90 ${notoSansChinese.variable} ${notoSansJp.variable} ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} min-h-dvh antialiased`}
       >
         <TanstackQueryProvider>
           {children}
