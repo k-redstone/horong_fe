@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 
+import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
 import { createPost } from '@/features/community/apis/post/index.ts'
 import { PostCreatePayload } from '@/features/community/types/post/index.ts'
 import {
@@ -13,12 +14,14 @@ import {
   transHTML,
   transText,
 } from '@/features/community/utils/editor/index.ts'
-
+import useLangStore from '@/hooks/useLangStore.ts'
 const PostEditor = dynamic(
   () => import('@/features/community/components/postEditor/index.tsx'),
   { ssr: false },
 )
+
 function CommunityPostWritePage() {
+  const lang = useLangStore((state) => state.lang)
   const router = useRouter()
   const [content, setContent] = useState<string>('')
   const [title, setTitle] = useState<string>('')
@@ -26,13 +29,15 @@ function CommunityPostWritePage() {
 
   const { mutateAsync } = useMutation({
     mutationFn: createPost,
-    onSuccess: () => toast.success('생성 성공'),
-    onError: () => toast.error('에러임'),
+    onSuccess: () =>
+      toast.success(`${COMMUNITY_CONSTANT[lang]['post-submit-toast-success']}`),
+    onError: () =>
+      toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-toast-fail']}`),
   })
 
   const handleSubmit = async () => {
     if (title.trim().length === 0 || content.trim().length === 0) {
-      return toast.error('빈칸이 있습니다!')
+      return toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-is-blank']}`)
     }
 
     const translatedContent = await transHTML(content)
@@ -59,7 +64,9 @@ function CommunityPostWritePage() {
           className="px-1 py-0.5"
           onClick={() => router.back()}
         >
-          <span className="text-sm">취소</span>
+          <span className="text-sm">
+            {COMMUNITY_CONSTANT[lang]['cancel-text']}
+          </span>
         </button>
         <p className="font-bold">
           <span>자유게시판</span>
@@ -69,7 +76,9 @@ function CommunityPostWritePage() {
           className="px-2 py-[.1875rem]"
           onClick={() => handleSubmit()}
         >
-          <span className="text-sm text-primary">등록</span>
+          <span className="text-sm text-primary">
+            {COMMUNITY_CONSTANT[lang]['post-submit-text']}
+          </span>
         </button>
       </div>
       {/* 에디터 */}

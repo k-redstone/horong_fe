@@ -1,11 +1,16 @@
 // todo : API연결/각 게시글별 컴포넌트 / 더보기 /
-
+'use client'
+import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 function PreviewRegionBoard() {
+  const lang = useLangStore((state) => state.lang)
   return (
     <div className="flex flex-col gap-y-4">
       {/* title */}
       <div className="flex justify-between">
-        <h1 className="font-bold">지역별 게시판</h1>
+        <h1 className="font-bold">
+          {COMMUNITY_CONSTANT[lang]['region-header']}
+        </h1>
       </div>
 
       {/* box */}

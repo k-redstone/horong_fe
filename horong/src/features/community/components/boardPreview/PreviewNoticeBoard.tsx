@@ -1,13 +1,18 @@
 // todo : API연결/각 게시글별 컴포넌트 / 더보기 /
-
+'use client'
+import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 function PreviewNoticeBoard() {
+  const lang = useLangStore((state) => state.lang)
   return (
     <div className="flex flex-col gap-y-4">
       {/* title */}
       <div className="flex justify-between">
-        <h1 className="font-bold">외교부 공지사항</h1>
+        <h1 className="font-bold">{`${COMMUNITY_CONSTANT[lang]['notice-header']}`}</h1>
         <p className="flex items-end">
-          <span className="text-2xs opacity-60">더보기+</span>
+          <span className="text-2xs opacity-60">
+            {`${COMMUNITY_CONSTANT[lang]['more']}`}+
+          </span>
         </p>
       </div>
 
