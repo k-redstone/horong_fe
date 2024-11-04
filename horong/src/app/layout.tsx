@@ -97,7 +97,7 @@ export default function RootLayout({
       className="h-full overscroll-none bg-white"
     >
       <body
-        className={`h-full w-full overflow-hidden bg-grey-90 ${notoSansChinese.variable} ${notoSansJp.variable} ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} flex min-h-dvh justify-center antialiased`}
+        className={`h-full w-full overflow-hidden bg-grey-90 ${notoSansChinese.variable} ${notoSansJp.variable} ${pretendard.variable} ${geistSans.variable} ${geistMono.variable} min-h-dvh antialiased`}
       >
         <TanstackQueryProvider>
           {children}

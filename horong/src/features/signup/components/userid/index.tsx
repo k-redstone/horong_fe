@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import publicAPI from '@/api/publicAPI/index.ts'
+import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
 import Progress3 from '@/static/imgs/signup-progress3-icon.png'
 import SuccessIcon from '@/static/svg/auth/auth-checked-term-icon.svg'
@@ -18,6 +20,7 @@ function SignupId({ setStep }: SignupProps) {
   const [errTxt, setErrTxt] = useState<string>('')
   const [isError, setIsError] = useState<boolean>(false)
 
+  const lang = useLangStore((state) => state.lang)
   useEffect(() => {
     async function fetchData() {
       await publicAPI
@@ -59,7 +62,9 @@ function SignupId({ setStep }: SignupProps) {
         />
       </div>
 
-      <div className="mb-10 w-full text-lg">ID를 설정해주세요.</div>
+      <div className="mb-10 w-full text-lg">
+        {AUTH_CONSTANT[lang]['signup-id-txt1']}
+      </div>
 
       {/* 아이디 입력   */}
       <div className="mb-60 flex flex-col justify-center gap-y-4 py-3">
@@ -76,7 +81,7 @@ function SignupId({ setStep }: SignupProps) {
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
             className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
-            placeholder={'ID를 입력해주세요'}
+            placeholder={AUTH_CONSTANT[lang]['id-placeholder']}
           />
           <div className="flex items-center gap-x-2">
             {isIdAllowed && <SuccessIcon />}
@@ -99,7 +104,7 @@ function SignupId({ setStep }: SignupProps) {
         disabled={!isIdAllowed}
         className={`${!isIdAllowed && '!bg-grey-50 text-text-disabled'} flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100`}
       >
-        다음으로
+        {AUTH_CONSTANT[lang]['signup-lang-btn']}
       </button>
     </div>
   )

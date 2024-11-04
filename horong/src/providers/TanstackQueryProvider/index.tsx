@@ -67,7 +67,7 @@ export default function TanstackQueryProvider({
   const lang = useLangStore((state) => state.lang)
   return (
     <div
-      className={`${lang === 'JAPANESE' && '!font-notoSansJp'} ${lang === 'CHINESE' && '!font-notoSansChinese'} flex w-full items-center bg-inherit font-pretendard`}
+      className={`h-full min-h-dvh w-full ${lang === 'JAPANESE' && '!font-notoSansJp'} ${lang === 'CHINESE' && '!font-notoSansChinese'} flex w-full justify-center bg-inherit font-pretendard`}
     >
       <QueryClientProvider client={client}>
         <MobileIndexModal

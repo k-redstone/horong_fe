@@ -1,6 +1,8 @@
 import Image from 'next/image'
 
+import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
 import LanguageRadioBtn from '@/features/signup/components/language/radio/index.tsx'
+import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
 import Progress1 from '@/static/imgs/signup-progress1-icon.png'
 import RadioCheckedIcon from '@/static/svg/auth/auth-checked-radio-icon.svg'
@@ -12,6 +14,7 @@ interface SignupProps {
 }
 function SignupLanguage({ setStep }: SignupProps) {
   const language = useSignupStore((state) => state.language)
+  const lang = useLangStore((state) => state.lang)
   return (
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
@@ -22,10 +25,10 @@ function SignupLanguage({ setStep }: SignupProps) {
           className="w-[10.3125rem]"
         />
       </div>
-      <div className="mb-20 w-full text-lg">
-        안녕하세요, 호롱입니다!
+      <div className="mb-20 h-20 w-full text-lg">
+        {AUTH_CONSTANT[lang]['signup-lang-txt1']}
         <br />
-        서비스 내에서 사용할 언어를 선택해주세요.
+        {AUTH_CONSTANT[lang]['signup-lang-txt2']}
       </div>
 
       {/* 언어선택 라디오버튼 */}
@@ -39,14 +42,14 @@ function SignupLanguage({ setStep }: SignupProps) {
           ) : (
             <RadioUnCheckdIcon />
           )}
-          영어
+          {AUTH_CONSTANT[lang]['signup-lang-radio1']}
         </LanguageRadioBtn>
         <LanguageRadioBtn
           className={`${language === 'KOREAN' && 'border-primary'}`}
           language="KOREAN"
         >
           {language === 'KOREAN' ? <RadioCheckedIcon /> : <RadioUnCheckdIcon />}
-          한국어
+          {AUTH_CONSTANT[lang]['signup-lang-radio2']}
         </LanguageRadioBtn>
         <LanguageRadioBtn
           className={`${language === 'CHINESE' && 'border-primary'}`}
@@ -57,7 +60,7 @@ function SignupLanguage({ setStep }: SignupProps) {
           ) : (
             <RadioUnCheckdIcon />
           )}
-          중국어
+          {AUTH_CONSTANT[lang]['signup-lang-radio3']}
         </LanguageRadioBtn>
         <LanguageRadioBtn
           className={`${language === 'JAPANESE' && 'border-primary'}`}
@@ -68,15 +71,15 @@ function SignupLanguage({ setStep }: SignupProps) {
           ) : (
             <RadioUnCheckdIcon />
           )}
-          일본어
+          {AUTH_CONSTANT[lang]['signup-lang-radio4']}
         </LanguageRadioBtn>
       </div>
 
       <button
         onClick={() => setStep(1)}
-        className="flex items-center justify-center rounded-xl bg-primary py-3 text-md text-grey-100"
+        className="flex items-center justify-center rounded-xl bg-primary py-3 text-md font-bold text-grey-100"
       >
-        다음으로
+        {AUTH_CONSTANT[lang]['signup-lang-btn']}
       </button>
     </div>
   )
