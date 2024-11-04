@@ -40,6 +40,8 @@ const config: Config = {
       },
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
+        notoSansJp: ['var(--font-noto-sans-jp)'],
+        notoSansChinese: ['var(--font-noto-sans-sc)'],
       },
       animation: {
         'slide-up': 'slide-up 0.5s ease-out forwards',

@@ -64,22 +64,20 @@ export default function TanstackQueryProvider({
     }
   }
 
-  const setLang = useLangStore((state) => state.setLang)
   const lang = useLangStore((state) => state.lang)
-  useEffect(() => {
-    if (lang === '') {
-      setLang('ENGLISH')
-    }
-  }, [lang, setLang])
   return (
-    <QueryClientProvider client={client}>
-      <MobileIndexModal
-        isIOS={isIOS}
-        isModal={isModal}
-        setIsModal={setIsModal}
-      />
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <div
+      className={`${lang === 'JAPANESE' && '!font-notoSansJp'} ${lang === 'CHINESE' && '!font-notoSansChinese'} flex w-full items-center bg-inherit font-pretendard`}
+    >
+      <QueryClientProvider client={client}>
+        <MobileIndexModal
+          isIOS={isIOS}
+          isModal={isModal}
+          setIsModal={setIsModal}
+        />
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </div>
   )
 }

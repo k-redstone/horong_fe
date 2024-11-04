@@ -9,7 +9,7 @@ interface LangStore {
 const useLangStore = create(
   persist<LangStore>(
     (set) => ({
-      lang: '',
+      lang: 'CHINESE',
       setLang: (lang) => set({ lang }),
     }),
     { name: 'langState' },
