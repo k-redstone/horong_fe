@@ -41,8 +41,13 @@ function Login() {
 
       if (response.status === 200) {
         //토큰 저장
-        localStorage.setItem('token', response.data.result.accessToken)
+        sessionStorage.setItem('token', response.data.result.accessToken)
+        if (isChecked) {
+          localStorage.setItem('token', response.data.result.accessToken)
+        }
       }
+
+      return response
     },
 
     onSuccess: () => {
