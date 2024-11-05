@@ -5,6 +5,8 @@ interface CommentInputProps {
 }
 
 function CommentInput(props: CommentInputProps) {
+  const { type } = props
+  console.log(type)
   return (
     <div className="flex gap-x-3 py-2">
       <input

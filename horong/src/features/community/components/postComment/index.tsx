@@ -4,7 +4,9 @@ interface postCommentProps {
   first: string
 }
 
-function postComment({ data }: postCommentProps) {
+function postComment(props: postCommentProps) {
+  const { first } = props
+  console.log(first)
   return (
     <div className="py-2">
       <div className="flex gap-x-2">
