@@ -14,13 +14,6 @@ type BoardType =
   | 'SEOUL'
 type language = 'KOREAN' | 'ENGLISH' | 'CHINESE' | 'JAPANESE'
 
-type PagenationType = {
-  size: number
-  number: number
-  totalElements: number
-  totalPages: number
-}
-
 // 게시물
 type ContentImageRequest = {
   imageUrl: string
@@ -68,12 +61,13 @@ type CommentPromise = {
   id: number
   nickname: string
   contents: string
+  createdDate: string
 }
 
 type CommentContentPaylaod = {
   content: string
   isOriginal: boolean
-  language: language
+  language?: language
 }
 
 type CommentUpdatePayload = {
@@ -96,4 +90,6 @@ export type {
   ContentItem,
   BoardType,
   BaordListPromise,
+  CommentPromise,
+  CommentContentPaylaod,
 }

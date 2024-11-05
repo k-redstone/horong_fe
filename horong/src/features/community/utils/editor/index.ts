@@ -13,9 +13,6 @@ type InputItem = {
 }
 
 async function transHTML(htmlString: string) {
-  const tempDiv = document.createElement('div')
-  tempDiv.innerHTML = htmlString
-
   const targetLanguages = ['EN', 'KO', 'JA', 'ZH']
   const translationPromises = targetLanguages.map(async (lang) => {
     const payload = {
@@ -35,14 +32,11 @@ async function transHTML(htmlString: string) {
   return translations
 }
 
-async function transText(htmlString: string) {
-  const tempDiv = document.createElement('div')
-  tempDiv.innerHTML = htmlString
-
+async function transText(text: string) {
   const targetLanguages = ['EN', 'KO', 'JA', 'ZH']
   const translationPromises = targetLanguages.map(async (lang) => {
     const payload = {
-      text: htmlString,
+      text: text,
       lang: lang,
       type: 'str',
     }
@@ -142,6 +136,7 @@ function transDateFormat(date: string): string {
 export {
   transHTML,
   transText,
+  transLanguageType,
   transContentToPostPayload,
   transPathtoHeader,
   transDateFormat,

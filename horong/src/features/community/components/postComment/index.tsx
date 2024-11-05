@@ -1,12 +1,13 @@
+import { CommentPromise } from '@/features/community/types/post/index.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 
 interface postCommentProps {
-  first: string
+  data: CommentPromise
 }
 
 function postComment(props: postCommentProps) {
-  const { first } = props
-  console.log(first)
+  const { nickname, contents, createdDate } = props.data
+
   return (
     <div className="py-2">
       <div className="flex gap-x-2">
@@ -15,12 +16,12 @@ function postComment(props: postCommentProps) {
           <HorongSVG className="h-full w-full" />
         </div>
 
-        <div className="flex flex-col gap-y-2">
+        <div className="flex grow flex-col gap-y-2">
           <div className="flex gap-x-2">
             {/* 작성자 및 작성 시간 */}
             <div className="flex grow flex-col gap-y-1">
-              <span className="text-xs">닉네임</span>
-              <span className="text-2xs opacity-60">2024/10/31 12:02</span>
+              <span className="text-xs">{nickname}</span>
+              <span className="text-2xs opacity-60">{createdDate}</span>
             </div>
             {/* dm 전송 버튼 */}
             <div>
@@ -31,10 +32,7 @@ function postComment(props: postCommentProps) {
           </div>
 
           {/* 실제 댓글 */}
-          <p className="text-xs opacity-60">
-            대 유 니 ! 대 유 니! 대 유 니 ! 대 유 니! 대 유 니 ! 대 유 니! 대 유
-            니 ! 대 유 니! 대 유 니 ! 대 유 니! 대 유 니 ! 대 유 니!
-          </p>
+          <p className="text-xs opacity-60">{contents}</p>
         </div>
       </div>
     </div>

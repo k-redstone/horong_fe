@@ -34,10 +34,11 @@ function CommunityBoardPage({ params }: CommunityBoardPageProps) {
     initialPageParam: 0,
   })
 
-  console.log(data)
-
   const handlePostWrite = (boardType: CommunityPathType) => {
     router.push(`/community/${boardType}/write`)
+  }
+  const handlePostDetail = (boardType: CommunityPathType, postId: number) => {
+    router.push(`/community/${boardType}/${postId}`)
   }
 
   return (
@@ -49,10 +50,12 @@ function CommunityBoardPage({ params }: CommunityBoardPageProps) {
         <div className="flex flex-col gap-y-3 px-3">
           {data?.pages.map((page) =>
             page.content.map((item) => (
-              <PostPreview
+              <button
                 key={item.postId}
-                data={item}
-              />
+                onClick={() => handlePostDetail(params.boardType, item.postId)}
+              >
+                <PostPreview data={item} />
+              </button>
             )),
           )}
         </div>
