@@ -1,18 +1,18 @@
 import GlobalHeader from '@/components/globalHeader/index.tsx'
-import CommentInput from '@/features/community/components/commentInput/index.tsx'
-import PostComment from '@/features/community/components/postComment/index.tsx'
-import PostContent from '@/features/community/components/postContent/index.tsx'
+// import CommentInput from '@/features/community/components/commentInput/index.tsx'
+// import PostComment from '@/features/community/components/postComment/index.tsx'
+// import PostContent from '@/features/community/components/postContent/index.tsx'
 import CommentIcon from '@/static/svg/community/community-comment-icon.svg'
 
 function CommunityPostDetailPage() {
-  const dummDataList = [1]
+  // const dummDataList = [1]
   return (
     <div className="flex w-full flex-col">
       <GlobalHeader pageName="~~ 커뮤니티" />
       <div className="flex grow flex-col gap-y-4 bg-grey-80 px-5 py-4">
         {/* 본문 */}
         <div className="flex h-[36rem] flex-col gap-y-4 overflow-y-scroll">
-          <PostContent />
+          {/* <PostContent /> */}
 
           {/* 댓글 수 */}
           <div className="flex items-center gap-x-2">
@@ -23,7 +23,7 @@ function CommunityPostDetailPage() {
           </div>
 
           {/* 댓글 컴포 */}
-          <div>
+          {/* <div>
             {dummDataList.length === 0 ? (
               <div className="flex flex-col items-center py-10 text-xs text-text-md">
                 <span>작성된 댓글이 없습니다.</span>
@@ -39,11 +39,11 @@ function CommunityPostDetailPage() {
                 <PostComment />
               </>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* 댓글 입력 컴포 */}
-        <CommentInput />
+        {/* <CommentInput /> */}
       </div>
     </div>
   )
