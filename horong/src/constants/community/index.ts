@@ -21,6 +21,7 @@ interface CommunityConstantType {
     // post
     'post-submit-text': string
     'post-submit-toast-success': string
+    'post-submit-toast-loading': string
     'post-submit-toast-fail': string
     'post-submit-is-blank': string
 
@@ -69,6 +70,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     // post
     'post-submit-text': '등록',
     'post-submit-toast-success': '게시글이 성공적으로 작성되었습니다.',
+    'post-submit-toast-loading': '게시글을 작성 중 입니다.',
     'post-submit-toast-fail': '게시글 작성 중 오류가 발생했습니다.',
     'post-submit-is-blank': '빈칸이 있습니다!',
 

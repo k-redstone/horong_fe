@@ -12,15 +12,23 @@ import { PostCreatePayload } from '@/features/community/types/post/index.ts'
 import {
   transContentToPostPayload,
   transHTML,
+  transPathtoHeader,
+  transPathtoPayloadBoardType,
   transText,
 } from '@/features/community/utils/editor/index.ts'
+import { CommunityPathType } from '@/features/community/utils/path/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
+
 const PostEditor = dynamic(
   () => import('@/features/community/components/postEditor/index.tsx'),
   { ssr: false },
 )
 
-function CommunityPostWritePage() {
+interface CommunityPostWritePageProps {
+  params: { boardType: CommunityPathType }
+}
+
+function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
   const lang = useLangStore((state) => state.lang)
   const router = useRouter()
   const [content, setContent] = useState<string>('')
@@ -29,10 +37,8 @@ function CommunityPostWritePage() {
 
   const { mutateAsync } = useMutation({
     mutationFn: createPost,
-    onSuccess: () =>
-      toast.success(`${COMMUNITY_CONSTANT[lang]['post-submit-toast-success']}`),
-    onError: () =>
-      toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-toast-fail']}`),
+
+    onSuccess: () => alert('hi'),
   })
 
   const handleSubmit = async () => {
@@ -40,20 +46,33 @@ function CommunityPostWritePage() {
       return toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-is-blank']}`)
     }
 
-    const translatedContent = await transHTML(content)
-    const translatedTitle = await transText(title)
+    const translatedContent = await transHTML(content.trim())
+    const translatedTitle = await transText(title.trim())
     console.log(transContentToPostPayload(translatedContent, translatedTitle))
     console.log(imgList)
+    const contentListPaylaod = transContentToPostPayload(
+      translatedContent,
+      translatedTitle,
+    )
+    contentListPaylaod.push({
+      title: title.trim(),
+      content: content.trim(),
+      isOriginal: true,
+    })
     const payload: PostCreatePayload = {
-      content: transContentToPostPayload(translatedContent, translatedTitle),
-      boardType: 'FREE',
+      content: contentListPaylaod,
+      boardType: transPathtoPayloadBoardType(params.boardType),
       contentImageRequest: imgList.map((img) => {
         return {
           imageUrl: img,
         }
       }),
     }
-    mutateAsync(payload)
+    toast.promise(mutateAsync(payload), {
+      loading: COMMUNITY_CONSTANT[lang]['post-submit-toast-loading'],
+      success: COMMUNITY_CONSTANT[lang]['post-submit-toast-success'],
+      error: COMMUNITY_CONSTANT[lang]['post-submit-toast-fail'],
+    })
   }
   return (
     <div className="flex w-full flex-col">
@@ -69,7 +88,7 @@ function CommunityPostWritePage() {
           </span>
         </button>
         <p className="font-bold">
-          <span>자유게시판</span>
+          <span>{transPathtoHeader(lang, params.boardType)}</span>
         </p>
         {/* todo: 사이드바 만들기 */}
         <button

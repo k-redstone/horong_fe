@@ -14,6 +14,13 @@ type BoardType =
   | 'SEOUL'
 type language = 'KOREAN' | 'ENGLISH' | 'CHINESE' | 'JAPANESE'
 
+type PagenationType = {
+  size: number
+  number: number
+  totalElements: number
+  totalPages: number
+}
+
 // 게시물
 type ContentImageRequest = {
   imageUrl: string
@@ -23,7 +30,7 @@ type ContentItem = {
   title: string
   content: string
   isOriginal: boolean
-  language: language
+  language?: language
 }
 
 type PostCreatePayload = {
@@ -42,7 +49,18 @@ type PostPromise = {
   title: string
   nickname: string
   contents: string
+  createdAt: string
   comments: CommentPromise[]
+}
+
+type BaordListPromise = {
+  content: PostPromise[]
+  page: {
+    size: number
+    number: number
+    totalElements: number
+    totalPages: number
+  }
 }
 
 // 댓글
@@ -76,4 +94,6 @@ export type {
   CommentCreatePayload,
   CommentUpdatePayload,
   ContentItem,
+  BoardType,
+  BaordListPromise,
 }

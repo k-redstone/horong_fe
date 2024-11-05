@@ -1,4 +1,11 @@
-const allowedPaths = ['notice', 'free', 'seoul'] as const
+const allowedPaths = [
+  'notice',
+  'free',
+  'seoul',
+  'gyeonggi',
+  'incheon',
+  'busan',
+] as const
 type CommunityPathType = (typeof allowedPaths)[number]
 
 export { allowedPaths }
