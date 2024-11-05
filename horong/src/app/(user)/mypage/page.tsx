@@ -2,10 +2,12 @@
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 
 import privateAPI from '@/api/privateAPI/index.ts'
 import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { MYPAGE_CONSTANT } from '@/constants/mypage/index.ts'
+import CommunityAlarmToggle from '@/features/mypage/components/toggle/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
 import DefaultProfile from '@/static/svg/logo-icon.svg'
 import ArrowRightIcon from '@/static/svg/mypage/mypage-arrowright-icon.svg'
@@ -19,6 +21,7 @@ type UserDataType = {
 }
 
 function MyPage() {
+  const [isToggle, setIsToggle] = useState(false)
   const lang = useLangStore((state) => state.lang)
 
   const { data: user } = useQuery<UserDataType>({
@@ -29,7 +32,6 @@ function MyPage() {
     },
   })
 
-  const handleDelete = () => {}
   const toggleCommunityAlarm = () => {}
   return (
     <div className="flex h-full w-full flex-col justify-between gap-y-6 bg-grey-80">
@@ -78,33 +80,39 @@ function MyPage() {
         </div>
 
         {/* 메뉴 */}
-        <div className="flex w-full flex-col items-center justify-center gap-y-2 px-6">
+        <div className="flex w-full flex-col items-center justify-center px-6">
           <Link
-            className="flex w-full items-center justify-between border-y border-[rgba(255,255,255,0.1)] px-2 py-4"
+            className="flex w-full items-center justify-between border-y border-[rgba(255,255,255,0.1)] px-2 py-5"
             href="/edit/lang"
           >
             <span>{MYPAGE_CONSTANT[lang]['mypage-lang-txt']}</span>
             <ArrowRightIcon className="h-5 w-5" />
           </Link>
 
-          <button onClick={toggleCommunityAlarm}>
+          <button
+            className="flex w-full items-center justify-between border-y border-transparent px-2 py-5"
+            onClick={() => setIsToggle(!isToggle)}
+          >
             <span>{MYPAGE_CONSTANT[lang]['mypage-alarm-txt']}</span>
-            <ArrowRightIcon className="h-5 w-5" />
+            <CommunityAlarmToggle isToggle={isToggle} />
           </button>
 
-          <Link href="/edit/password">
+          <Link
+            className="flex w-full items-center justify-between border-y border-[rgba(255,255,255,0.1)] px-2 py-5"
+            href="/edit/password"
+          >
             <span>{MYPAGE_CONSTANT[lang]['mypage-pw-txt']}</span>
             <ArrowRightIcon className="h-5 w-5" />
           </Link>
         </div>
       </div>
 
-      <button
-        onClick={handleDelete}
+      <Link
+        href="/delete"
         className="flex w-full grow items-center justify-start px-6 text-xs text-warning"
       >
         {MYPAGE_CONSTANT[lang]['mypage-delete-txt']}
-      </button>
+      </Link>
     </div>
   )
 }
