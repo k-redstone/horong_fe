@@ -113,7 +113,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
       'Boards for other regions will be added in the next update.',
 
     // post
-    'post-submit-text': '등록',
+    'post-submit-text': 'post',
     'post-submit-toast-success': 'The post has been successfully created.',
     'post-submit-toast-fail': 'An error occurred while creating the post.',
     'post-submit-is-blank': 'There are empty fields!',
