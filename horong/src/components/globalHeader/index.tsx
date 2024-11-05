@@ -15,7 +15,7 @@ function GlobalHeader({ pageName }: GlobalHeaderProps) {
   const pathname = usePathname()
 
   return (
-    <div className="relative flex w-full items-center justify-between px-5 py-4">
+    <div className="relative flex w-full items-center justify-between bg-grey-90 px-5 py-4">
       <button
         type="button"
         className="px-1 py-0.5"
