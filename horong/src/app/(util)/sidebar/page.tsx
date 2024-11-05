@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { LoaderIcon } from 'react-hot-toast'
 
 import privateAPI from '@/api/privateAPI/index.ts'
 import LinkWrapperBtn from '@/components/sidebar/linkwrapper/index.tsx'
@@ -57,6 +58,14 @@ function SideBar() {
     logout()
   }
 
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center">
+        <LoaderIcon />
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full w-full flex-col justify-between gap-y-3 bg-grey-80">
       <div className="flex w-full items-center justify-end px-3 py-2">
@@ -70,7 +79,7 @@ function SideBar() {
         {/* 프로필 */}
         <div className="flex w-full flex-col items-center justify-center gap-y-4 py-5">
           {/* 프로필 사진 */}
-          {user ? (
+          {user?.result.profilePreSignedUrl ? (
             // <div className="relative px-36">
             <Image
               src={user.result.profilePreSignedUrl}
