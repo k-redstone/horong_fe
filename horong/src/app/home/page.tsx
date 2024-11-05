@@ -1,5 +1,8 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
+
+import privateAPI from '@/api/privateAPI/index.ts'
 import GlobalFooterNav from '@/components/globalFooterNav/index.tsx'
 import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
@@ -8,6 +11,20 @@ import useLangStore from '@/hooks/useLangStore.ts'
 
 export default function HomePage() {
   const lang = useLangStore((state) => state.lang)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const res = privateAPI.get('/user', {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      })
+
+      return res
+    },
+  })
   return (
     <div className="flex w-full flex-col">
       {/* 헤더 */}

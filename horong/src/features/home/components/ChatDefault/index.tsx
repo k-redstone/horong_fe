@@ -1,5 +1,5 @@
-import { HOME_CONSTANT } from '@/constants/home'
-import useLangStore from '@/hooks/useLangStore'
+import { HOME_CONSTANT } from '@/constants/home/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 
 export default function ChatDefault() {
