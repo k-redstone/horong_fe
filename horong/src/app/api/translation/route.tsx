@@ -2,13 +2,28 @@ import axios from 'axios'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const { text, lang }: { text: string; lang: 'KO' | 'JA' | 'ZH' | 'EN' } =
+  const {
+    text,
+    lang,
+    type,
+  }: { text: string; lang: 'KO' | 'JA' | 'ZH' | 'EN'; type: 'html' | 'str' } =
     await request.json()
 
-  const params = {
-    auth_key: process.env.DEEPL_API_KEY,
-    text: text,
-    target_lang: lang,
+  let params
+  if (type === 'html') {
+    params = {
+      auth_key: process.env.DEEPL_API_KEY,
+
+      text: text,
+      target_lang: lang,
+      tag_handling: 'html',
+    }
+  } else {
+    params = {
+      auth_key: process.env.DEEPL_API_KEY,
+      text: text,
+      target_lang: lang,
+    }
   }
 
   try {
@@ -19,11 +34,17 @@ export async function POST(request: NextRequest) {
         params,
       },
     )
+    console.log(response.data)
     console.log(response.data.translations[0].text)
     return NextResponse.json(
       {
         message: 'Translate Success.',
-        result: response.data.translations[0].text,
+        result: {
+          text: response.data.translations[0].text,
+          detected_source_language:
+            response.data.translations[0].detected_source_language,
+        },
+        // result: response.data.translations.map((t) => t.text),
       },
       { status: 200 },
     )
