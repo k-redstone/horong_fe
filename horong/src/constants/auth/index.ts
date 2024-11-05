@@ -54,6 +54,11 @@ interface AuthConstantType {
     'signup-complete-toast-load': string
     'signup-complete-toast-success': string
     'signup-complete-toast-fail': string
+
+    //complete page
+    'complete-header': string
+    'complete-txt1': string
+    'complete-btn': string
   }
 }
 
@@ -104,6 +109,10 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-complete-toast-load': '회원가입 중...',
     'signup-complete-toast-success': '회원가입이 완료되었습니다.',
     'signup-complete-toast-fail': '회원가입에 실패했습니다.',
+
+    'complete-header': '회원가입',
+    'complete-txt1': '가입을 환영합니다!',
+    'complete-btn': '호롱 시작하기',
   },
   ENGLISH: {
     'id-label': 'ID',
@@ -153,6 +162,10 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-complete-toast-load': 'Signing up...',
     'signup-complete-toast-success': 'Sign up success.',
     'signup-complete-toast-fail': 'Sign up failed.',
+
+    'complete-header': 'Sign up',
+    'complete-txt1': 'Welcome to Horong!',
+    'complete-btn': 'Start Horong',
   },
   CHINESE: {
     'id-label': 'ID',
@@ -199,6 +212,10 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-complete-toast-load': '注册中...',
     'signup-complete-toast-success': '注册成功。',
     'signup-complete-toast-fail': '注册失败。',
+
+    'complete-header': '注册',
+    'complete-txt1': '欢迎来到Horong！',
+    'complete-btn': '开始Horong',
   },
   JAPANESE: {
     'id-label': 'ID',
@@ -247,5 +264,9 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-complete-toast-load': 'サインアップ中...',
     'signup-complete-toast-success': 'サインアップ成功。',
     'signup-complete-toast-fail': 'サインアップに失敗しました。',
+
+    'complete-header': 'サインアップ',
+    'complete-txt1': 'Horongへようこそ！',
+    'complete-btn': 'Horongを開始',
   },
 }
