@@ -102,6 +102,7 @@ export default function RootLayout({
         <TanstackQueryProvider>
           {children}
           <Toaster />
+          <div id="modalPortal" />
         </TanstackQueryProvider>
       </body>
     </html>
