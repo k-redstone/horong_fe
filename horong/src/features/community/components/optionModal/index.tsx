@@ -22,16 +22,22 @@ function OptionModal(props: optionModalProps) {
           className="flex w-[16.25rem] flex-col gap-y-2 rounded-lg bg-grey-80 px-4 py-3"
           onClick={(e) => e.stopPropagation()}
         >
-          <button className="py-2">
+          <button
+            className="py-2"
+            type="button"
+            onClick={() => handleConfirmModal()}
+          >
             <span>{COMMUNITY_CONSTANT[lang]['modal-delete-text']}</span>
           </button>
           <button
+            type="button"
             className="py-2"
-            onClick={() => handleConfirmModal()}
+            // onClick={() => handleConfirmModal()}
           >
             <span>{COMMUNITY_CONSTANT[lang]['modal-edit-text']}</span>
           </button>
           <button
+            type="button"
             className="py-2"
             onClick={() => handleModalClose()}
           >

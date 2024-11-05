@@ -13,7 +13,7 @@ import CommentIcon from '@/static/svg/community/community-comment-icon.svg'
 
 interface CommunityPostDetailPage {
   params: {
-    postId: number
+    postId: string
     boardType: BoardType
   }
 }
@@ -21,8 +21,8 @@ interface CommunityPostDetailPage {
 function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
   const lang = useLangStore((state) => state.lang)
   const { data, isSuccess } = useQuery({
-    queryKey: ['postDetail', params.postId],
-    queryFn: () => fetchPost(params.postId),
+    queryKey: ['postDetail', parseInt(params.postId)],
+    queryFn: () => fetchPost(parseInt(params.postId)),
   })
 
   return (
@@ -56,6 +56,7 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
                 data.comments.map((item) => (
                   <PostComment
                     key={item.id}
+                    postId={data.postId}
                     data={item}
                   />
                 ))
@@ -65,7 +66,7 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
 
           {/* 댓글 입력 컴포 */}
           <CommentInput
-            postId={params.postId}
+            postId={parseInt(params.postId)}
             boardType={params.boardType}
           />
         </div>

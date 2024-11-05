@@ -1,6 +1,10 @@
+'use client'
+
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { deleteComment } from '@/features/community/apis/post/index.ts'
 import ConfirmModal from '@/features/community/components/confirmModal/index.tsx'
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
@@ -10,13 +14,25 @@ import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
 
 interface PostCommentProps {
   data: CommentPromise
+  postId: number
 }
 
 function PostComment(props: PostCommentProps) {
   const isCreate = true
-  const { nickname, contents, createdDate } = props.data
+  const queryClient = useQueryClient()
+  const { nickname, contents, createdDate, id: commentId } = props.data
 
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
+
+  const { mutateAsync: commentDeleteMutation } = useMutation({
+    mutationFn: () => deleteComment(props.postId, commentId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['postDetail', props.postId],
+      })
+    },
+  })
 
   const handleCloseConfirmModal = () => {
     handleModalClose()
@@ -25,6 +41,11 @@ function PostComment(props: PostCommentProps) {
   const handleOpenConfirmModal = () => {
     handleModalClose()
     setIsOpenConfirmModal(true)
+  }
+  const handleDeleteComment = async () => {
+    handleModalClose()
+    setIsOpenConfirmModal(false)
+    await commentDeleteMutation()
   }
 
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
@@ -43,7 +64,10 @@ function PostComment(props: PostCommentProps) {
         : null}
       {isOpenConfirmModal && portalElement
         ? createPortal(
-            <ConfirmModal handleModalClose={handleCloseConfirmModal} />,
+            <ConfirmModal
+              handleModalClose={handleCloseConfirmModal}
+              handleDelete={handleDeleteComment}
+            />,
             portalElement,
           )
         : null}

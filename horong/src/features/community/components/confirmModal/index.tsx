@@ -4,11 +4,13 @@ import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 interface ConfirmModalProps {
   handleModalClose: () => void
+  handleDelete: () => void
 }
 
 function ConfirmModal(props: ConfirmModalProps) {
   const lang = useLangStore((state) => state.lang)
-  const { handleModalClose } = props
+  const { handleModalClose, handleDelete } = props
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30"
@@ -30,6 +32,7 @@ function ConfirmModal(props: ConfirmModalProps) {
           <button
             type="button"
             className="grow rounded bg-primary py-2 text-black"
+            onClick={() => handleDelete()}
           >
             <span>{COMMUNITY_CONSTANT[lang]['modal-confirm-yes']}</span>
           </button>

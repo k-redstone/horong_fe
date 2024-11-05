@@ -14,6 +14,10 @@ async function createComment(payload: CommentCreatePayload) {
   await privateAPI.post(`/community/${payload.postId}/comments`, payload)
 }
 
+async function deleteComment(postId: number, commentId: number) {
+  return await privateAPI.delete(`/community/${postId}/comments/${commentId}`)
+}
+
 async function fetchPost(postId: number): Promise<PostPromise> {
   const res = await privateAPI.get(`/community/${postId}`)
   return res.data.result
@@ -27,4 +31,4 @@ async function fetchBoard(
   return res.data.result
 }
 
-export { createPost, fetchPost, fetchBoard, createComment }
+export { createPost, fetchPost, fetchBoard, createComment, deleteComment }
