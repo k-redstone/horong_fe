@@ -14,6 +14,7 @@ export default function ChatArea() {
     {
       type: 'horong',
       text: HOME_CONSTANT[lang]['home-txt2'],
+      uuid: crypto.randomUUID(),
     },
   ])
 

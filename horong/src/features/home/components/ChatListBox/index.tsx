@@ -26,13 +26,13 @@ export default function ChatListBox({ data }: ChatListBoxProps) {
       {data.map((item) => {
         if (item.type === 'horong') {
           return (
-            <div key={item.text}>
+            <div key={crypto.randomUUID()}>
               <HorongChatBox text={item.text} />
             </div>
           )
         } else {
           return (
-            <div key={item.text}>
+            <div key={crypto.randomUUID()}>
               <UserChatBox text={item.text} />
             </div>
           )

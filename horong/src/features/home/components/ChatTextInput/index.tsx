@@ -13,14 +13,30 @@ interface ChatTextInputProps {
 export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
   const lang = useLangStore((state) => state.lang)
   const [inputValue, setInputValue] = useState<string>('')
+  const [isPending, setIspending] = useState<boolean>(false)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
   const handleChatSubmit = async () => {
+    if (inputValue.trim().length === 0) {
+      return
+    }
+
+    setIspending(true)
+
     const userChat: ChatType = {
       type: 'user',
       text: inputValue,
+      uuid: crypto.randomUUID(),
     }
     setChatList((prevChats) => [...prevChats, userChat])
+
+    const tempHorongChat: ChatType = {
+      type: 'horong',
+      text: 'Loading...',
+      uuid: crypto.randomUUID(),
+    }
+    setChatList((prevChats) => [...prevChats, tempHorongChat])
+
     try {
       const payload = {
         text: inputValue,
@@ -28,28 +44,45 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
       }
       const resText = await axios.post('/api/translation', payload)
       // todo: 임시로 시스템 챗도 넣어놓음, 추후 api연동 후 수정
-      console.log(resText)
-      const horongChat: ChatType = {
-        type: 'horong',
-        text: resText.data.result,
+
+      const params = {
+        question: 'resText',
       }
-      setChatList((prevChats) => [...prevChats, horongChat])
+      const resDataText = await axios.get(
+        `${process.env.NEXT_PUBLIC_DATA_URL}/chat`,
+        { params },
+      )
+      console.log(resDataText)
+      setChatList((prevChats) =>
+        prevChats.map((chat) =>
+          chat === tempHorongChat // 기존 로딩 중이던 horong 채팅을 업데이트
+            ? { ...chat, text: resText.data.result.text, isLoading: false }
+            : chat,
+        ),
+      )
 
       if (textareaRef.current) {
         textareaRef.current.style.height = '1rem'
       }
     } catch {
-      const horongChat: ChatType = {
-        type: 'horong',
-        text: '답변 생성 중에 오류가 발생했어요.\n 잠시후 다시 시도해주세요.',
-      }
-      setChatList((prevChats) => [...prevChats, horongChat])
+      setChatList((prevChats) =>
+        prevChats.map((chat) =>
+          chat === tempHorongChat // 기존 로딩 중이던 horong 채팅을 업데이트
+            ? {
+                ...chat,
+                text: '답변 생성 중에 오류가 발생했어요.\n 잠시후 다시 시도해주세요.',
+                isLoading: false,
+              }
+            : chat,
+        ),
+      )
 
       if (textareaRef.current) {
         textareaRef.current.style.height = '1rem'
       }
     } finally {
       setInputValue('')
+      setIspending(false)
     }
   }
 
@@ -81,7 +114,6 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
             className="w-full resize-none bg-[#1B1D24] text-white focus:outline-none"
             placeholder={HOME_CONSTANT[lang]['home-chat-placeholder']}
             value={inputValue}
-            // onChange={(e) => setInputValue(e.target.value)}
             rows={1}
           />
         </div>
@@ -90,6 +122,7 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
       <button
         type="button"
         onClick={() => handleChatSubmit()}
+        disabled={isPending}
       >
         <SendSVG />
       </button>
