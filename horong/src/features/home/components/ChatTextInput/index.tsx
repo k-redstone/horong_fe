@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { ChangeEvent, useRef, useState } from 'react'
 
+import { HOME_CONSTANT } from '@/constants/home/index.ts'
 import { ChatType } from '@/features/home/types/chatType.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import SendSVG from '@/static/svg/home/home-send-icon.svg'
 
 interface ChatTextInputProps {
@@ -9,6 +11,7 @@ interface ChatTextInputProps {
 }
 
 export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
+  const lang = useLangStore((state) => state.lang)
   const [inputValue, setInputValue] = useState<string>('')
   const [isPending, setIspending] = useState<boolean>(false)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -109,7 +112,7 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
             ref={textareaRef}
             onChange={(event) => handleInputChange(event)}
             className="w-full resize-none bg-[#1B1D24] text-white focus:outline-none"
-            placeholder="메세지를 입력해주세요."
+            placeholder={HOME_CONSTANT[lang]['home-chat-placeholder']}
             value={inputValue}
             rows={1}
           />

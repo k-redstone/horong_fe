@@ -1,16 +1,19 @@
 'use client'
 import { useState } from 'react'
 
+import { HOME_CONSTANT } from '@/constants/home/index.ts'
 import ChatDefault from '@/features/home/components/ChatDefault/index.tsx'
 import ChatListBox from '@/features/home/components/ChatListBox/index.tsx'
 import ChatTextInput from '@/features/home/components/ChatTextInput/index.tsx'
 import { ChatType } from '@/features/home/types/chatType.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 
 export default function ChatArea() {
+  const lang = useLangStore((state) => state.lang)
   const [chatList, setChatList] = useState<ChatType[]>([
     {
       type: 'horong',
-      text: '안녕하세요, 호롱입니다 :D 궁금하신게 있으시면 편하게 말씀해주세요 ❤',
+      text: HOME_CONSTANT[lang]['home-txt2'],
       uuid: crypto.randomUUID(),
     },
   ])

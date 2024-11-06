@@ -15,7 +15,7 @@ function Signup() {
   const [step, setStep] = useState(0)
   const lang = useLangStore((state) => state.lang)
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full flex-col bg-grey-80">
       {/* 글로벌헤더  */}
       <GlobalHeader pageName={AUTH_CONSTANT[lang]['signup-header']} />
 
