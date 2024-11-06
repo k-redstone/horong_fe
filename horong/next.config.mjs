@@ -14,6 +14,15 @@ const nextConfig = {
 
     return config
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        pathname: '/**',
+        hostname: 'horong-service.s3.ap-northeast-2.amazonaws.com',
+      },
+    ],
+  },
 }
 
 const nextConfigFunction = async (phase) => {

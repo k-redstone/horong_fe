@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 import QRIcon from '@/static/imgs/QR.png'
 interface MobileIndexModalProps {
@@ -8,11 +9,16 @@ interface MobileIndexModalProps {
   isIOS: boolean
 }
 function MobileIndexModal(props: MobileIndexModalProps) {
+  const pathname = usePathname()
   const { setIsModal, isModal, isIOS } = props
   const closeModal = () => {
     setIsModal(!isModal)
 
     sessionStorage.setItem('checkedMobileModal', 'true')
+  }
+
+  if (pathname !== '/') {
+    return null
   }
 
   if (isIOS) {
