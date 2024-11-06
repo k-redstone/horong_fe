@@ -8,6 +8,7 @@ import { deleteComment } from '@/features/community/apis/post/index.ts'
 import ConfirmModal from '@/features/community/components/confirmModal/index.tsx'
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
+import CommentUpdatePage from '@/features/community/pages/commentUpdatePage/index.tsx'
 import { CommentPromise } from '@/features/community/types/post/index.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
@@ -23,6 +24,7 @@ function PostComment(props: PostCommentProps) {
   const { nickname, contents, createdDate, id: commentId } = props.data
 
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
+  const [isCommentUpdate, setIsCommentUpdate] = useState<boolean>(false)
 
   const { mutateAsync: commentDeleteMutation } = useMutation({
     mutationFn: () => deleteComment(props.postId, commentId),
@@ -47,6 +49,9 @@ function PostComment(props: PostCommentProps) {
     setIsOpenConfirmModal(false)
     await commentDeleteMutation()
   }
+  const handleUpdateOpen = () => {
+    setIsCommentUpdate(true)
+  }
 
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
     useModal()
@@ -58,6 +63,7 @@ function PostComment(props: PostCommentProps) {
             <OptionModal
               handleModalClose={handleModalClose}
               handleConfirmModal={handleOpenConfirmModal}
+              handleUpdateOpen={handleUpdateOpen}
             />,
             portalElement,
           )
@@ -71,6 +77,12 @@ function PostComment(props: PostCommentProps) {
             portalElement,
           )
         : null}
+      {isCommentUpdate && (
+        <CommentUpdatePage
+          postId={props.postId}
+          data={props.data}
+        />
+      )}
       <div className="py-2">
         <div className="flex gap-x-2">
           {/* 프로필 이미지 */}

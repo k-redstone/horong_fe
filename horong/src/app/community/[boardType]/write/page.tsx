@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -30,49 +30,69 @@ interface CommunityPostWritePageProps {
 
 function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
   const lang = useLangStore((state) => state.lang)
+  const queryClient = useQueryClient()
+
   const router = useRouter()
   const [content, setContent] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [imgList, setImgList] = useState<string[]>([])
+  const [isPending, setIsPending] = useState<boolean>(false)
 
   const { mutateAsync } = useMutation({
     mutationFn: createPost,
 
-    onSuccess: () => alert('hi'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: params.boardType }],
+      })
+      setIsPending(false)
+      router.push(`/community/${params.boardType}`)
+    },
+    onError: () => {
+      setIsPending(false)
+    },
   })
 
   const handleSubmit = async () => {
     if (title.trim().length === 0 || content.trim().length === 0) {
       return toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-is-blank']}`)
     }
-
-    const translatedContent = await transHTML(content.trim())
-    const translatedTitle = await transText(title.trim())
-    console.log(transContentToPostPayload(translatedContent, translatedTitle))
-    console.log(imgList)
-    const contentListPaylaod = transContentToPostPayload(
-      translatedContent,
-      translatedTitle,
-    )
-    contentListPaylaod.push({
-      title: title.trim(),
-      content: content.trim(),
-      isOriginal: true,
-    })
-    const payload: PostCreatePayload = {
-      content: contentListPaylaod,
-      boardType: transPathtoPayloadBoardType(params.boardType),
-      contentImageRequest: imgList.map((img) => {
-        return {
-          imageUrl: img,
+    setIsPending(true)
+    toast.promise(
+      (async () => {
+        const translatedContent = await transHTML(content.trim())
+        const translatedTitle = await transText(title.trim())
+        console.log(
+          transContentToPostPayload(translatedContent, translatedTitle),
+        )
+        console.log(imgList)
+        const contentListPaylaod = transContentToPostPayload(
+          translatedContent,
+          translatedTitle,
+        )
+        contentListPaylaod.push({
+          title: title.trim(),
+          content: content.trim(),
+          isOriginal: true,
+        })
+        const payload: PostCreatePayload = {
+          content: contentListPaylaod,
+          boardType: transPathtoPayloadBoardType(params.boardType),
+          contentImageRequest: imgList.map((img) => {
+            return {
+              imageUrl: img,
+            }
+          }),
         }
-      }),
-    }
-    toast.promise(mutateAsync(payload), {
-      loading: COMMUNITY_CONSTANT[lang]['post-submit-toast-loading'],
-      success: COMMUNITY_CONSTANT[lang]['post-submit-toast-success'],
-      error: COMMUNITY_CONSTANT[lang]['post-submit-toast-fail'],
-    })
+        await mutateAsync(payload)
+      })(),
+      {
+        loading: COMMUNITY_CONSTANT[lang]['post-submit-toast-loading'],
+        success: COMMUNITY_CONSTANT[lang]['post-submit-toast-success'],
+        error: COMMUNITY_CONSTANT[lang]['post-submit-toast-fail'],
+      },
+    )
+    setIsPending(false)
   }
   return (
     <div className="flex w-full flex-col">
@@ -94,6 +114,7 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
         <button
           className="px-2 py-[.1875rem]"
           onClick={() => handleSubmit()}
+          disabled={isPending}
         >
           <span className="text-sm text-primary">
             {COMMUNITY_CONSTANT[lang]['post-submit-text']}

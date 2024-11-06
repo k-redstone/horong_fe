@@ -45,6 +45,7 @@ interface CommunityConstantType {
     'cancel-text': string
     'submit-dm-text': string
     'new-text': string
+    'post-text': string
     more: string
   }
 }
@@ -97,6 +98,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': '취소',
     'submit-dm-text': 'DM전송',
     'new-text': 'new',
+    'post-text': '게시글',
+
     more: '더보기',
   },
   ENGLISH: {
@@ -148,6 +151,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': 'Cancel',
     'submit-dm-text': 'Send DM',
     'new-text': 'New',
+    'post-text': 'Post',
+
     more: 'See more',
   },
   CHINESE: {
@@ -196,6 +201,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': '取消',
     'submit-dm-text': '发送私信',
     'new-text': '新',
+    'post-text': '帖子',
+
     more: '查看更多',
   },
   JAPANESE: {
@@ -244,6 +251,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': 'キャンセル',
     'submit-dm-text': 'DM送信',
     'new-text': 'new',
+    'post-text': '投稿',
+
     more: 'もっと見る',
   },
 }

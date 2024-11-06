@@ -6,10 +6,11 @@ import useLangStore from '@/hooks/useLangStore.ts'
 interface optionModalProps {
   handleModalClose: () => void
   handleConfirmModal: () => void
+  handleUpdateOpen: () => void
 }
 
 function OptionModal(props: optionModalProps) {
-  const { handleModalClose, handleConfirmModal } = props
+  const { handleModalClose, handleConfirmModal, handleUpdateOpen } = props
   const lang = useLangStore((state) => state.lang)
 
   return (
@@ -32,7 +33,7 @@ function OptionModal(props: optionModalProps) {
           <button
             type="button"
             className="py-2"
-            // onClick={() => handleConfirmModal()}
+            onClick={() => handleUpdateOpen()}
           >
             <span>{COMMUNITY_CONSTANT[lang]['modal-edit-text']}</span>
           </button>

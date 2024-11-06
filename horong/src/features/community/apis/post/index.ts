@@ -2,6 +2,7 @@ import privateAPI from '@/api/privateAPI/index.ts'
 import {
   BaordListPromise,
   CommentCreatePayload,
+  CommentUpdatePayload,
   PostCreatePayload,
   PostPromise,
 } from '@/features/community/types/post/index.ts'
@@ -15,7 +16,14 @@ async function createComment(payload: CommentCreatePayload) {
 }
 
 async function deleteComment(postId: number, commentId: number) {
-  return await privateAPI.delete(`/community/${postId}/comments/${commentId}`)
+  await privateAPI.delete(`/community/${postId}/comments/${commentId}`)
+}
+
+async function updateComment(postId: number, payload: CommentUpdatePayload) {
+  await privateAPI.patch(
+    `/community/${postId}/comments/${payload.commentId}`,
+    payload,
+  )
 }
 
 async function fetchPost(postId: number): Promise<PostPromise> {
@@ -31,4 +39,11 @@ async function fetchBoard(
   return res.data.result
 }
 
-export { createPost, fetchPost, fetchBoard, createComment, deleteComment }
+export {
+  createPost,
+  fetchPost,
+  fetchBoard,
+  createComment,
+  updateComment,
+  deleteComment,
+}
