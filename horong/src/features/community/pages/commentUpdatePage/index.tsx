@@ -46,6 +46,7 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
         queryKey: ['boardList', { type: params.boardType }],
       })
       setInputValue('')
+
       setIsPending(false)
       router.push(`/community/${params.boardType}/${props.postId}`)
     },
@@ -93,7 +94,6 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
         error: COMMUNITY_CONSTANT[lang]['comment-submit-toast-fail'],
       },
     )
-    setIsPending(false)
   }
 
   return (

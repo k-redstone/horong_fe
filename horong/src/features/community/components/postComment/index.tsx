@@ -10,6 +10,7 @@ import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
 import CommentUpdatePage from '@/features/community/pages/commentUpdatePage/index.tsx'
 import { CommentPromise } from '@/features/community/types/post/index.ts'
+import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
 
@@ -19,9 +20,9 @@ interface PostCommentProps {
 }
 
 function PostComment(props: PostCommentProps) {
-  const isCreate = true
+  const { loginUserId } = useUserId()
   const queryClient = useQueryClient()
-  const { nickname, contents, createdDate, id: commentId } = props.data
+  const { nickname, contents, createdDate, id: commentId, userId } = props.data
 
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
   const [isCommentUpdate, setIsCommentUpdate] = useState<boolean>(false)
@@ -99,7 +100,7 @@ function PostComment(props: PostCommentProps) {
               </div>
               {/* dm 전송 버튼 */}
               <div>
-                {isCreate ? (
+                {loginUserId === userId ? (
                   <button
                     type="button"
                     onClick={() => handleModalOpen()}
@@ -107,9 +108,11 @@ function PostComment(props: PostCommentProps) {
                     <MenuIcon />
                   </button>
                 ) : (
-                  <button className="rounded-2xl border border-text-disabled px-2 py-1 text-2xs text-text-disabled">
-                    DM전송
-                  </button>
+                  userId && (
+                    <button className="rounded-2xl border border-text-disabled px-2 py-1 text-2xs text-text-disabled">
+                      DM전송
+                    </button>
+                  )
                 )}
               </div>
             </div>

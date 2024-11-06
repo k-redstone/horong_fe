@@ -6,15 +6,15 @@ import ConfirmModal from '@/features/community/components/confirmModal/index.tsx
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
 import { PostPromise } from '@/features/community/types/post/index.ts'
+import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
-
 interface PostContentProps {
   data: PostPromise
 }
 
 function PostContent({ data }: PostContentProps) {
-  const isCreate = true
+  const { loginUserId } = useUserId()
   const sanitizer = dompurify.sanitize
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
 
@@ -61,7 +61,7 @@ function PostContent({ data }: PostContentProps) {
             <span className="text-xs opacity-60">2024/10/31 12:02</span>
           </div>
           <div className="flex shrink-0 items-center">
-            {isCreate ? (
+            {loginUserId === data.userId ? (
               <button
                 type="button"
                 onClick={() => handleModalOpen()}

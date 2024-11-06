@@ -36,6 +36,9 @@ function CommentInput(props: CommentInputProps) {
       setInputValue('')
       setIsPending(false)
     },
+    onError: () => {
+      setIsPending(false)
+    },
   })
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

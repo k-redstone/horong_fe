@@ -92,7 +92,6 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
         error: COMMUNITY_CONSTANT[lang]['post-submit-toast-fail'],
       },
     )
-    setIsPending(false)
   }
   return (
     <div className="flex w-full flex-col">

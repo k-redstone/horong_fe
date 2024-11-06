@@ -55,7 +55,7 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
               ) : (
                 data.comments.map((item) => (
                   <PostComment
-                    key={item.id}
+                    key={crypto.randomUUID()}
                     postId={data.postId}
                     data={item}
                   />

@@ -40,6 +40,7 @@ type PostUpdatePayload = {
 type PostPromise = {
   postId: number
   title: string
+  userId: number
   nickname: string
   contents: string
   createdAt: string
@@ -61,6 +62,7 @@ type CommentPromise = {
   id: number
   nickname: string
   contents: string
+  userId: number
   createdDate: string
 }
 
