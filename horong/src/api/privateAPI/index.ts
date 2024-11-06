@@ -8,7 +8,7 @@ const privateAPI = axios.create({
 })
 
 privateAPI.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem('token')
+  const accessToken = sessionStorage.getItem('token')
   config.headers.Authorization = `Bearer ${accessToken}`
 
   return config

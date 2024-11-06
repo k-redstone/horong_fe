@@ -45,7 +45,12 @@ export default function TanstackQueryProvider({
   }, [])
 
   const checkToken = () => {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
+
+    if (localStorage.getItem('token') !== null && token === null) {
+      sessionStorage.setItem('token', localStorage.getItem('token') as string)
+      router.push('/home')
+    }
 
     if (token !== null && pathname === '/') {
       router.push('/home')

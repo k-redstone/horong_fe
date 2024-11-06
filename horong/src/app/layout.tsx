@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 
-import { Noto_Sans_JP, Noto_Sans_SC } from '@next/font/google'
+import { Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Toaster } from 'react-hot-toast'
 

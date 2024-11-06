@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 
 import BackIconSVG from '@/static/svg/common/common-back-icon.svg'
 import SidebaIconSvg from '@/static/svg/common/common-sidebar-icon.svg'
@@ -11,9 +12,10 @@ interface GlobalHeaderProps {
 
 function GlobalHeader({ pageName }: GlobalHeaderProps) {
   const router = useRouter()
+  const pathname = usePathname()
 
   return (
-    <div className="flex w-full items-center justify-between px-5 py-4">
+    <div className="relative flex w-full items-center justify-between bg-grey-90 px-5 py-4">
       <button
         type="button"
         className="px-1 py-0.5"
@@ -21,13 +23,19 @@ function GlobalHeader({ pageName }: GlobalHeaderProps) {
       >
         <BackIconSVG />
       </button>
-      <p className="font-bold">
+      <p className="absolute left-1/2 -translate-x-1/2 transform font-bold">
         <span>{pageName}</span>
       </p>
       {/* todo: 사이드바 만들기 */}
-      <div className="px-2 py-[.1875rem]">
-        <SidebaIconSvg />
-      </div>
+
+      {pathname !== '/signup' && (
+        <Link
+          href="/sidebar"
+          className="px-2 py-[.1875rem]"
+        >
+          <SidebaIconSvg />
+        </Link>
+      )}
     </div>
   )
 }
