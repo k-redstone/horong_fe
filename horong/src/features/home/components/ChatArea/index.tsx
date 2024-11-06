@@ -11,6 +11,7 @@ export default function ChatArea() {
     {
       type: 'horong',
       text: '안녕하세요, 호롱입니다 :D 궁금하신게 있으시면 편하게 말씀해주세요 ❤',
+      uuid: crypto.randomUUID(),
     },
   ])
 
