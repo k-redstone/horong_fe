@@ -32,6 +32,7 @@ function MyPage() {
     },
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleCommunityAlarm = () => {}
   return (
     <div className="flex h-full w-full flex-col justify-between gap-y-6 bg-grey-80">
