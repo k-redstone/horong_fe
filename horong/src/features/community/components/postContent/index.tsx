@@ -60,6 +60,10 @@ function PostContent({ data }: PostContentProps) {
   const handleUpdateOpen = () => {
     setIsPostUpdate(true)
   }
+  const handleUpdateClose = () => {
+    setIsPostUpdate(false)
+    handleModalClose()
+  }
 
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
     useModal()
@@ -86,7 +90,12 @@ function PostContent({ data }: PostContentProps) {
             portalElement,
           )
         : null}
-      {isPostUpdate && <PostUpdatePage postId={data.postId} />}
+      {isPostUpdate && (
+        <PostUpdatePage
+          postId={data.postId}
+          handleUpdateClose={handleUpdateClose}
+        />
+      )}
       <div className="flex flex-col gap-y-4">
         {/* user info */}
         <div className="flex gap-x-2 py-1">

@@ -62,8 +62,14 @@ function PostComment(props: PostCommentProps) {
     setIsOpenConfirmModal(false)
     await commentDeleteMutation()
   }
+
   const handleUpdateOpen = () => {
     setIsCommentUpdate(true)
+  }
+
+  const handleUpdateClose = () => {
+    setIsCommentUpdate(false)
+    handleModalClose()
   }
 
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
@@ -94,6 +100,7 @@ function PostComment(props: PostCommentProps) {
         <CommentUpdatePage
           postId={props.postId}
           data={props.data}
+          handleUpdateClose={handleUpdateClose}
         />
       )}
       <div className="py-2">

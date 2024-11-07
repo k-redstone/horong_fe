@@ -25,6 +25,7 @@ const PostEditor = dynamic(
 
 interface PostUpdatePageProps {
   postId: number
+  handleUpdateClose: () => void
 }
 
 function PostUpdatePage(props: PostUpdatePageProps) {
@@ -123,7 +124,7 @@ function PostUpdatePage(props: PostUpdatePageProps) {
         <button
           type="button"
           className="px-1 py-0.5"
-          onClick={() => router.back()}
+          onClick={props.handleUpdateClose}
         >
           <span className="text-sm">
             {COMMUNITY_CONSTANT[lang]['cancel-text']}

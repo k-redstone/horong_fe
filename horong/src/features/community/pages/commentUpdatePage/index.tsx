@@ -1,11 +1,14 @@
 'use client'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
-import { updateComment } from '@/features/community/apis/post/index.ts'
+import {
+  fetchOriginalComment,
+  updateComment,
+} from '@/features/community/apis/post/index.ts'
 import {
   CommentContentPaylaod,
   CommentPromise,
@@ -21,6 +24,7 @@ import useLangStore from '@/hooks/useLangStore.ts'
 interface CommentUpdatePageProps {
   data: CommentPromise
   postId: number
+  handleUpdateClose: () => void
 }
 
 function CommentUpdatePage(props: CommentUpdatePageProps) {
@@ -35,6 +39,12 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
   const postTitle =
     (queryClient.getQueryData(['postDetail', props.postId]) as PostPromise) ||
     ''
+
+  const { data: originalCommentData, isSuccess } = useQuery({
+    queryKey: ['originComment'],
+    queryFn: () => fetchOriginalComment(commentId),
+    staleTime: 0,
+  })
 
   const { mutateAsync: commentMutation } = useMutation({
     mutationFn: (payload: CommentUpdatePayload) =>
@@ -99,14 +109,19 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
     )
   }
 
+  useEffect(() => {
+    if (originalCommentData) {
+      setInputValue(originalCommentData.contents || '')
+    }
+  }, [originalCommentData])
+
   return (
     <div className="absolute left-0 top-0 z-50 flex h-dvh w-full flex-col bg-black">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between px-5 py-4">
         <button
-          type="button"
           className="px-1 py-0.5"
-          onClick={() => router.back()}
+          onClick={props.handleUpdateClose}
         >
           <span className="text-sm">
             {COMMUNITY_CONSTANT[lang]['cancel-text']}
@@ -127,29 +142,29 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
           </span>
         </button>
       </div>
-
-      {/* 본문 */}
-      <div className="grow bg-grey-80">
-        <div className="flex flex-col gap-y-4 px-5 py-4">
-          {/* 본문 게시글 */}
-          <div className="flex flex-col gap-y-2 text-sm font-bold">
-            <span>{COMMUNITY_CONSTANT[lang]['post-text']}</span>
-            <p className="hyphens-auto break-all">{postTitle.title}</p>
-          </div>
-          {/* 댓글 인풋 */}
-          <div className="flex py-3">
-            <textarea
-              className="h-10 grow resize-none bg-grey-80 text-xs focus:outline-none"
-              value={inputValue}
-              onChange={(e) => handleValueChange(e)}
-            ></textarea>
-          </div>
-          {/* 글자 수 */}
-          <div className="flex justify-end">
-            <span className="text-xs">{inputValue.length}/100</span>
+      {isSuccess && (
+        <div className="grow bg-grey-80">
+          <div className="flex flex-col gap-y-4 px-5 py-4">
+            {/* 본문 게시글 */}
+            <div className="flex flex-col gap-y-2 text-sm font-bold">
+              <span>{COMMUNITY_CONSTANT[lang]['post-text']}</span>
+              <p className="hyphens-auto break-all">{postTitle.title}</p>
+            </div>
+            {/* 댓글 인풋 */}
+            <div className="flex py-3">
+              <textarea
+                className="h-10 grow resize-none bg-grey-80 text-xs focus:outline-none"
+                value={inputValue}
+                onChange={(e) => handleValueChange(e)}
+              ></textarea>
+            </div>
+            {/* 글자 수 */}
+            <div className="flex justify-end">
+              <span className="text-xs">{inputValue.length}/100</span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
