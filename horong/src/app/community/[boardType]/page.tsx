@@ -46,22 +46,36 @@ function CommunityBoardPage({ params }: CommunityBoardPageProps) {
       <GlobalHeader pageName={`${COMMUNITY_CONSTANT[lang]['page-header']}`} />
       <div className="flex grow flex-col gap-y-3 bg-grey-80 py-4">
         <BoardTitle boardType={params.boardType} />
-        <SearchInput boardType="notice" />
-        <div className="flex flex-col gap-y-3 px-3">
-          {data?.pages.map((page) =>
-            page.content.map((item) => (
-              <button
-                key={item.postId}
-                onClick={() => handlePostDetail(params.boardType, item.postId)}
-              >
-                <PostPreview data={item} />
-              </button>
-            )),
-          )}
-        </div>
+
+        {data?.pages[0].content.length === 0 ? (
+          <p className="tex-xs flex justify-center py-10">
+            <span>{COMMUNITY_CONSTANT[lang]['post-none-text']}</span>
+          </p>
+        ) : (
+          <>
+            <SearchInput boardType="notice" />
+            <div className="flex flex-col gap-y-3 px-3">
+              {data?.pages.map((page) =>
+                page.content.map((item) => (
+                  <button
+                    key={item.postId}
+                    onClick={() =>
+                      handlePostDetail(params.boardType, item.postId)
+                    }
+                  >
+                    <PostPreview data={item} />
+                  </button>
+                )),
+              )}
+            </div>
+          </>
+        )}
       </div>
       <div className="absolute bottom-10 right-5 z-30">
-        <PostIconSVG onClick={() => handlePostWrite(params.boardType)} />
+        <PostIconSVG
+          className="cursor-pointer"
+          onClick={() => handlePostWrite(params.boardType)}
+        />
       </div>
     </div>
   )

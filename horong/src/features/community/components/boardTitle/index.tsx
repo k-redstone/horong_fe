@@ -45,6 +45,39 @@ function BoardTitle({ boardType }: BoardTitleProps) {
           </span>
         </div>
       )
+    case 'gyeonggi':
+      return (
+        <div className="flex flex-col gap-y-2 px-3 pb-1 pt-4">
+          <h1 className="font-bold">
+            {COMMUNITY_CONSTANT[lang]['region-subheader-gyeonggi']}
+          </h1>
+          <span className="text-2xs">
+            {COMMUNITY_CONSTANT[lang]['region-des-gyeonggi']}
+          </span>
+        </div>
+      )
+    case 'incheon':
+      return (
+        <div className="flex flex-col gap-y-2 px-3 pb-1 pt-4">
+          <h1 className="font-bold">
+            {COMMUNITY_CONSTANT[lang]['region-subheader-incheon']}
+          </h1>
+          <span className="text-2xs">
+            {COMMUNITY_CONSTANT[lang]['region-des-incheon']}
+          </span>
+        </div>
+      )
+    case 'busan':
+      return (
+        <div className="flex flex-col gap-y-2 px-3 pb-1 pt-4">
+          <h1 className="font-bold">
+            {COMMUNITY_CONSTANT[lang]['region-subheader-busan']}
+          </h1>
+          <span className="text-2xs">
+            {COMMUNITY_CONSTANT[lang]['region-des-busan']}
+          </span>
+        </div>
+      )
   }
   // return (
   //   <div className="flex flex-col gap-y-2 px-3 pb-1 pt-4">
