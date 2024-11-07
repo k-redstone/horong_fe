@@ -8,11 +8,13 @@ import { deletePost } from '@/features/community/apis/post/index.ts'
 import ConfirmModal from '@/features/community/components/confirmModal/index.tsx'
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
+import PostUpdatePage from '@/features/community/pages/postUpdatePage/index.tsx'
 import { PostPromise } from '@/features/community/types/post/index.ts'
 import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
+
 interface PostContentProps {
   data: PostPromise
 }
@@ -24,6 +26,7 @@ function PostContent({ data }: PostContentProps) {
   const queryClient = useQueryClient()
   const sanitizer = dompurify.sanitize
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
+  const [isPostUpdate, setIsPostUpdate] = useState<boolean>(false)
 
   const { mutateAsync: postDeleteMutation } = useMutation({
     mutationFn: () => deletePost(data.postId),
@@ -54,6 +57,9 @@ function PostContent({ data }: PostContentProps) {
     handleModalClose()
     setIsOpenConfirmModal(true)
   }
+  const handleUpdateOpen = () => {
+    setIsPostUpdate(true)
+  }
 
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
     useModal()
@@ -65,7 +71,7 @@ function PostContent({ data }: PostContentProps) {
             <OptionModal
               handleModalClose={handleModalClose}
               handleConfirmModal={handleOpenConfirmModal}
-              handleUpdateOpen={() => alert('todo')}
+              handleUpdateOpen={handleUpdateOpen}
               // todo
             />,
             portalElement,
@@ -80,7 +86,7 @@ function PostContent({ data }: PostContentProps) {
             portalElement,
           )
         : null}
-
+      {isPostUpdate && <PostUpdatePage postId={data.postId} />}
       <div className="flex flex-col gap-y-4">
         {/* user info */}
         <div className="flex gap-x-2 py-1">

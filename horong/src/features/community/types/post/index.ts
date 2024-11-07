@@ -39,6 +39,7 @@ type PostCreatePayload = {
 
 type PostUpdatePayload = {
   title: string
+  contentImageRequest: ContentImageRequest[]
   content: ContentItem[]
 }
 
@@ -50,6 +51,11 @@ type PostPromise = {
   contents: string
   createdAt: string
   comments: CommentPromise[]
+}
+
+type PostOriginalPromise = {
+  post: PostPromise
+  images: string[]
 }
 
 type BaordListPromise = {
@@ -101,6 +107,7 @@ export type {
   PostCreatePayload,
   PostUpdatePayload,
   PostPromise,
+  PostOriginalPromise,
   CommentCreatePayload,
   CommentUpdatePayload,
   ContentItem,

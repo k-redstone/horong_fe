@@ -12,6 +12,7 @@ import EditorToolBar from '@/features/community/components/postEditor/EditorTool
 interface PostEditorProps {
   title: string
   imgList: string[]
+  content?: string
   setTitle: React.Dispatch<React.SetStateAction<string>>
   setImgList: React.Dispatch<React.SetStateAction<string[]>>
   setContent: React.Dispatch<React.SetStateAction<string>>
@@ -20,7 +21,7 @@ interface PostEditorProps {
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 
 function PostEditor(props: PostEditorProps) {
-  const { title, imgList, setImgList, setTitle, setContent } = props
+  const { title, imgList, content, setImgList, setTitle, setContent } = props
   // const [content, setContent] = useState<string>('')
   // const [title, setTitle] = useState<string>('')
   const [previousContent, setPreviousContent] = useState('')
@@ -35,7 +36,7 @@ function PostEditor(props: PostEditorProps) {
     }
     setTitle(newValue)
   }
-
+  console.log('asdfasdfasdfasdf', content)
   const handleContentChange = (newContent: string) => {
     const prevImgUrls = Array.from(
       new DOMParser().parseFromString(previousContent, 'text/html').images,
@@ -211,10 +212,11 @@ function PostEditor(props: PostEditorProps) {
       </div>
       <ReactQuill
         ref={quillRef}
-        onChange={handleContentChange}
+        onChange={(value) => handleContentChange(value)}
         modules={modules}
         formats={formats}
         placeholder={'내용을 입력하세요'}
+        value={content}
         theme="snow"
       />
     </div>

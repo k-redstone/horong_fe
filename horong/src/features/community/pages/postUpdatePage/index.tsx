@@ -1,22 +1,21 @@
 'use client'
-
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
-import { createPost } from '@/features/community/apis/post/index.ts'
-import { PostCreatePayload } from '@/features/community/types/post/index.ts'
+import {
+  fetchOriginalPost,
+  updatePost,
+} from '@/features/community/apis/post/index.ts'
+import { PostUpdatePayload } from '@/features/community/types/post/index.ts'
 import {
   transContentToPostPayload,
   transHTML,
-  transPathtoHeader,
-  transPathtoPayloadBoardType,
   transText,
 } from '@/features/community/utils/editor/index.ts'
-import { CommunityPathType } from '@/features/community/utils/path/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 
 const PostEditor = dynamic(
@@ -24,24 +23,36 @@ const PostEditor = dynamic(
   { ssr: false },
 )
 
-interface CommunityPostWritePageProps {
-  params: { boardType: CommunityPathType }
+interface PostUpdatePageProps {
+  postId: number
 }
 
-function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
-  const lang = useLangStore((state) => state.lang)
-  const queryClient = useQueryClient()
-
+function PostUpdatePage(props: PostUpdatePageProps) {
   const router = useRouter()
+  const params = useParams()
+  const queryClient = useQueryClient()
+  const lang = useLangStore((state) => state.lang)
+
+  const { data: originalPostData, isSuccess } = useQuery({
+    queryKey: ['originPost'],
+    queryFn: () => fetchOriginalPost(props.postId),
+    staleTime: 0,
+  })
+
+  const [isPending, setIsPending] = useState<boolean>(false)
+
   const [content, setContent] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [imgList, setImgList] = useState<string[]>([])
-  const [isPending, setIsPending] = useState<boolean>(false)
 
-  const { mutateAsync } = useMutation({
-    mutationFn: createPost,
+  const { mutateAsync: postMutation } = useMutation({
+    mutationFn: (payload: PostUpdatePayload) =>
+      updatePost(props.postId, payload),
 
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['postDetail', props.postId],
+      })
       queryClient.invalidateQueries({
         queryKey: ['boardList', { type: params.boardType }],
       })
@@ -78,16 +89,17 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
           content: content.trim(),
           isOriginal: true,
         })
-        const payload: PostCreatePayload = {
+        const payload: PostUpdatePayload = {
+          title: title,
           content: contentListPaylaod,
-          boardType: transPathtoPayloadBoardType(params.boardType),
           contentImageRequest: imgList.map((img) => {
             return {
               imageUrl: img,
             }
           }),
         }
-        await mutateAsync(payload)
+        console.log('asdfasdfasdfasdfasd', payload)
+        await postMutation(payload)
       })(),
       {
         loading: COMMUNITY_CONSTANT[lang]['post-submit-toast-loading'],
@@ -96,8 +108,16 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
       },
     )
   }
+
+  useEffect(() => {
+    if (originalPostData) {
+      setContent(originalPostData.post.contents || '')
+      setTitle(originalPostData.post.title || '')
+    }
+  }, [originalPostData])
+
   return (
-    <div className="flex w-full flex-col">
+    <div className="absolute left-0 top-0 z-50 flex h-dvh w-full flex-col bg-black">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between px-5 py-4">
         <button
@@ -109,32 +129,36 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
             {COMMUNITY_CONSTANT[lang]['cancel-text']}
           </span>
         </button>
+
         <p className="font-bold">
-          <span>{transPathtoHeader(lang, params.boardType)}</span>
+          <span> {COMMUNITY_CONSTANT[lang]['post-edit-header']}</span>
         </p>
-        {/* todo: 사이드바 만들기 */}
+
         <button
           className="px-2 py-[.1875rem]"
           onClick={() => handleSubmit()}
           disabled={isPending}
         >
           <span className="text-sm text-primary">
-            {COMMUNITY_CONSTANT[lang]['post-submit-text']}
+            {COMMUNITY_CONSTANT[lang]['modal-edit-text']}
           </span>
         </button>
       </div>
-      {/* 에디터 */}
-      <div className="flex grow flex-col bg-grey-80 px-5 py-4">
-        <PostEditor
-          title={title}
-          imgList={imgList}
-          content={content}
-          setImgList={setImgList}
-          setTitle={setTitle}
-          setContent={setContent}
-        />
-      </div>
+
+      {isSuccess && (
+        <div className="flex grow flex-col bg-grey-80 px-5 py-4">
+          <PostEditor
+            title={title}
+            imgList={imgList}
+            content={content}
+            setImgList={setImgList}
+            setTitle={setTitle}
+            setContent={setContent}
+          />
+        </div>
+      )}
     </div>
   )
 }
-export default CommunityPostWritePage
+
+export default PostUpdatePage

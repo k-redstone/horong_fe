@@ -29,6 +29,7 @@ interface CommunityConstantType {
     'post-submit-toast-fail': string
     'post-submit-is-blank': string
     'post-none-text': string
+    'post-edit-header': string
 
     // comment
     'comment-edit-header': string
@@ -89,6 +90,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '게시글 작성 중 오류가 발생했습니다.',
     'post-submit-is-blank': '빈칸이 있습니다!',
     'post-none-text': '아직 게시물이 존재하지 않습니다.',
+    'post-edit-header': '게시글 수정',
 
     // comment
     'comment-submit-toast-success': '댓글을 성공적으로 작성했습니다.',
@@ -148,6 +150,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': 'An error occurred while creating the post.',
     'post-submit-is-blank': 'There are empty fields!',
     'post-none-text': 'No posts are currently available.',
+    'post-edit-header': 'Edit Post',
 
     // comment
     'comment-submit-toast-success': 'Comment submitted successfully.',
@@ -206,6 +209,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '创建帖子时发生错误。',
     'post-submit-is-blank': '有空字段！',
     'post-none-text': '目前没有帖子。',
+    'post-edit-header': '编辑帖子',
 
     // comment
     'comment-edit-header': '编辑评论',
@@ -263,6 +267,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '投稿の作成中にエラーが発生しました。',
     'post-submit-is-blank': '空のフィールドがあります！',
     'post-none-text': 'まだ投稿がありません。',
+    'post-edit-header': '投稿の編集',
 
     // comment
     'comment-edit-header': 'コメント編集',
