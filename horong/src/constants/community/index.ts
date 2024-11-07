@@ -29,6 +29,7 @@ interface CommunityConstantType {
     'post-submit-toast-fail': string
     'post-submit-is-blank': string
     'post-none-text': string
+    'post-edit-header': string
 
     // comment
     'comment-edit-header': string
@@ -37,6 +38,8 @@ interface CommunityConstantType {
     'comment-submit-toast-success': string
     'comment-submit-toast-loading': string
     'comment-submit-toast-fail': string
+    'comment-deleted-text1': string
+    'comment-deleted-text2': string
 
     // modal
     'modal-delete-text': string
@@ -87,6 +90,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '게시글 작성 중 오류가 발생했습니다.',
     'post-submit-is-blank': '빈칸이 있습니다!',
     'post-none-text': '아직 게시물이 존재하지 않습니다.',
+    'post-edit-header': '게시글 수정',
 
     // comment
     'comment-submit-toast-success': '댓글을 성공적으로 작성했습니다.',
@@ -95,6 +99,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': '댓글 수정',
     'comment-none-text1': '작성된 댓글이 없습니다.',
     'comment-none-text2': '첫 번째 댓글을 남겨보세요',
+    'comment-deleted-text1': '삭제됨',
+    'comment-deleted-text2': '삭제된 댓글입니다.',
 
     // modal
     'modal-delete-text': '삭제',
@@ -144,6 +150,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': 'An error occurred while creating the post.',
     'post-submit-is-blank': 'There are empty fields!',
     'post-none-text': 'No posts are currently available.',
+    'post-edit-header': 'Edit Post',
 
     // comment
     'comment-submit-toast-success': 'Comment submitted successfully.',
@@ -153,6 +160,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': 'Edit Comment',
     'comment-none-text1': 'No comments posted yet.',
     'comment-none-text2': 'Be the first to leave a comment.',
+    'comment-deleted-text1': 'Deleted',
+    'comment-deleted-text2': 'This comment has been deleted.',
 
     // modal
     'modal-delete-text': 'Delete',
@@ -200,6 +209,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '创建帖子时发生错误。',
     'post-submit-is-blank': '有空字段！',
     'post-none-text': '目前没有帖子。',
+    'post-edit-header': '编辑帖子',
 
     // comment
     'comment-edit-header': '编辑评论',
@@ -208,6 +218,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-success': '评论已成功提交。',
     'comment-submit-toast-loading': '正在提交评论…',
     'comment-submit-toast-fail': '提交评论时发生错误。',
+    'comment-deleted-text1': '已删除',
+    'comment-deleted-text2': '该评论已被删除。',
 
     // modal
     'modal-delete-text': '删除',
@@ -255,6 +267,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-fail': '投稿の作成中にエラーが発生しました。',
     'post-submit-is-blank': '空のフィールドがあります！',
     'post-none-text': 'まだ投稿がありません。',
+    'post-edit-header': '投稿の編集',
 
     // comment
     'comment-edit-header': 'コメント編集',
@@ -263,6 +276,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-success': 'コメントを正常に投稿しました。',
     'comment-submit-toast-loading': 'コメントを投稿中です…',
     'comment-submit-toast-fail': 'コメントの投稿中にエラーが発生しました。',
+    'comment-deleted-text1': '削除済み',
+    'comment-deleted-text2': '削除されたコメントです。',
 
     // modal
     'modal-delete-text': '削除',

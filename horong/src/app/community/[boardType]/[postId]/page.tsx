@@ -1,5 +1,7 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
+import { notFound } from 'next/navigation'
+import { LoaderIcon } from 'react-hot-toast'
 
 import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
@@ -7,27 +9,28 @@ import { fetchPost } from '@/features/community/apis/post/index.ts'
 import CommentInput from '@/features/community/components/commentInput/index.tsx'
 import PostComment from '@/features/community/components/postComment/index.tsx'
 import PostContent from '@/features/community/components/postContent/index.tsx'
-import { BoardType } from '@/features/community/types/post/index.ts'
+import { transPathtoHeader } from '@/features/community/utils/editor/index.ts'
+import { CommunityPathType } from '@/features/community/utils/path/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import CommentIcon from '@/static/svg/community/community-comment-icon.svg'
-
 interface CommunityPostDetailPage {
   params: {
     postId: string
-    boardType: BoardType
+    boardType: CommunityPathType
   }
 }
 
 function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
   const lang = useLangStore((state) => state.lang)
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isError } = useQuery({
     queryKey: ['postDetail', parseInt(params.postId)],
     queryFn: () => fetchPost(parseInt(params.postId)),
+    retry: 1,
   })
 
   return (
     <div className="flex w-full flex-col">
-      <GlobalHeader pageName="~~ 커뮤니티" />
+      <GlobalHeader pageName={`${transPathtoHeader(lang, params.boardType)}`} />
 
       {isSuccess ? (
         <div className="flex grow flex-col gap-y-4 bg-grey-80 px-5 py-4">
@@ -70,9 +73,11 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
             boardType={params.boardType}
           />
         </div>
+      ) : isError ? (
+        notFound()
       ) : (
-        <div>
-          <p>loading.......</p>
+        <div className="flex h-full items-center justify-center">
+          <LoaderIcon />
         </div>
       )}
     </div>
