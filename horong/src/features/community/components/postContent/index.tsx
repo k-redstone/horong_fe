@@ -37,13 +37,18 @@ function PostContent({ data }: PostContentProps) {
             <OptionModal
               handleModalClose={handleModalClose}
               handleConfirmModal={handleOpenConfirmModal}
+              handleUpdateOpen={() => alert('todo')}
+              // todo
             />,
             portalElement,
           )
         : null}
       {isOpenConfirmModal && portalElement
         ? createPortal(
-            <ConfirmModal handleModalClose={handleCloseConfirmModal} />,
+            <ConfirmModal
+              handleModalClose={handleCloseConfirmModal}
+              handleDelete={() => alert('todo')}
+            />,
             portalElement,
           )
         : null}
