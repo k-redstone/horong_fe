@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ChangeEvent, useRef, useState } from 'react'
+import { LoaderIcon } from 'react-hot-toast'
 
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
 import { ChatType } from '@/features/home/types/chatType.ts'
@@ -32,10 +33,11 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
 
     const tempHorongChat: ChatType = {
       type: 'horong',
-      text: 'Loading...',
+      text: <LoaderIcon />,
       uuid: crypto.randomUUID(),
     }
     setChatList((prevChats) => [...prevChats, tempHorongChat])
+    setInputValue('')
 
     try {
       const payload = {
@@ -81,7 +83,6 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
         textareaRef.current.style.height = '1rem'
       }
     } finally {
-      setInputValue('')
       setIspending(false)
     }
   }
