@@ -34,7 +34,7 @@ function EditNickname() {
     onSuccess: () => {
       toast.success(EDIT_NICKNAME_CONSTANT[lang]['nickname-toast-success'])
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ['user-info'],
       })
 
       router.back()

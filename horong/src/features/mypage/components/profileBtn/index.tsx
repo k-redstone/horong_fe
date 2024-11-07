@@ -9,15 +9,30 @@ interface ProfileBtnProps {
   targetImg: StaticImageData
   profileImg: StaticImageData
   setProfileImg: React.Dispatch<React.SetStateAction<StaticImageData>>
+
+  profileIdx: number
+  setProfileIdx: React.Dispatch<React.SetStateAction<number>>
 }
 
 function ProfileBtn(props: ProfileBtnProps) {
-  const { targetImg, isLock, profileImg, setProfileImg } = props
+  const {
+    targetImg,
+    profileIdx,
+    setProfileIdx,
+    isLock,
+    profileImg,
+    setProfileImg,
+  } = props
+
+  const handleImgClick = () => {
+    setProfileImg(targetImg)
+    setProfileIdx(profileIdx)
+  }
   return (
     <button
       disabled={isLock}
-      onClick={() => setProfileImg(targetImg)}
-      className="flex flex-1 items-center justify-center"
+      onClick={handleImgClick}
+      className="flex w-1/4 shrink-0 items-center justify-center"
     >
       {isLock && (
         <div className="absolute flex h-14 w-14 items-center justify-center rounded-full bg-grey-100 bg-opacity-30">
@@ -27,6 +42,8 @@ function ProfileBtn(props: ProfileBtnProps) {
       <Image
         src={targetImg}
         alt="unlocked-profile"
+        width={60}
+        height={60}
         className={`${profileImg === targetImg && 'border-4 border-primary'} h-14 w-14 rounded-full`}
       />
     </button>
