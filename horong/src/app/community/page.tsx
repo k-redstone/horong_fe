@@ -15,7 +15,7 @@ import useLangStore from '@/hooks/useLangStore.ts'
 function CommunityMainPage() {
   const lang = useLangStore((state) => state.lang)
   const { data: preveiwData } = useQuery({
-    queryKey: ['boardList', { type: 'preveiw' }],
+    queryKey: ['boardList', { type: 'preview' }],
     queryFn: fetchPreviewBoard,
   })
 
