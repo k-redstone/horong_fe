@@ -1,5 +1,6 @@
 // 공용
 type BoardType =
+  | 'BUSAN'
   | 'CHUNGBUG'
   | 'CHUNGNAM'
   | 'FREE'
@@ -7,11 +8,15 @@ type BoardType =
   | 'GYEONGBUK'
   | 'GYEONGGI'
   | 'GYEONGNAM'
+  | 'INCHEON'
   | 'JEJU'
   | 'JEONBUK'
   | 'JEONNAM'
   | 'NOTICE'
   | 'SEOUL'
+
+// ('BUSAN','CHUNGBUG','CHUNGNAM','FREE','GANGWON','GYEONGBUK','GYEONGGI','GYEONGNAM','INCHEON','JEJU','JEONBUK','JEONNAM','NOTICE','SEOUL')
+
 type language = 'KOREAN' | 'ENGLISH' | 'CHINESE' | 'JAPANESE'
 
 // 게시물
@@ -57,6 +62,15 @@ type BaordListPromise = {
   }
 }
 
+type BaordPreviewPromise = {
+  GYEONGGI: PostPromise[]
+  NOTICE: PostPromise[]
+  FREE: PostPromise[]
+  INCHEON: PostPromise[]
+  BUSAN: PostPromise[]
+  SEOUL: PostPromise[]
+}
+
 // 댓글
 type CommentPromise = {
   id: number
@@ -92,6 +106,7 @@ export type {
   ContentItem,
   BoardType,
   BaordListPromise,
+  BaordPreviewPromise,
   CommentPromise,
   CommentContentPaylaod,
 }

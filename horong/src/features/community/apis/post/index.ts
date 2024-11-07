@@ -1,6 +1,7 @@
 import privateAPI from '@/api/privateAPI/index.ts'
 import {
   BaordListPromise,
+  BaordPreviewPromise,
   CommentCreatePayload,
   CommentUpdatePayload,
   PostCreatePayload,
@@ -39,10 +40,16 @@ async function fetchBoard(
   return res.data.result
 }
 
+async function fetchPreviewBoard(): Promise<BaordPreviewPromise> {
+  const res = await privateAPI.get(`/community/main`)
+  return res.data.result
+}
+
 export {
   createPost,
   fetchPost,
   fetchBoard,
+  fetchPreviewBoard,
   createComment,
   updateComment,
   deleteComment,
