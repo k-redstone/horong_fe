@@ -6,10 +6,19 @@ import {
   CommentUpdatePayload,
   PostCreatePayload,
   PostPromise,
+  PostUpdatePayload,
 } from '@/features/community/types/post/index.ts'
 
 async function createPost(payload: PostCreatePayload) {
   await privateAPI.post('/community', payload)
+}
+
+async function deletePost(postId: number) {
+  await privateAPI.delete(`/community/${postId}`)
+}
+
+async function updatePost(postId: number, payload: PostUpdatePayload) {
+  await privateAPI.patch(`/community/${postId}`, payload)
 }
 
 async function createComment(payload: CommentCreatePayload) {
@@ -47,6 +56,8 @@ async function fetchPreviewBoard(): Promise<BaordPreviewPromise> {
 
 export {
   createPost,
+  deletePost,
+  updatePost,
   fetchPost,
   fetchBoard,
   fetchPreviewBoard,

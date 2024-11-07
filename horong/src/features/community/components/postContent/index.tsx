@@ -1,7 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dompurify from 'dompurify'
+import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { deletePost } from '@/features/community/apis/post/index.ts'
 import ConfirmModal from '@/features/community/components/confirmModal/index.tsx'
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
@@ -10,15 +13,38 @@ import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
-
 interface PostContentProps {
   data: PostPromise
 }
 
 function PostContent({ data }: PostContentProps) {
+  const router = useRouter()
+  const params = useParams()
   const { loginUserId } = useUserId()
+  const queryClient = useQueryClient()
   const sanitizer = dompurify.sanitize
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState<boolean>(false)
+
+  const { mutateAsync: postDeleteMutation } = useMutation({
+    mutationFn: () => deletePost(data.postId),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: params.boardType }],
+      })
+      queryClient.removeQueries({ queryKey: ['postDetail', data.postId] })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: 'preview' }],
+      })
+      router.push(`/community/${params.boardType}`)
+    },
+  })
+
+  const handleDeletePost = async () => {
+    handleModalClose()
+    setIsOpenConfirmModal(false)
+    await postDeleteMutation()
+  }
 
   const handleCloseConfirmModal = () => {
     handleModalClose()
@@ -49,7 +75,7 @@ function PostContent({ data }: PostContentProps) {
         ? createPortal(
             <ConfirmModal
               handleModalClose={handleCloseConfirmModal}
-              handleDelete={() => alert('todo')}
+              handleDelete={handleDeletePost}
             />,
             portalElement,
           )
