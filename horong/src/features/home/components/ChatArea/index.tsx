@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
 import ChatDefault from '@/features/home/components/ChatDefault/index.tsx'
@@ -10,13 +10,17 @@ import useLangStore from '@/hooks/useLangStore.ts'
 
 export default function ChatArea() {
   const lang = useLangStore((state) => state.lang)
-  const [chatList, setChatList] = useState<ChatType[]>([
-    {
-      type: 'horong',
-      text: HOME_CONSTANT[lang]['home-txt2'],
-      uuid: crypto.randomUUID(),
-    },
-  ])
+  const [chatList, setChatList] = useState<ChatType[]>([])
+
+  useEffect(() => {
+    setChatList([
+      {
+        type: 'horong',
+        text: HOME_CONSTANT[lang]['home-txt2'],
+        uuid: crypto.randomUUID(),
+      },
+    ])
+  }, [lang])
 
   return (
     <div className="relative flex h-full flex-col">

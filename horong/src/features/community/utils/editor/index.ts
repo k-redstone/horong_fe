@@ -78,6 +78,20 @@ function transLanguageType(lang: string) {
       return 'ENGLISH'
   }
 }
+function transLanguageTypetoDeepL(lang: string) {
+  switch (lang) {
+    case 'KOREAN':
+      return 'KO'
+    case 'ENGLISH':
+      return 'EN'
+    case 'JAPANESE':
+      return 'JA'
+    case 'CHINESE':
+      return 'ZH'
+    default:
+      return 'EN'
+  }
+}
 
 function transPathtoHeader(lang: string, boardType: CommunityPathType) {
   switch (boardType) {
@@ -121,6 +135,7 @@ export {
   transHTML,
   transText,
   transLanguageType,
+  transLanguageTypetoDeepL,
   transContentToPostPayload,
   transPathtoHeader,
   transPathtoPayloadBoardType,
