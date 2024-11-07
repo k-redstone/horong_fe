@@ -106,39 +106,22 @@ function transPathtoPayloadBoardType(boardType: CommunityPathType): BoardType {
       return 'SEOUL'
     case 'gyeonggi':
       return 'GYEONGGI'
+    case 'busan':
+      return 'BUSAN'
+    case 'incheon':
+      return 'INCHEON'
     default:
       return 'FREE'
   }
 }
 
-function transDateFormat(date: string): string {
-  const postDateTime = new Date(date)
-  const now = new Date()
+// ('BUSAN','CHUNGBUG','CHUNGNAM','FREE','GANGWON','GYEONGBUK','GYEONGGI','GYEONGNAM','INCHEON','JEJU','JEONBUK','JEONNAM','NOTICE','SEOUL')
 
-  // 오늘 날짜인지 확인
-  const isToday =
-    postDateTime.getDate() === now.getDate() &&
-    postDateTime.getMonth() === now.getMonth() &&
-    postDateTime.getFullYear() === now.getFullYear()
-
-  if (isToday) {
-    const hours = postDateTime.getHours().toString().padStart(2, '0')
-    const minutes = postDateTime.getMinutes().toString().padStart(2, '0')
-    return `${hours}:${minutes}`
-  } else {
-    const month = (postDateTime.getMonth() + 1).toString().padStart(2, '0')
-    const day = postDateTime.getDate().toString().padStart(2, '0')
-    return `${month}/${day}`
-  }
-}
-
-// ('CHUNGBUG','CHUNGNAM','FREE','GANGWON','GYEONGBUK','GYEONGGI','GYEONGNAM','JEJU','JEONBUK','JEONNAM','NOTICE','SEOUL')
 export {
   transHTML,
   transText,
   transLanguageType,
   transContentToPostPayload,
   transPathtoHeader,
-  transDateFormat,
   transPathtoPayloadBoardType,
 }

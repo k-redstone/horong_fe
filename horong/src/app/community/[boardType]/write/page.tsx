@@ -45,6 +45,9 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
       queryClient.invalidateQueries({
         queryKey: ['boardList', { type: params.boardType }],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: 'preview' }],
+      })
       setIsPending(false)
       router.push(`/community/${params.boardType}`)
     },

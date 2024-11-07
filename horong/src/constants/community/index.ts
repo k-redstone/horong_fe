@@ -15,6 +15,10 @@ interface CommunityConstantType {
     'region-subheader-incheon': string
     'region-des-busan': string
     'region-subheader-busan': string
+    'region-text-seoul': string
+    'region-text-gyeonggi': string
+    'region-text-incheon': string
+    'region-text-busan': string
 
     'region-update-notice': string
 
@@ -24,6 +28,7 @@ interface CommunityConstantType {
     'post-submit-toast-loading': string
     'post-submit-toast-fail': string
     'post-submit-is-blank': string
+    'post-none-text': string
 
     // comment
     'comment-edit-header': string
@@ -67,6 +72,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'region-des-incheon': '서울시에 사는 친구들 모여라 👀',
     'region-subheader-busan': '지역별게시판 | 부산',
     'region-des-busan': '부산에 사는 친구들 모여라 👀',
+    'region-text-seoul': '서울특별시',
+    'region-text-gyeonggi': '경기도',
+    'region-text-incheon': '인천광역시',
+    'region-text-busan': '부산광역시',
 
     'region-update-notice':
       '다른 지역의 게시판은 다음 업데이트시 추가 예정입니다.',
@@ -77,6 +86,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-loading': '게시글을 작성 중 입니다.',
     'post-submit-toast-fail': '게시글 작성 중 오류가 발생했습니다.',
     'post-submit-is-blank': '빈칸이 있습니다!',
+    'post-none-text': '아직 게시물이 존재하지 않습니다.',
 
     // comment
     'comment-submit-toast-success': '댓글을 성공적으로 작성했습니다.',
@@ -119,6 +129,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'region-des-incheon': 'Friends living in Incheon, gather here 👀',
     'region-subheader-busan': 'Regional Board | Busan',
     'region-des-busan': 'Friends living in Busan, gather here 👀',
+    'region-text-seoul': 'Seoul',
+    'region-text-gyeonggi': 'Gyeonggi',
+    'region-text-incheon': 'Incheon',
+    'region-text-busan': 'Busan',
 
     'region-update-notice':
       'Boards for other regions will be added in the next update.',
@@ -129,6 +143,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-loading': 'Creating a post...',
     'post-submit-toast-fail': 'An error occurred while creating the post.',
     'post-submit-is-blank': 'There are empty fields!',
+    'post-none-text': 'No posts are currently available.',
 
     // comment
     'comment-submit-toast-success': 'Comment submitted successfully.',
@@ -171,6 +186,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'region-des-incheon': '住在仁川的朋友们，快来集合 👀',
     'region-subheader-busan': '地区论坛 | 釜山',
     'region-des-busan': '住在釜山的朋友们，快来集合 👀',
+    'region-text-seoul': '首尔',
+    'region-text-gyeonggi': '京畿道',
+    'region-text-incheon': '仁川',
+    'region-text-busan': '釜山',
 
     'region-update-notice': '其他地区的论坛将在下一次更新中添加。',
 
@@ -180,6 +199,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-loading': '正在创建帖子…',
     'post-submit-toast-fail': '创建帖子时发生错误。',
     'post-submit-is-blank': '有空字段！',
+    'post-none-text': '目前没有帖子。',
 
     // comment
     'comment-edit-header': '编辑评论',
@@ -221,6 +241,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'region-des-incheon': 'ソウル市に住む友達集まれ👀',
     'region-subheader-busan': '地域別掲示板｜釜山',
     'region-des-busan': '釜山に住む友達集まれ👀',
+    'region-text-seoul': '首尔',
+    'region-text-gyeonggi': '京畿道',
+    'region-text-incheon': '仁川',
+    'region-text-busan': '釜山',
 
     'region-update-notice': '他の地域の掲示板は次回更新時に追加予定です',
 
@@ -230,6 +254,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-toast-loading': '投稿を作成中です…',
     'post-submit-toast-fail': '投稿の作成中にエラーが発生しました。',
     'post-submit-is-blank': '空のフィールドがあります！',
+    'post-none-text': 'まだ投稿がありません。',
 
     // comment
     'comment-edit-header': 'コメント編集',
