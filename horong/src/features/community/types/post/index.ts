@@ -23,7 +23,7 @@ type ContentItem = {
   title: string
   content: string
   isOriginal: boolean
-  language: language
+  language?: language
 }
 
 type PostCreatePayload = {
@@ -40,9 +40,21 @@ type PostUpdatePayload = {
 type PostPromise = {
   postId: number
   title: string
+  userId: number
   nickname: string
   contents: string
+  createdAt: string
   comments: CommentPromise[]
+}
+
+type BaordListPromise = {
+  content: PostPromise[]
+  page: {
+    size: number
+    number: number
+    totalElements: number
+    totalPages: number
+  }
 }
 
 // 댓글
@@ -50,12 +62,14 @@ type CommentPromise = {
   id: number
   nickname: string
   contents: string
+  userId: number
+  createdDate: string
 }
 
 type CommentContentPaylaod = {
   content: string
   isOriginal: boolean
-  language: language
+  language?: language
 }
 
 type CommentUpdatePayload = {
@@ -76,4 +90,8 @@ export type {
   CommentCreatePayload,
   CommentUpdatePayload,
   ContentItem,
+  BoardType,
+  BaordListPromise,
+  CommentPromise,
+  CommentContentPaylaod,
 }

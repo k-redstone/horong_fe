@@ -21,6 +21,7 @@ interface CommunityConstantType {
     // post
     'post-submit-text': string
     'post-submit-toast-success': string
+    'post-submit-toast-loading': string
     'post-submit-toast-fail': string
     'post-submit-is-blank': string
 
@@ -28,6 +29,9 @@ interface CommunityConstantType {
     'comment-edit-header': string
     'comment-none-text1': string
     'comment-none-text2': string
+    'comment-submit-toast-success': string
+    'comment-submit-toast-loading': string
+    'comment-submit-toast-fail': string
 
     // modal
     'modal-delete-text': string
@@ -41,6 +45,7 @@ interface CommunityConstantType {
     'cancel-text': string
     'submit-dm-text': string
     'new-text': string
+    'post-text': string
     more: string
   }
 }
@@ -69,10 +74,14 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     // post
     'post-submit-text': '등록',
     'post-submit-toast-success': '게시글이 성공적으로 작성되었습니다.',
+    'post-submit-toast-loading': '게시글을 작성 중 입니다.',
     'post-submit-toast-fail': '게시글 작성 중 오류가 발생했습니다.',
     'post-submit-is-blank': '빈칸이 있습니다!',
 
     // comment
+    'comment-submit-toast-success': '댓글을 성공적으로 작성했습니다.',
+    'comment-submit-toast-loading': '댓글을 작성 중 입니다.',
+    'comment-submit-toast-fail': '댓글 작성 중 오류가 발생했습니다.',
     'comment-edit-header': '댓글 수정',
     'comment-none-text1': '작성된 댓글이 없습니다.',
     'comment-none-text2': '첫 번째 댓글을 남겨보세요',
@@ -89,6 +98,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': '취소',
     'submit-dm-text': 'DM전송',
     'new-text': 'new',
+    'post-text': '게시글',
+
     more: '더보기',
   },
   ENGLISH: {
@@ -113,12 +124,17 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
       'Boards for other regions will be added in the next update.',
 
     // post
-    'post-submit-text': '등록',
+    'post-submit-text': 'post',
     'post-submit-toast-success': 'The post has been successfully created.',
+    'post-submit-toast-loading': 'Creating a post...',
     'post-submit-toast-fail': 'An error occurred while creating the post.',
     'post-submit-is-blank': 'There are empty fields!',
 
     // comment
+    'comment-submit-toast-success': 'Comment submitted successfully.',
+    'comment-submit-toast-loading': 'Submitting comment...',
+    'comment-submit-toast-fail':
+      'An error occurred while submitting the comment.',
     'comment-edit-header': 'Edit Comment',
     'comment-none-text1': 'No comments posted yet.',
     'comment-none-text2': 'Be the first to leave a comment.',
@@ -135,6 +151,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': 'Cancel',
     'submit-dm-text': 'Send DM',
     'new-text': 'New',
+    'post-text': 'Post',
+
     more: 'See more',
   },
   CHINESE: {
@@ -159,6 +177,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     // post
     'post-submit-text': '提交',
     'post-submit-toast-success': '帖子成功创建。',
+    'post-submit-toast-loading': '正在创建帖子…',
     'post-submit-toast-fail': '创建帖子时发生错误。',
     'post-submit-is-blank': '有空字段！',
 
@@ -166,6 +185,9 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': '编辑评论',
     'comment-none-text1': '尚未有评论。',
     'comment-none-text2': '留下第一条评论吧',
+    'comment-submit-toast-success': '评论已成功提交。',
+    'comment-submit-toast-loading': '正在提交评论…',
+    'comment-submit-toast-fail': '提交评论时发生错误。',
 
     // modal
     'modal-delete-text': '删除',
@@ -179,6 +201,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': '取消',
     'submit-dm-text': '发送私信',
     'new-text': '新',
+    'post-text': '帖子',
+
     more: '查看更多',
   },
   JAPANESE: {
@@ -203,6 +227,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     // post
     'post-submit-text': '登録',
     'post-submit-toast-success': '投稿が成功裏に作成されました。',
+    'post-submit-toast-loading': '投稿を作成中です…',
     'post-submit-toast-fail': '投稿の作成中にエラーが発生しました。',
     'post-submit-is-blank': '空のフィールドがあります！',
 
@@ -210,6 +235,9 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': 'コメント編集',
     'comment-none-text1': '作成されたコメントがありません',
     'comment-none-text2': '最初のコメントを残してください',
+    'comment-submit-toast-success': 'コメントを正常に投稿しました。',
+    'comment-submit-toast-loading': 'コメントを投稿中です…',
+    'comment-submit-toast-fail': 'コメントの投稿中にエラーが発生しました。',
 
     // modal
     'modal-delete-text': '削除',
@@ -223,6 +251,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'cancel-text': 'キャンセル',
     'submit-dm-text': 'DM送信',
     'new-text': 'new',
+    'post-text': '投稿',
+
     more: 'もっと見る',
   },
 }
