@@ -33,6 +33,10 @@ function CommentInput(props: CommentInputProps) {
       queryClient.invalidateQueries({
         queryKey: ['boardList', { type: boardType }],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: 'preview' }],
+      })
+
       setInputValue('')
       setIsPending(false)
     },

@@ -6,9 +6,11 @@ import ConfirmModal from '@/features/community/components/confirmModal/index.tsx
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
 import { PostPromise } from '@/features/community/types/post/index.ts'
+import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
+
 interface PostContentProps {
   data: PostPromise
 }
@@ -63,7 +65,9 @@ function PostContent({ data }: PostContentProps) {
           <div className="flex grow flex-col gap-y-1 px-2">
             <span className="font-bold">{data.nickname}</span>
 
-            <span className="text-xs opacity-60">2024/10/31 12:02</span>
+            <span className="text-xs opacity-60">
+              {transFullDateTime(data.createdAt)}
+            </span>
           </div>
           <div className="flex shrink-0 items-center">
             {loginUserId === data.userId ? (

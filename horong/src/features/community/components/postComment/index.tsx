@@ -1,6 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -10,6 +11,7 @@ import OptionModal from '@/features/community/components/optionModal/index.tsx'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
 import CommentUpdatePage from '@/features/community/pages/commentUpdatePage/index.tsx'
 import { CommentPromise } from '@/features/community/types/post/index.ts'
+import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
@@ -20,6 +22,7 @@ interface PostCommentProps {
 }
 
 function PostComment(props: PostCommentProps) {
+  const params = useParams()
   const { loginUserId } = useUserId()
   const queryClient = useQueryClient()
   const { nickname, contents, createdDate, id: commentId, userId } = props.data
@@ -33,6 +36,12 @@ function PostComment(props: PostCommentProps) {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['postDetail', props.postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: params.boardType }],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: 'preview' }],
       })
     },
   })
@@ -96,7 +105,9 @@ function PostComment(props: PostCommentProps) {
               {/* 작성자 및 작성 시간 */}
               <div className="flex grow flex-col gap-y-1">
                 <span className="text-xs">{nickname}</span>
-                <span className="text-2xs opacity-60">{createdDate}</span>
+                <span className="text-2xs opacity-60">
+                  {transFullDateTime(createdDate)}
+                </span>
               </div>
               {/* dm 전송 버튼 */}
               <div>

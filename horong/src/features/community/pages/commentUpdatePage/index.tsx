@@ -45,6 +45,9 @@ function CommentUpdatePage(props: CommentUpdatePageProps) {
       queryClient.invalidateQueries({
         queryKey: ['boardList', { type: params.boardType }],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['boardList', { type: 'preview' }],
+      })
       setInputValue('')
 
       setIsPending(false)
