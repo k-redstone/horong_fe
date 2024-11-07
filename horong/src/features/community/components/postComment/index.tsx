@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
+import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
 import { deleteComment } from '@/features/community/apis/post/index.ts'
 import ConfirmModal from '@/features/community/components/confirmModal/index.tsx'
 import OptionModal from '@/features/community/components/optionModal/index.tsx'
@@ -12,6 +13,7 @@ import useModal from '@/features/community/hooks/useModal/index.tsx'
 import CommentUpdatePage from '@/features/community/pages/commentUpdatePage/index.tsx'
 import { CommentPromise } from '@/features/community/types/post/index.ts'
 import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
@@ -23,6 +25,7 @@ interface PostCommentProps {
 
 function PostComment(props: PostCommentProps) {
   const params = useParams()
+  const lang = useLangStore((state) => state.lang)
   const { loginUserId } = useUserId()
   const queryClient = useQueryClient()
   const { nickname, contents, createdDate, id: commentId, userId } = props.data
@@ -104,9 +107,13 @@ function PostComment(props: PostCommentProps) {
             <div className="flex gap-x-2">
               {/* 작성자 및 작성 시간 */}
               <div className="flex grow flex-col gap-y-1">
-                <span className="text-xs">{nickname}</span>
+                <span className="text-xs">
+                  {userId
+                    ? nickname
+                    : COMMUNITY_CONSTANT[lang]['comment-deleted-text1']}
+                </span>
                 <span className="text-2xs opacity-60">
-                  {transFullDateTime(createdDate)}
+                  {userId && transFullDateTime(createdDate)}
                 </span>
               </div>
               {/* dm 전송 버튼 */}
@@ -129,7 +136,11 @@ function PostComment(props: PostCommentProps) {
             </div>
 
             {/* 실제 댓글 */}
-            <p className="text-xs opacity-60">{contents}</p>
+            <p className="text-xs opacity-60">
+              {userId
+                ? contents
+                : COMMUNITY_CONSTANT[lang]['comment-deleted-text2']}
+            </p>
           </div>
         </div>
       </div>

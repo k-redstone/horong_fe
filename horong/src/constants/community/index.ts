@@ -37,6 +37,8 @@ interface CommunityConstantType {
     'comment-submit-toast-success': string
     'comment-submit-toast-loading': string
     'comment-submit-toast-fail': string
+    'comment-deleted-text1': string
+    'comment-deleted-text2': string
 
     // modal
     'modal-delete-text': string
@@ -95,6 +97,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': '댓글 수정',
     'comment-none-text1': '작성된 댓글이 없습니다.',
     'comment-none-text2': '첫 번째 댓글을 남겨보세요',
+    'comment-deleted-text1': '삭제됨',
+    'comment-deleted-text2': '삭제된 댓글입니다.',
 
     // modal
     'modal-delete-text': '삭제',
@@ -153,6 +157,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-edit-header': 'Edit Comment',
     'comment-none-text1': 'No comments posted yet.',
     'comment-none-text2': 'Be the first to leave a comment.',
+    'comment-deleted-text1': 'Deleted',
+    'comment-deleted-text2': 'This comment has been deleted.',
 
     // modal
     'modal-delete-text': 'Delete',
@@ -208,6 +214,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-success': '评论已成功提交。',
     'comment-submit-toast-loading': '正在提交评论…',
     'comment-submit-toast-fail': '提交评论时发生错误。',
+    'comment-deleted-text1': '已删除',
+    'comment-deleted-text2': '该评论已被删除。',
 
     // modal
     'modal-delete-text': '删除',
@@ -263,6 +271,8 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-success': 'コメントを正常に投稿しました。',
     'comment-submit-toast-loading': 'コメントを投稿中です…',
     'comment-submit-toast-fail': 'コメントの投稿中にエラーが発生しました。',
+    'comment-deleted-text1': '削除済み',
+    'comment-deleted-text2': '削除されたコメントです。',
 
     // modal
     'modal-delete-text': '削除',
