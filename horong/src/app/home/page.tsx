@@ -14,15 +14,11 @@ export default function HomePage() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['user-info'],
     queryFn: async () => {
-      const res = privateAPI.get('/user', {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-        },
-      })
+      const res = await privateAPI.get('/user')
 
-      return res
+      return res.data.result
     },
   })
   return (
