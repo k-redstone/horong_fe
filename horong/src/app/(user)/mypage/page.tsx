@@ -9,15 +9,12 @@ import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { MYPAGE_CONSTANT } from '@/constants/mypage/index.ts'
 import CommunityAlarmToggle from '@/features/mypage/components/toggle/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
-import DefaultProfile from '@/static/svg/logo-icon.svg'
 import ArrowRightIcon from '@/static/svg/mypage/mypage-arrowright-icon.svg'
 import ProfileEditIcon from '@/static/svg/mypage/mypage-profile-edit-icon.svg'
 
 type UserDataType = {
-  result: {
-    nickname: string
-    profilePreSignedUrl: string
-  }
+  nickname: string
+  profilePreSignedUrl: string
 }
 
 function MyPage() {
@@ -25,10 +22,10 @@ function MyPage() {
   const lang = useLangStore((state) => state.lang)
 
   const { data: user } = useQuery<UserDataType>({
-    queryKey: ['user'],
+    queryKey: ['user-info'],
     queryFn: async () => {
       const res = await privateAPI.get('/user')
-      return res.data
+      return res.data.result
     },
   })
 
@@ -47,10 +44,10 @@ function MyPage() {
             href="/edit/profile"
             className="relative"
           >
-            {user?.result.profilePreSignedUrl ? (
+            {user && (
               // <div className="relative px-36">
               <Image
-                src={user.result.profilePreSignedUrl}
+                src={user.profilePreSignedUrl}
                 alt="profile"
                 width={80}
                 height={80}
@@ -58,9 +55,6 @@ function MyPage() {
                 className="rounded-full"
                 priority
               />
-            ) : (
-              // 임시
-              <DefaultProfile className="h-20 w-20 rounded-full" />
             )}
             <div className="absolute bottom-0 right-0 h-6 w-6 -translate-x-1/2 -translate-y-1/2">
               <ProfileEditIcon />
@@ -68,9 +62,7 @@ function MyPage() {
           </Link>
 
           <div className="flex flex-col items-center justify-center gap-y-1">
-            <p className="text-sm text-text-high">
-              {user && user.result.nickname}
-            </p>
+            <p className="text-sm text-text-high">{user && user?.nickname}</p>
             <Link
               href="/edit/nickname"
               className="flex items-center justify-center text-xs text-text-md"

@@ -1,5 +1,7 @@
+import { ReactElement } from 'react'
+
 interface UserChatBoxProps {
-  text: string
+  text: string | ReactElement
 }
 
 export default function UserChatBox({ text }: UserChatBoxProps) {

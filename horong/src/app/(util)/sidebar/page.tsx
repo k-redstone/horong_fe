@@ -10,7 +10,6 @@ import privateAPI from '@/api/privateAPI/index.ts'
 import LinkWrapperBtn from '@/components/sidebar/linkwrapper/index.tsx'
 import { MYPAGE_CONSTANT } from '@/constants/mypage/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
-import DefaultProfile from '@/static/svg/logo-icon.svg'
 import ArrowDownIcon from '@/static/svg/sidebar/sidebar-arrowdown-icon.svg'
 import ArrowUpIcon from '@/static/svg/sidebar/sidebar-arrowup-icon.svg'
 import CloseIcon from '@/static/svg/sidebar/sidebar-close-icon.svg'
@@ -22,10 +21,8 @@ import IssueIcon from '@/static/svg/sidebar/sidebar-issue-icon.svg'
 import MicIcon from '@/static/svg/sidebar/sidebar-mic-icon.svg'
 
 type UserDataType = {
-  result: {
-    nickname: string
-    profilePreSignedUrl: string
-  }
+  nickname: string
+  profilePreSignedUrl: string
 }
 
 function SideBar() {
@@ -34,11 +31,11 @@ function SideBar() {
 
   const lang = useLangStore((state) => state.lang)
 
-  const { data: user } = useQuery<UserDataType>({
-    queryKey: ['user'],
+  const { data: user, isLoading } = useQuery<UserDataType>({
+    queryKey: ['user-info'],
     queryFn: async () => {
       const res = await privateAPI.get('/user')
-      return res.data
+      return res.data.result
     },
   })
 
@@ -58,7 +55,7 @@ function SideBar() {
     logout()
   }
 
-  if (!user) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center">
         <LoaderIcon />
@@ -79,10 +76,10 @@ function SideBar() {
         {/* 프로필 */}
         <div className="flex w-full flex-col items-center justify-center gap-y-4 py-5">
           {/* 프로필 사진 */}
-          {user?.result.profilePreSignedUrl ? (
+          {user && (
             // <div className="relative px-36">
             <Image
-              src={user.result.profilePreSignedUrl}
+              src={user.profilePreSignedUrl}
               alt="profile"
               width={80}
               height={80}
@@ -90,15 +87,10 @@ function SideBar() {
               className="rounded-full"
               priority
             />
-          ) : (
-            // 임시
-            <DefaultProfile className="h-20 w-20 rounded-full" />
           )}
 
           {/* 이름 */}
-          <p className="text-sm text-text-high">
-            {user && user.result.nickname}
-          </p>
+          <p className="text-sm text-text-high">{user && user?.nickname}</p>
           <Link
             href="/mypage"
             className="flex w-fit items-center justify-center rounded-xl bg-primary px-24 py-3 text-xs text-grey-100"

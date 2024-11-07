@@ -1,5 +1,7 @@
+import { ReactElement } from 'react'
+
 export type ChatType = {
   type: 'horong' | 'user'
-  text: string
+  text: string | ReactElement
   uuid: string
 }
