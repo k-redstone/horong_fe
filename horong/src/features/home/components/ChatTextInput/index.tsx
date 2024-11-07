@@ -1,7 +1,10 @@
+'use client'
 import axios from 'axios'
 import { ChangeEvent, useRef, useState } from 'react'
+import { LoaderIcon } from 'react-hot-toast'
 
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
+import { transLanguageTypetoDeepL } from '@/features/community/utils/editor/index.ts'
 import { ChatType } from '@/features/home/types/chatType.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import SendSVG from '@/static/svg/home/home-send-icon.svg'
@@ -32,31 +35,39 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
 
     const tempHorongChat: ChatType = {
       type: 'horong',
-      text: 'Loading...',
+      text: <LoaderIcon />,
       uuid: crypto.randomUUID(),
     }
+
     setChatList((prevChats) => [...prevChats, tempHorongChat])
+    setInputValue('')
 
     try {
-      const payload = {
+      let payload = {
         text: inputValue,
         lang: 'EN',
       }
       const resText = await axios.post('/api/translation', payload)
-      // todo: 임시로 시스템 챗도 넣어놓음, 추후 api연동 후 수정
 
       const params = {
-        question: 'resText',
+        question: resText.data.result.text,
       }
+
       const resDataText = await axios.get(
         `${process.env.NEXT_PUBLIC_DATA_URL}/chat`,
         { params },
       )
-      console.log(resDataText)
+
+      payload = {
+        text: resDataText.data,
+        lang: transLanguageTypetoDeepL(lang),
+      }
+      const result = await axios.post('/api/translation', payload)
+
       setChatList((prevChats) =>
         prevChats.map((chat) =>
           chat === tempHorongChat // 기존 로딩 중이던 horong 채팅을 업데이트
-            ? { ...chat, text: resText.data.result.text, isLoading: false }
+            ? { ...chat, text: result.data.result.text, isLoading: false }
             : chat,
         ),
       )
@@ -70,7 +81,7 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
           chat === tempHorongChat // 기존 로딩 중이던 horong 채팅을 업데이트
             ? {
                 ...chat,
-                text: '답변 생성 중에 오류가 발생했어요.\n 잠시후 다시 시도해주세요.',
+                text: `${HOME_CONSTANT[lang]['home-horong-error-txt']}`,
                 isLoading: false,
               }
             : chat,
@@ -81,7 +92,6 @@ export default function ChatTextInput({ setChatList }: ChatTextInputProps) {
         textareaRef.current.style.height = '1rem'
       }
     } finally {
-      setInputValue('')
       setIspending(false)
     }
   }

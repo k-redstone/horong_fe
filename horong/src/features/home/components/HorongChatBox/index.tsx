@@ -1,6 +1,8 @@
+import { ReactElement } from 'react'
+
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 interface HorongChatBoxProps {
-  text: string
+  text: string | ReactElement
 }
 
 export default function HorongChatBox({ text }: HorongChatBoxProps) {
@@ -17,7 +19,7 @@ export default function HorongChatBox({ text }: HorongChatBoxProps) {
           <span>호롱</span>
         </p>
         {/* 내용 */}
-        <p>{text}</p>
+        <div>{text}</div>
       </div>
     </div>
   )
