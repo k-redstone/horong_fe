@@ -33,6 +33,8 @@ function DeleteUser() {
     onSuccess: () => {
       toast.success(WITHDRAW_CONSTANT[lang]['delete-toast-success'])
       router.push('/login')
+      localStorage.clear()
+      sessionStorage.clear()
     },
   })
   const deleteUser = () => {
