@@ -36,7 +36,7 @@ function PostEditor(props: PostEditorProps) {
     }
     setTitle(newValue)
   }
-  console.log('asdfasdfasdfasdf', content)
+  console.log('asdfasdfasdfasdf', content, imgList)
   const handleContentChange = (newContent: string) => {
     const prevImgUrls = Array.from(
       new DOMParser().parseFromString(previousContent, 'text/html').images,
@@ -79,6 +79,7 @@ function PostEditor(props: PostEditorProps) {
     console.log('asdf')
 
     input.addEventListener('change', async () => {
+      console.log(imgList)
       if (!quillRef.current) {
         return
       }

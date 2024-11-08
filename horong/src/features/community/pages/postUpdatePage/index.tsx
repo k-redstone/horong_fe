@@ -114,6 +114,12 @@ function PostUpdatePage(props: PostUpdatePageProps) {
     if (originalPostData) {
       setContent(originalPostData.post.contents || '')
       setTitle(originalPostData.post.title || '')
+
+      setImgList(
+        originalPostData.images.map((item) => {
+          return `https://horong-service.s3.ap-northeast-2.amazonaws.com/${item}`
+        }) || [],
+      )
     }
   }, [originalPostData])
 
