@@ -14,4 +14,10 @@ async function fetchMessage(senderId: number): Promise<MessagePromise[]> {
   return res.data.result
 }
 
-export { fetchAllMessage, fetchMessage }
+async function fetchNotifyStream() {
+  const res = await privateAPI.get(`/nocifications/notifications/stream`)
+  console.log('stream', res)
+  return res.data.result
+}
+
+export { fetchAllMessage, fetchMessage, fetchNotifyStream }
