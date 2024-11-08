@@ -36,7 +36,7 @@ function MyPage() {
       <GlobalHeader pageName={MYPAGE_CONSTANT[lang]['mypage-header']} />
       {/* 메인 콘텐츠 wrapper */}
 
-      <div className="flex grow flex-col gap-y-3">
+      <div className="flex grow flex-col gap-y-3 overflow-y-scroll">
         {/* 프로필 */}
         <div className="flex w-full flex-col items-center justify-center gap-y-4 pb-2 pt-7">
           {/* 프로필 사진 */}

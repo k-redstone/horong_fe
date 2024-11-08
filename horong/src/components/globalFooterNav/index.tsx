@@ -63,11 +63,46 @@ function GlobalFooterNav() {
       {/* 모달 */}
       {isIOS ? (
         <div
-          className={`${isModalOpen ? 'block' : 'hidden'} absolute left-0 z-50 flex w-full flex-col items-center justify-center gap-y-6 rounded-md rounded-t-[2.5rem] bg-grey-80 px-6 pb-8 pt-6`}
+          className={`${isModalOpen ? 'block' : 'hidden'} absolute bottom-0 left-0 z-50 flex w-full flex-col items-center justify-center gap-y-6 rounded-md rounded-t-[2.5rem] bg-grey-80 px-6 pb-8 pt-6`}
         >
-          {' '}
-          <button onClick={() => setIsModalOpen(false)}>x</button>
-          모달
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="h-[.3125rem] w-12 rounded-3xl bg-grey-40"
+          />
+          {/* link */}
+          <div className="flex w-full flex-col gap-y-2">
+            <Link
+              href="/guide"
+              className="flex items-center gap-x-3 bg-inherit px-3 py-2 text-text-high"
+            >
+              <GuideIcon className="h-5 w-5" />
+              <span>{HOME_CONSTANT[lang]['guide-btn']}</span>
+            </Link>
+
+            <Link
+              href="/learn"
+              className="flex items-center gap-x-3 bg-inherit px-3 py-2 text-text-high"
+            >
+              <MicIcon className="h-5 w-5" />
+              <span>{HOME_CONSTANT[lang]['mic-btn']}</span>
+            </Link>
+
+            <Link
+              href="/community"
+              className="flex items-center gap-x-3 bg-inherit px-3 py-2 text-text-high"
+            >
+              <CommunityIcon className="h-5 w-5" />
+              <span>{HOME_CONSTANT[lang]['community-btn']}</span>
+            </Link>
+
+            <Link
+              href="/exchange"
+              className="flex items-center gap-x-3 bg-inherit px-3 py-2 text-text-high"
+            >
+              <ExchangeIcon className="h-5 w-5" />
+              <span>{HOME_CONSTANT[lang]['exchange-btn']}</span>
+            </Link>
+          </div>
         </div>
       ) : (
         <div
