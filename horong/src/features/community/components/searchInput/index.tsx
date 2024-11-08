@@ -6,17 +6,33 @@ import SearchIcon from '@/static/svg/community/community-search-icon.svg'
 
 interface SearchInputProps {
   boardType: string
+  setIsSearchTriggered: (arg: boolean) => void
+  setSearchTxt: (arg: string) => void
 }
 
-function SearchInput({ boardType }: SearchInputProps) {
+function SearchInput({
+  boardType,
+  setIsSearchTriggered,
+  setSearchTxt,
+}: SearchInputProps) {
   const [isFocused, setIsFocused] = useState(false)
+  const [inputValue, setInputVale] = useState<string>('')
   console.log(boardType)
+
+  const handleSearch = () => {
+    console.log(inputValue)
+    setSearchTxt(inputValue)
+    setIsSearchTriggered(true)
+    setInputVale('')
+  }
+
   const handleFocus = () => {
     setIsFocused(true)
   }
   const handleBlur = () => {
     setIsFocused(false)
   }
+
   return (
     <div className="flex justify-end px-4">
       <div
@@ -28,8 +44,15 @@ function SearchInput({ boardType }: SearchInputProps) {
           placeholder="search"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          value={inputValue}
+          onChange={(e) => setInputVale(e.currentTarget.value)}
         />
-        <SearchIcon />
+        <button
+          type="button"
+          onClick={() => handleSearch()}
+        >
+          <SearchIcon />
+        </button>
       </div>
     </div>
   )
