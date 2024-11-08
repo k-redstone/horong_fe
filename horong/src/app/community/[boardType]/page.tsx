@@ -71,12 +71,14 @@ function CommunityBoardPage({ params }: CommunityBoardPageProps) {
           </>
         )}
       </div>
-      <div className="absolute bottom-10 right-5 z-30">
-        <PostIconSVG
-          className="cursor-pointer"
-          onClick={() => handlePostWrite(params.boardType)}
-        />
-      </div>
+      {params.boardType !== 'notice' && (
+        <div className="absolute bottom-10 right-5 z-30">
+          <PostIconSVG
+            className="cursor-pointer"
+            onClick={() => handlePostWrite(params.boardType)}
+          />
+        </div>
+      )}
     </div>
   )
 }
