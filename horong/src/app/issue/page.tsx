@@ -1,13 +1,9 @@
 'use client'
 import { useState } from 'react'
 
-import GlobalFooterNav from '@/components/globalFooterNav/index.tsx'
-import GlobalHeader from '@/components/globalHeader/index.tsx'
-import { ISSUE_CONSTANTS } from '@/constants/issue/index.ts'
 import IssueGrid from '@/features/issue/components/grid/index.tsx'
 import IssueLike from '@/features/issue/components/like/index.tsx'
 import IssueScrap from '@/features/issue/components/scrap/index.tsx'
-import useLangStore from '@/hooks/useLangStore.ts'
 import GridIcon from '@/static/svg/issue/issue-grid-icon.svg'
 import SelectedGridIcon from '@/static/svg/issue/issue-grid-selected-icon.svg'
 import LikeIcon from '@/static/svg/issue/issue-like-icon.svg'
@@ -17,11 +13,8 @@ import SelectedScrapIcon from '@/static/svg/issue/issue-scrap-selected-icon.svg'
 
 function IssuePage() {
   const [tab, setTab] = useState(0)
-  const lang = useLangStore((state) => state.lang)
   return (
-    <div className="flex h-full w-full flex-col">
-      <GlobalHeader pageName={ISSUE_CONSTANTS[lang]['issue-header']} />
-
+    <>
       {/* tab */}
       <div className="grid w-full grid-cols-3 place-items-center px-2 py-2">
         <button
@@ -61,8 +54,7 @@ function IssuePage() {
       {tab === 0 && <IssueGrid />}
       {tab === 1 && <IssueLike />}
       {tab === 2 && <IssueScrap />}
-      <GlobalFooterNav />
-    </div>
+    </>
   )
 }
 
