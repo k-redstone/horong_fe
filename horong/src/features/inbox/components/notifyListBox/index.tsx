@@ -20,12 +20,11 @@ function NotifyListBox() {
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          Connection: 'keep-alive',
-          // Accpet: 'text/event-stream',
         },
-        heartbeatTimeout: 86400000,
+        heartbeatTimeout: 10000,
       },
     )
+    console.log(eventSource.readyState)
 
     // eventSource.onmessage = function (event) {
     //   setMessages((prevMessages) => [...prevMessages, event.data])
@@ -39,7 +38,9 @@ function NotifyListBox() {
         console.log(event)
       }
     })
-
+    addEventListener('error', (event) => {
+      console.log(event)
+    })
     eventSource.addEventListener('message', (event) => {
       console.log('Received message:', event.data)
     })

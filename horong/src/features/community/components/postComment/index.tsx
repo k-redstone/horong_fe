@@ -13,11 +13,11 @@ import useModal from '@/features/community/hooks/useModal/index.tsx'
 import CommentUpdatePage from '@/features/community/pages/commentUpdatePage/index.tsx'
 import { CommentPromise } from '@/features/community/types/post/index.ts'
 import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
+import SendDMBtn from '@/features/inbox/components/sendDMBtn/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
-
 interface PostCommentProps {
   data: CommentPromise
   postId: number
@@ -134,9 +134,10 @@ function PostComment(props: PostCommentProps) {
                   </button>
                 ) : (
                   userId && (
-                    <button className="rounded-2xl border border-text-disabled px-2 py-1 text-2xs text-text-disabled">
-                      DM전송
-                    </button>
+                    <SendDMBtn
+                      userId={userId}
+                      postId={props.postId}
+                    />
                   )
                 )}
               </div>

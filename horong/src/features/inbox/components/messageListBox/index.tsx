@@ -33,12 +33,17 @@ function MessageListBox() {
         {data.map((item) => (
           <Link
             key={crypto.randomUUID()}
-            href={`/inbox/${item.senderId}`}
+            href={`/inbox/${item.roomId}`}
             onClick={() => refetch()}
           >
             <MessageCard data={item} />
           </Link>
         ))}
+        {data.length === 0 && (
+          <div>
+            <p>새로운 쪽지가 없습니다.</p>
+          </div>
+        )}
       </div>
     )
   }
