@@ -23,10 +23,10 @@ function IssuePage() {
       <GlobalHeader pageName={ISSUE_CONSTANTS[lang]['issue-header']} />
 
       {/* tab */}
-      <div className="flex gap-x-4 px-4 py-2">
+      <div className="grid w-full grid-cols-3 place-items-center px-2 py-2">
         <button
           onClick={() => setTab(0)}
-          className={`${tab === 0 && '!border-primary'} flex flex-1 items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
+          className={`${tab === 0 && '!border-primary'} flex w-full items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
         >
           {tab === 0 ? (
             <SelectedGridIcon className="h-6 w-6" />
@@ -37,7 +37,7 @@ function IssuePage() {
 
         <button
           onClick={() => setTab(1)}
-          className={`${tab === 1 && '!border-primary'} flex flex-1 items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
+          className={`${tab === 1 && '!border-primary'} flex w-full items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
         >
           {tab === 1 ? (
             <SelectedLikeIcon className="h-6 w-6" />
@@ -48,7 +48,7 @@ function IssuePage() {
 
         <button
           onClick={() => setTab(2)}
-          className={`${tab === 2 && '!border-primary'} flex flex-1 items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
+          className={`${tab === 2 && '!border-primary'} flex w-full items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
         >
           {tab === 2 ? (
             <SelectedScrapIcon className="h-6 w-6" />
