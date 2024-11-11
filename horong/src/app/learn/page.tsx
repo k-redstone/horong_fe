@@ -46,7 +46,7 @@ function LearnPage() {
               {' '}
               {LEARN_CONSTANTS[lang]['today-learn-title']}
             </h3>
-            <div className="whitespace-pre-line">
+            <div className="whitespace-pre-line text-3xs">
               {' '}
               {LEARN_CONSTANTS[lang]['today-learn-content']}
             </div>
