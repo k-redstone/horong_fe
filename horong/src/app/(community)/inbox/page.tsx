@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 
-import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import MessageListBox from '@/features/inbox/components/messageListBox/index.tsx'
 import NotifyListBox from '@/features/inbox/components/notifyListBox/index.tsx'
@@ -13,8 +12,7 @@ function InboxPage() {
   const [selectedTap, setSelectedTap] = useState<number>(1)
 
   return (
-    <div className="flex w-full flex-col">
-      <GlobalHeader pageName={INBOX_CONSTANT[lang]['inbox-header']} />
+    <div className="flex h-full w-full flex-col">
       <div className="grow bg-grey-80">
         <div className="flex justify-center gap-x-5 px-6 py-8">
           <button

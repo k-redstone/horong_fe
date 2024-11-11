@@ -1,6 +1,7 @@
+import Image from 'next/image'
+
 import { transFullTime } from '@/features/community/utils/datetime/index.ts'
 import { MessagePromise } from '@/features/inbox/types/message/index.ts'
-import HorongSVG from '@/static/svg/common/common-horong.svg'
 
 interface SenderChatBoxProps {
   data: MessagePromise
@@ -11,7 +12,12 @@ function SenderChatBox({ data }: SenderChatBoxProps) {
     <div className="flex gap-x-2">
       {/* 로고영역 */}
       <div className="h-10 w-10 shrink-0">
-        <HorongSVG />
+        <Image
+          src={data.profileImage}
+          alt={'profile'}
+          width={40}
+          height={40}
+        />
       </div>
       {/* 텍스트 영역 */}
       <div className="flex gap-x-1 text-xs text-white">
