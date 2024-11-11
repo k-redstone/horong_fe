@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import toast, { LoaderIcon } from 'react-hot-toast'
 
-import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import { uploadS3AnddInsertEmbed } from '@/features/community/apis/editor/index.ts'
 import {
@@ -167,8 +166,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
   }, [chatRoomData, isSuccess, queryClient, router])
 
   return (
-    <div className="flex w-full flex-col">
-      <GlobalHeader pageName={INBOX_CONSTANT[lang]['inbox-header']} />
+    <div className="flex h-full w-full flex-col">
       <div className="grow bg-grey-80">
         {isSuccess && chatRoomData !== null && (
           <div className="flex h-[calc(100dvh-12.625rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-4">

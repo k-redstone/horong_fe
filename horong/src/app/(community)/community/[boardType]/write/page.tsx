@@ -97,12 +97,11 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
     )
   }
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex h-full w-full flex-col">
       {/* 헤더 */}
       <div className="flex w-full items-center justify-between px-5 py-4">
         <button
           type="button"
-          className="px-1 py-0.5"
           onClick={() => router.back()}
         >
           <span className="text-sm">
@@ -112,9 +111,8 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
         <p className="font-bold">
           <span>{transPathtoHeader(lang, params.boardType)}</span>
         </p>
-        {/* todo: 사이드바 만들기 */}
+
         <button
-          className="px-2 py-[.1875rem]"
           onClick={() => handleSubmit()}
           disabled={isPending}
         >
