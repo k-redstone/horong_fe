@@ -7,7 +7,11 @@ interface MessageCardProps {
 function MessageCard({ data }: MessageCardProps) {
   return (
     <div className="flex gap-x-2 rounded-xl border border-white p-3">
-      <div className="h-[3.125rem] w-[3.125rem] rounded-full bg-white"></div>
+      <div className="relative h-[3.125rem] w-[3.125rem] rounded-full bg-white">
+        {data.messageCount >= 1 && (
+          <div className="absolute right-0 h-3 w-3 rounded-full bg-warning" />
+        )}
+      </div>
       <div className="flex w-[15.375rem] flex-col gap-y-1">
         <div className="flex justify-between">
           <span className="text-xs font-bold">{data.senderNickname}</span>

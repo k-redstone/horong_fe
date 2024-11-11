@@ -42,4 +42,16 @@ function transFullDateTime(receivedTimeStr: string): string {
   return transDate
 }
 
-export { isPostNew, transDateFormat, transFullDate, transFullDateTime }
+function transFullTime(receivedTimeStr: string): string {
+  const date = new Date(receivedTimeStr)
+  const transDate = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  return transDate
+}
+
+export {
+  isPostNew,
+  transDateFormat,
+  transFullDate,
+  transFullDateTime,
+  transFullTime,
+}

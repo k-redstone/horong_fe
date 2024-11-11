@@ -32,7 +32,7 @@ function MessageListBox() {
 
   if (isSuccess) {
     return (
-      <div className="flex flex-col items-center gap-y-3 px-6 pb-8">
+      <div className="flex max-h-[calc(100dvh-13.25rem)] flex-col items-center gap-y-3 overflow-y-scroll px-6 pb-8">
         {data.map((item) => (
           <Link
             key={crypto.randomUUID()}

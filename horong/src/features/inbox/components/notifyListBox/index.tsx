@@ -30,12 +30,12 @@ function NotifyListBox() {
     const accessToken = sessionStorage.getItem('token')
     const eventSource = new EventSource(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/notifications/stream`,
-      // {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`,
-      //   },
-      //   heartbeatTimeout: 10000,
-      // },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        heartbeatTimeout: 10000,
+      },
     )
     console.log(eventSource.readyState)
 
