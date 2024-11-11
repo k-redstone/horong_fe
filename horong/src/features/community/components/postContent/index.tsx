@@ -11,6 +11,7 @@ import useModal from '@/features/community/hooks/useModal/index.tsx'
 import PostUpdatePage from '@/features/community/pages/postUpdatePage/index.tsx'
 import { PostPromise } from '@/features/community/types/post/index.ts'
 import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
+import SendDMBtn from '@/features/inbox/components/sendDMBtn/index.tsx'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
@@ -119,9 +120,10 @@ function PostContent({ data }: PostContentProps) {
                 <MenuIcon />
               </button>
             ) : (
-              <button className="rounded-2xl border border-text-disabled px-2 py-1 text-2xs text-text-disabled">
-                DM전송
-              </button>
+              <SendDMBtn
+                userId={data.userId}
+                postId={data.postId}
+              />
             )}
           </div>
         </div>

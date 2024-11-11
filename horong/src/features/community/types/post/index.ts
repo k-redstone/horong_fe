@@ -103,6 +103,14 @@ type CommentCreatePayload = {
   contentByCountries: CommentContentPaylaod[]
 }
 
+// 채팅
+
+type MessageSendPayload = {
+  chatRoomId: number
+  contentsByLanguages: CommentContentPaylaod[]
+  contentImageRequest: ContentImageRequest[]
+}
+
 export type {
   PostCreatePayload,
   PostUpdatePayload,
@@ -116,4 +124,5 @@ export type {
   BaordPreviewPromise,
   CommentPromise,
   CommentContentPaylaod,
+  MessageSendPayload,
 }
