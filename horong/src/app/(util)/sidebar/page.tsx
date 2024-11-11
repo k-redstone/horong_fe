@@ -100,7 +100,7 @@ function SideBar() {
         </div>
 
         {/* 메뉴 */}
-        <div className="flex w-full flex-col justify-center gap-y-3 px-6 py-3">
+        <div className="flex w-full flex-col justify-center gap-y-3 overflow-y-scroll px-6 py-3">
           {/* 홈 collapse*/}
           <div className="flex flex-col text-text-high">
             <div className="flex w-full items-center gap-x-3 bg-inherit px-3 py-2">
