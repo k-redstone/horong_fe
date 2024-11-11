@@ -3,6 +3,7 @@ type MessagePromise = {
   senderNickname: string
   senderId: number
   createdAt: string
+  profileImage: string
   userMessageType: 'USER' | 'OPPONENT'
 }
 

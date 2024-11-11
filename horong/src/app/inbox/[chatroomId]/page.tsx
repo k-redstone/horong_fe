@@ -48,7 +48,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
   } = useQuery({
     queryKey: ['message', { type: parseInt(params.chatroomId) }],
     queryFn: () => fetchMessage(parseInt(params.chatroomId)),
-    staleTime: 0,
+    staleTime: 1000 * 10,
   })
 
   const { mutateAsync: messageMutation } = useMutation({
@@ -171,7 +171,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       <GlobalHeader pageName={INBOX_CONSTANT[lang]['inbox-header']} />
       <div className="grow bg-grey-80">
         {isSuccess && chatRoomData !== null && (
-          <div className="flex h-[calc(100dvh-12.625rem)] flex-col gap-y-4 px-3 py-4">
+          <div className="flex h-[calc(100dvh-12.625rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-4">
             {Object.keys(groupedData).map((date) => (
               <div
                 className="flex flex-col gap-y-4"
