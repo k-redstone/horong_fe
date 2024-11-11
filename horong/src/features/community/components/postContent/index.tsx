@@ -120,12 +120,10 @@ function PostContent({ data }: PostContentProps) {
                 <MenuIcon />
               </button>
             ) : (
-              loginUserId && (
-                <SendDMBtn
-                  userId={loginUserId}
-                  postId={data.postId}
-                />
-              )
+              <SendDMBtn
+                userId={data.userId}
+                postId={data.postId}
+              />
             )}
           </div>
         </div>

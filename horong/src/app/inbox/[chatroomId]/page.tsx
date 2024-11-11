@@ -69,7 +69,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
 
   const groupedData = useMemo<Record<string, MessagePromise[]>>(() => {
     if (!chatRoomData) return {}
-    return chatRoomData.reduce(
+    return chatRoomData.messageList.reduce(
       (acc, item) => {
         const dateKey = new Date(item.createdAt)
           .toLocaleDateString('ko-KR', {
@@ -211,7 +211,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         )}
         {isError && (
           <div className="flex h-full items-center justify-center">
-            <p>{INBOX_CONSTANT[lang]['meesage-fetch-error']}</p>
+            <p>{INBOX_CONSTANT[lang]['message-fetch-error']}</p>
           </div>
         )}
         {/* input */}

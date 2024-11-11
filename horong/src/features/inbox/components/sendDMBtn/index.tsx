@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import toast from 'react-hot-toast'
@@ -23,6 +23,7 @@ interface SendDMBtnProps {
 }
 
 function SendDMBtn({ userId, postId }: SendDMBtnProps) {
+  const queryClient = useQueryClient()
   const lang = useLangStore((state) => state.lang)
   const [isPending, setIsPending] = useState<boolean>(false)
   const { isModalOpen, portalElement, handleModalClose, handleModalOpen } =
@@ -33,6 +34,15 @@ function SendDMBtn({ userId, postId }: SendDMBtnProps) {
 
     onSuccess: () => {
       handleModalClose()
+      queryClient.invalidateQueries({
+        queryKey: [
+          'isChatroomExist',
+          {
+            postId: postId,
+            userId: userId,
+          },
+        ],
+      })
       setIsPending(false)
     },
     onError: () => {

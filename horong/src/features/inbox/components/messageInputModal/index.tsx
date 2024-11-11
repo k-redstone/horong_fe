@@ -48,8 +48,8 @@ function MessageInputModal(props: MessageInputModalProps) {
   })
 
   useEffect(() => {
-    if (isSuccess && isChatroomExist) {
-      router.push(`/inbox`)
+    if (isSuccess && isChatroomExist !== -1) {
+      router.push(`/inbox/${isChatroomExist}`)
     }
   }, [isSuccess, isChatroomExist, router])
 
@@ -69,7 +69,7 @@ function MessageInputModal(props: MessageInputModalProps) {
     )
   }
 
-  if (isSuccess && !isChatroomExist) {
+  if (isSuccess && isChatroomExist === -1) {
     return (
       <div
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30"
