@@ -3,10 +3,13 @@ import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { LoaderIcon } from 'react-hot-toast'
 
+import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import { fetchAllMessage } from '@/features/inbox/apis/message/index.ts'
 import MessageCard from '@/features/inbox/components/messageCard/index.tsx'
+import useLangStore from '@/hooks/useLangStore.ts'
 
 function MessageListBox() {
+  const lang = useLangStore((state) => state.lang)
   const { data, isSuccess, isError, isPending, refetch } = useQuery({
     queryKey: ['message', { type: 'all' }],
     queryFn: fetchAllMessage,
@@ -15,7 +18,7 @@ function MessageListBox() {
   if (isError) {
     return (
       <div className="flex justify-center">
-        <p>쪽지를 불러오다가 오류가 발생했어요.</p>
+        <p>{INBOX_CONSTANT[lang]['message-fetch-error']}</p>
       </div>
     )
   }
@@ -41,7 +44,7 @@ function MessageListBox() {
         ))}
         {data.length === 0 && (
           <div>
-            <p>새로운 쪽지가 없습니다.</p>
+            <p>{INBOX_CONSTANT[lang]['message-no-item-txt']}</p>
           </div>
         )}
       </div>

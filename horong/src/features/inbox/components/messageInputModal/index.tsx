@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 
 import privateAPI from '@/api/privateAPI/index.ts'
-import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
+import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 
 interface MessageInputModalProps {
@@ -55,8 +55,16 @@ function MessageInputModal(props: MessageInputModalProps) {
 
   if (checkingChatroom) {
     return (
-      <div>
-        <LoaderIcon />
+      <div
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30"
+        onClick={() => handleModalClose()}
+      >
+        <div
+          className="flex w-[16.25rem] justify-center gap-y-2 rounded-lg bg-grey-80 px-4 py-3"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <LoaderIcon />
+        </div>
       </div>
     )
   }
@@ -81,7 +89,7 @@ function MessageInputModal(props: MessageInputModalProps) {
             onClick={() => handleSendChat(inputValue)}
             disabled={isPending}
           >
-            쪽지 보내기
+            {INBOX_CONSTANT[lang]['message-send-txt']}
           </button>
         </div>
       </div>

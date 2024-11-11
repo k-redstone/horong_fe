@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import toast, { LoaderIcon } from 'react-hot-toast'
 
 import GlobalHeader from '@/components/globalHeader/index.tsx'
-import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
+import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import { uploadS3AnddInsertEmbed } from '@/features/community/apis/editor/index.ts'
 import {
   CommentContentPaylaod,
@@ -77,7 +77,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
             month: '2-digit',
             day: '2-digit',
           })
-          .replaceAll('. ', '.') // "2024.11.09" 형식으로 변환
+          .replaceAll('. ', '.')
 
         if (!acc[dateKey]) acc[dateKey] = []
         acc[dateKey].push(item)
@@ -89,7 +89,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
 
   const handleSubmitMessage = () => {
     if (inputValue.trim().length === 0) {
-      return toast.error(`${COMMUNITY_CONSTANT[lang]['post-submit-is-blank']}`)
+      return toast.error(`${INBOX_CONSTANT[lang]['message-submit-is-blank']}`)
     }
     setIsPending(true)
 
@@ -115,9 +115,9 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         await messageMutation(payload)
       })(),
       {
-        loading: COMMUNITY_CONSTANT[lang]['comment-submit-toast-loading'],
-        success: COMMUNITY_CONSTANT[lang]['comment-submit-toast-success'],
-        error: COMMUNITY_CONSTANT[lang]['comment-submit-toast-fail'],
+        loading: INBOX_CONSTANT[lang]['message-submit-toast-loading'],
+        success: INBOX_CONSTANT[lang]['message-submit-toast-success'],
+        error: INBOX_CONSTANT[lang]['message-submit-toast-fail'],
       },
     )
   }
@@ -134,14 +134,18 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         const payload = {
           chatRoomId: parseInt(params.chatroomId),
           contentsByLanguages: [],
-          contentImageRequest: [{ imageUrl: imgURL }],
+          contentImageRequest: [
+            {
+              imageUrl: `https://horong-service.s3.ap-northeast-2.amazonaws.com/${imgURL}`,
+            },
+          ],
         }
         await messageMutation(payload)
       })(),
       {
-        loading: COMMUNITY_CONSTANT[lang]['comment-submit-toast-loading'],
-        success: COMMUNITY_CONSTANT[lang]['comment-submit-toast-success'],
-        error: COMMUNITY_CONSTANT[lang]['comment-submit-toast-fail'],
+        loading: INBOX_CONSTANT[lang]['message-submit-toast-loading'],
+        success: INBOX_CONSTANT[lang]['message-submit-toast-success'],
+        error: INBOX_CONSTANT[lang]['message-submit-toast-fail'],
       },
     )
   }
@@ -164,7 +168,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
 
   return (
     <div className="flex w-full flex-col">
-      <GlobalHeader pageName="알림 및 쪽지" />
+      <GlobalHeader pageName={INBOX_CONSTANT[lang]['inbox-header']} />
       <div className="grow bg-grey-80">
         {isSuccess && chatRoomData !== null && (
           <div className="flex h-[calc(100dvh-12.625rem)] flex-col gap-y-4 px-3 py-4">
@@ -207,7 +211,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         )}
         {isError && (
           <div className="flex h-full items-center justify-center">
-            <p>쪽지를 불러오다가 오류가 발생했어요.</p>
+            <p>{INBOX_CONSTANT[lang]['meesage-fetch-error']}</p>
           </div>
         )}
         {/* input */}

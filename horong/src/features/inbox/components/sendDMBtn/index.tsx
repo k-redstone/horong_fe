@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom'
 import toast from 'react-hot-toast'
 
 import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
+import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import useModal from '@/features/community/hooks/useModal/index.tsx'
 import { CommentContentPaylaod } from '@/features/community/types/post/index.ts'
 import {
@@ -64,9 +65,9 @@ function SendDMBtn({ userId, postId }: SendDMBtnProps) {
         await messageMutation({ userId, postId, contentsByLanguages })
       })(),
       {
-        loading: COMMUNITY_CONSTANT[lang]['comment-submit-toast-loading'],
-        success: COMMUNITY_CONSTANT[lang]['comment-submit-toast-success'],
-        error: COMMUNITY_CONSTANT[lang]['comment-submit-toast-fail'],
+        loading: INBOX_CONSTANT[lang]['message-submit-toast-loading'],
+        success: INBOX_CONSTANT[lang]['message-submit-toast-success'],
+        error: INBOX_CONSTANT[lang]['message-submit-toast-fail'],
       },
     )
   }

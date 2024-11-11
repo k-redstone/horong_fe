@@ -133,9 +133,10 @@ function PostComment(props: PostCommentProps) {
                     <MenuIcon />
                   </button>
                 ) : (
+                  loginUserId &&
                   userId && (
                     <SendDMBtn
-                      userId={userId}
+                      userId={loginUserId}
                       postId={props.postId}
                     />
                   )
