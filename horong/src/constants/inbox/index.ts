@@ -16,6 +16,8 @@ interface InboxConstantType {
 
     // 알림
     'notify-no-item-txt': string
+    'notify-new-message-txt': string
+    'notify-new-comment-txt': string
   }
 }
 
@@ -37,6 +39,8 @@ export const INBOX_CONSTANT: InboxConstantType = {
 
     // 알림
     'notify-no-item-txt': '새로운 알림이 없습니다.',
+    'notify-new-message-txt': '글에 새 댓글이 달렸습니다.',
+    'notify-new-comment-txt': '새 쪽지가 도착했습니다.',
   },
 
   ENGLISH: {
@@ -56,6 +60,8 @@ export const INBOX_CONSTANT: InboxConstantType = {
 
     // Notifications
     'notify-no-item-txt': 'No new notifications.',
+    'notify-new-message-txt': 'A new comment has been posted.',
+    'notify-new-comment-txt': 'You have a new message.',
   },
 
   CHINESE: {
@@ -75,6 +81,8 @@ export const INBOX_CONSTANT: InboxConstantType = {
 
     // Notifications
     'notify-no-item-txt': '没有新通知。',
+    'notify-new-message-txt': '有新评论。',
+    'notify-new-comment-txt': '您有一条新消息。',
   },
 
   JAPANESE: {
@@ -94,5 +102,7 @@ export const INBOX_CONSTANT: InboxConstantType = {
 
     // Notifications
     'notify-no-item-txt': '新しい通知はありません。',
+    'notify-new-message-txt': '新しいコメントが投稿されました。',
+    'notify-new-comment-txt': '新しいメッセージが届きました。',
   },
 }

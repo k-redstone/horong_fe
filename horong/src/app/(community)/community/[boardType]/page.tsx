@@ -3,7 +3,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
 import { fetchBoard } from '@/features/community/apis/post/index.ts'
 import BoardTitle from '@/features/community/components/boardTitle/index.tsx'
@@ -42,8 +41,7 @@ function CommunityBoardPage({ params }: CommunityBoardPageProps) {
   }
 
   return (
-    <div className="relative flex w-full flex-col">
-      <GlobalHeader pageName={`${COMMUNITY_CONSTANT[lang]['page-header']}`} />
+    <div className="relative flex h-full w-full flex-col">
       <div className="flex grow flex-col gap-y-3 bg-grey-80 py-4">
         <BoardTitle boardType={params.boardType} />
 

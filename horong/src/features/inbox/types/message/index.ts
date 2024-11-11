@@ -3,6 +3,7 @@ type MessagePromise = {
   senderNickname: string
   senderId: number
   createdAt: string
+  profileImage: string
   userMessageType: 'USER' | 'OPPONENT'
 }
 
@@ -16,4 +17,20 @@ type MessageAllPromise = {
   roomId: number
 } & MessagePromise
 
-export type { MessagePromise, MessageAllPromise, MessageListPromise }
+type NotifyPromise = {
+  id: number
+  chatRoomId: number | null
+  postId: number | null
+  type: 'MESSAGE' | 'COMMENT'
+  senderName: string
+  senderId: number
+  message: string
+  createdAt: string
+}
+
+export type {
+  MessagePromise,
+  MessageAllPromise,
+  MessageListPromise,
+  NotifyPromise,
+}
