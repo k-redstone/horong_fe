@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from 'next'
 
 import { Noto_Sans_JP, Noto_Sans_SC } from 'next/font/google'
 import localFont from 'next/font/local'
+import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 
+import { NavigationEvents } from '@/components/navigationEvents/index.tsx'
 import TanstackQueryProvider from '@/providers/TanstackQueryProvider/index.tsx'
 import './globals.css'
 
@@ -102,6 +104,9 @@ export default function RootLayout({
         <TanstackQueryProvider>
           {children}
           <Toaster />
+          <Suspense fallback={null}>
+            <NavigationEvents />
+          </Suspense>
           <div id="modalPortal" />
         </TanstackQueryProvider>
       </body>
