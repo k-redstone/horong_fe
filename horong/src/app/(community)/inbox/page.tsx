@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import MessageListBox from '@/features/inbox/components/messageListBox/index.tsx'
@@ -9,7 +10,15 @@ import useLangStore from '@/hooks/useLangStore.ts'
 
 function InboxPage() {
   const lang = useLangStore((state) => state.lang)
+  const searchParams = useSearchParams()
   const [selectedTap, setSelectedTap] = useState<number>(1)
+
+  useEffect(() => {
+    const type = searchParams.get('type')
+    if (type === '2') {
+      setSelectedTap(2)
+    }
+  }, [searchParams])
 
   return (
     <div className="flex h-full w-full flex-col">
