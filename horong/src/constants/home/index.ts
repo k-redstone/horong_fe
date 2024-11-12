@@ -10,6 +10,14 @@ interface HomeConstantType {
     'mic-btn': string
     'community-btn': string
     'exchange-btn': string
+
+    // chat log
+    'home-log-header': string
+    'home-log-info-txt': string
+    'home-log-fetch-error-txt': string
+    'home-log-today-txt': string
+    'home-log-yesterday-txt': string
+    'home-log-week-txt': string
   }
 }
 
@@ -26,6 +34,15 @@ export const HOME_CONSTANT: HomeConstantType = {
     'mic-btn': '한국어 학습',
     'community-btn': '커뮤니티',
     'exchange-btn': '사설 환전소',
+
+    // chat log
+    'home-log-header': '호롱챗 로그',
+    'home-log-info-txt':
+      '호롱과의 채팅은 일주일간 저장된 후 자동으로 삭제됩니다.',
+    'home-log-fetch-error-txt': '로그를 불러오던 중 오류가 발생했습니다.',
+    'home-log-today-txt': '오늘',
+    'home-log-yesterday-txt': '어제',
+    'home-log-week-txt': '7일 이내',
   },
 
   ENGLISH: {
@@ -40,6 +57,15 @@ export const HOME_CONSTANT: HomeConstantType = {
     'mic-btn': 'Korean Learning',
     'community-btn': 'Community',
     'exchange-btn': 'Private Exchange',
+
+    // chat log
+    'home-log-header': 'Horong Chat Log',
+    'home-log-info-txt':
+      'Chats with Horong are stored for one week and then automatically deleted.',
+    'home-log-fetch-error-txt': 'An error occurred while fetching the log.',
+    'home-log-today-txt': 'Today',
+    'home-log-yesterday-txt': 'Yesterday',
+    'home-log-week-txt': 'Within 7 days',
   },
 
   CHINESE: {
@@ -53,6 +79,14 @@ export const HOME_CONSTANT: HomeConstantType = {
     'mic-btn': '韩语学习',
     'community-btn': '社区',
     'exchange-btn': '私人交易所',
+
+    // chat log
+    'home-log-header': 'Horong Chat Log',
+    'home-log-info-txt': '与霍龙的聊天会保存一周，然后自动删除。',
+    'home-log-fetch-error-txt': '加载日志时发生错误。',
+    'home-log-today-txt': '今天',
+    'home-log-yesterday-txt': '昨天',
+    'home-log-week-txt': '7天内',
   },
 
   JAPANESE: {
@@ -67,5 +101,14 @@ export const HOME_CONSTANT: HomeConstantType = {
     'mic-btn': '韓国語学習',
     'community-btn': 'コミュニティ',
     'exchange-btn': 'プライベート取引所',
+
+    // chat log
+    'home-log-header': 'Horong Chat Log',
+    'home-log-info-txt':
+      'ホロンとのチャットは1週間保存され、その後自動的に削除されます。',
+    'home-log-fetch-error-txt': 'ログの取得中にエラーが発生しました。',
+    'home-log-today-txt': '今日',
+    'home-log-yesterday-txt': '昨日',
+    'home-log-week-txt': '7日以内',
   },
 }
