@@ -91,7 +91,7 @@ function CommentInput(props: CommentInputProps) {
         type="text"
         value={inputValue}
         onChange={(e) => handleChangeInput(e)}
-        placeholder="댓글을 입력해주세요."
+        placeholder={COMMUNITY_CONSTANT[lang]['comment-input-placeholder']}
       />
       <button
         className="shrink-0"

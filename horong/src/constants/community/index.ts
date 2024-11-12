@@ -30,6 +30,10 @@ interface CommunityConstantType {
     'post-submit-is-blank': string
     'post-none-text': string
     'post-edit-header': string
+    'post-input-placeholder': string
+    'post-limit-img-text': string
+    'post-limit-title-text': string
+    'post-limit-content-text': string
 
     // comment
     'comment-edit-header': string
@@ -40,6 +44,7 @@ interface CommunityConstantType {
     'comment-submit-toast-fail': string
     'comment-deleted-text1': string
     'comment-deleted-text2': string
+    'comment-input-placeholder': string
 
     // modal
     'modal-delete-text': string
@@ -91,6 +96,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-is-blank': '빈칸이 있습니다!',
     'post-none-text': '아직 게시물이 존재하지 않습니다.',
     'post-edit-header': '게시글 수정',
+    'post-input-placeholder': '제목을 입력하세요.',
+    'post-limit-img-text': '이미지는 최대 5장 업로드 가능합니다.',
+    'post-limit-title-text': '최대 40자까지 입력 가능합니다.',
+    'post-limit-content-text': '최대 글자 수를 초과했습니다.',
 
     // comment
     'comment-submit-toast-success': '댓글을 성공적으로 작성했습니다.',
@@ -101,6 +110,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-none-text2': '첫 번째 댓글을 남겨보세요',
     'comment-deleted-text1': '삭제됨',
     'comment-deleted-text2': '삭제된 댓글입니다.',
+    'comment-input-placeholder': '댓글을 입력해주세요.',
 
     // modal
     'modal-delete-text': '삭제',
@@ -151,6 +161,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-is-blank': 'There are empty fields!',
     'post-none-text': 'No posts are currently available.',
     'post-edit-header': 'Edit Post',
+    'post-input-placeholder': 'Please enter a title.',
+    'post-limit-img-text': 'You can upload up to 5 images.',
+    'post-limit-title-text': 'You can enter up to 40 characters.',
+    'post-limit-content-text': 'You have exceeded the maximum character limit.',
 
     // comment
     'comment-submit-toast-success': 'Comment submitted successfully.',
@@ -162,6 +176,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-none-text2': 'Be the first to leave a comment.',
     'comment-deleted-text1': 'Deleted',
     'comment-deleted-text2': 'This comment has been deleted.',
+    'comment-input-placeholder': 'Please enter a comment.',
 
     // modal
     'modal-delete-text': 'Delete',
@@ -210,6 +225,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-is-blank': '有空字段！',
     'post-none-text': '目前没有帖子。',
     'post-edit-header': '编辑帖子',
+    'post-input-placeholder': '请输入标题。',
+    'post-limit-img-text': '最多可上传5张图片。',
+    'post-limit-title-text': '最多可输入40个字符。',
+    'post-limit-content-text': '已超出最大字符数。',
 
     // comment
     'comment-edit-header': '编辑评论',
@@ -220,6 +239,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-fail': '提交评论时发生错误。',
     'comment-deleted-text1': '已删除',
     'comment-deleted-text2': '该评论已被删除。',
+    'comment-input-placeholder': '请输入评论。',
 
     // modal
     'modal-delete-text': '删除',
@@ -268,6 +288,10 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'post-submit-is-blank': '空のフィールドがあります！',
     'post-none-text': 'まだ投稿がありません。',
     'post-edit-header': '投稿の編集',
+    'post-input-placeholder': 'タイトルを入力してください。',
+    'post-limit-img-text': '画像は最大5枚までアップロード可能です。',
+    'post-limit-title-text': '最大40文字まで入力可能です。',
+    'post-limit-content-text': '最大文字数を超えました。',
 
     // comment
     'comment-edit-header': 'コメント編集',
@@ -278,6 +302,7 @@ const COMMUNITY_CONSTANT: CommunityConstantType = {
     'comment-submit-toast-fail': 'コメントの投稿中にエラーが発生しました。',
     'comment-deleted-text1': '削除済み',
     'comment-deleted-text2': '削除されたコメントです。',
+    'comment-input-placeholder': 'コメントを入力してください。',
 
     // modal
     'modal-delete-text': '削除',

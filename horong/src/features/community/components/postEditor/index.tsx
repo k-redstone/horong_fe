@@ -1,14 +1,17 @@
 'use client'
 
+import dompurify from 'dompurify'
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 import { useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import ReactQuill, { Quill } from 'react-quill-new'
 
+import { COMMUNITY_CONSTANT } from '@/constants/community/index.ts'
 import { uploadS3AnddInsertEmbed } from '@/features/community/apis/editor/index.ts'
 import './editor.css'
 import 'react-quill-new/dist/quill.snow.css'
 import EditorToolBar from '@/features/community/components/postEditor/EditorToolBar.tsx'
+import useLangStore from '@/hooks/useLangStore.ts'
 interface PostEditorProps {
   title: string
   imgList: string[]
@@ -21,23 +24,31 @@ interface PostEditorProps {
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 
 function PostEditor(props: PostEditorProps) {
+  const lang = useLangStore((state) => state.lang)
+  const sanitizer = dompurify.sanitize
   const { title, imgList, content, setImgList, setTitle, setContent } = props
-  // const [content, setContent] = useState<string>('')
-  // const [title, setTitle] = useState<string>('')
   const [previousContent, setPreviousContent] = useState('')
-  // const [imgList, setImgList] = useState<string[]>([])
+
   const quillRef = useRef<ReactQuill>(null)
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value
 
     if (newValue.length >= 41) {
-      return toast.error('최대 40자까지 입력 가능합니다.')
+      return toast.error(COMMUNITY_CONSTANT[lang]['post-limit-title-text'])
     }
     setTitle(newValue)
   }
-  console.log('asdfasdfasdfasdf', content, imgList)
+
   const handleContentChange = (newContent: string) => {
+    if (newContent.length >= 4001) {
+      setContent('')
+      const editor = quillRef.current?.getEditor()
+      editor?.clipboard.dangerouslyPasteHTML(sanitizer(`${content}`))
+      toast.error(COMMUNITY_CONSTANT[lang]['post-limit-content-text'])
+      return
+    }
+
     const prevImgUrls = Array.from(
       new DOMParser().parseFromString(previousContent, 'text/html').images,
     ).map((img) => img.src)
@@ -45,14 +56,12 @@ function PostEditor(props: PostEditorProps) {
       new DOMParser().parseFromString(newContent, 'text/html').images,
     ).map((img) => img.src)
 
-    // 이전 내용에 있던 이미지 URL 중 새 내용에 없는 것들을 찾아 삭제
     const deletedImages = prevImgUrls.filter((url) => !newImgUrls.includes(url))
 
     if (deletedImages.length > 0) {
       setImgList((prevList) =>
         prevList.filter((url) => !deletedImages.includes(url)),
       )
-      console.log('Images deleted:', deletedImages) // 확인을 위해 삭제된 이미지 URL 로그
     }
 
     setContent(newContent)
@@ -70,21 +79,19 @@ function PostEditor(props: PostEditorProps) {
     )
 
     if (imgTags.length >= 5) {
-      return toast.error('이미지는 최대 5장 업로드 가능합니다.')
+      return toast.error(COMMUNITY_CONSTANT[lang]['post-limit-img-text'])
     }
     const input = document.createElement('input')
     input.setAttribute('type', 'file')
     input.setAttribute('accept', 'image/*')
     input.click()
-    console.log('asdf')
 
     input.addEventListener('change', async () => {
-      console.log(imgList)
       if (!quillRef.current) {
         return
       }
       if (imgList.length >= 5) {
-        return toast.error('이미지는 최대 5장 업로드 가능합니다.')
+        return toast.error(COMMUNITY_CONSTANT[lang]['post-limit-img-text'])
       }
 
       const file = input.files?.[0]
@@ -92,18 +99,13 @@ function PostEditor(props: PostEditorProps) {
         return
       }
       try {
-        // const res = await imageApi({ img: file });
-        // const imgURL =
-        //   'https://cf-templates-1gyolugg9zn9q-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/store/ee0e7809%2C5846%2C4b2c%2Cb9f2%2C81148b282892'
         const imgURL = await uploadS3AnddInsertEmbed(file)
         const editor = quillRef.current.getEditor()
-        console.log(editor.getText())
         setImgList((prevList) => [
           ...prevList,
           `https://horong-service.s3.ap-northeast-2.amazonaws.com/${imgURL}`,
         ])
         const range = editor.getSelection()
-        console.log(range)
         editor.insertEmbed(
           range ? range.index : 0,
           'image',
@@ -120,7 +122,6 @@ function PostEditor(props: PostEditorProps) {
     dataUrl: string,
     type: string | string[],
   ) => {
-    console.log('drag')
     if (!quillRef.current) {
       return
     }
@@ -131,27 +132,23 @@ function PostEditor(props: PostEditorProps) {
     )
 
     if (imgTags.length >= 5) {
-      return toast.error('이미지는 최대 5장 업로드 가능합니다.')
+      return toast.error(COMMUNITY_CONSTANT[lang]['post-limit-img-text'])
     }
 
     if (type.includes('image')) {
       try {
-        // const imgURL =
-        //   'https://cf-templates-1gyolugg9zn9q-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/store/ee0e7809%2C5846%2C4b2c%2Cb9f2%2C81148b282892'
         const blob = await fetch(dataUrl).then((res) => res.blob())
         const file = new File([blob], 'image.png', { type: 'image/png' })
-        console.log(file)
+
         const imgURL = await uploadS3AnddInsertEmbed(file)
         const editor = quillRef.current.getEditor()
         const range = editor.getSelection()
-        console.log(imgURL)
-        console.log(imgList)
+
         setImgList((prevList) => [
           ...prevList,
           `https://horong-service.s3.ap-northeast-2.amazonaws.com/${imgURL}`,
         ])
-        console.log(imgURL)
-        console.log(range)
+
         editor.insertEmbed(
           range ? range.index : 0,
           'image',
@@ -198,7 +195,7 @@ function PostEditor(props: PostEditorProps) {
         <textarea
           className="grow resize-none bg-grey-80 text-lg focus:outline-none"
           onChange={(e) => handleTitleChange(e)}
-          placeholder="제목을 입력하세요."
+          placeholder={COMMUNITY_CONSTANT[lang]['post-input-placeholder']}
           value={title}
         />
         <div className="flex items-end">
@@ -216,7 +213,6 @@ function PostEditor(props: PostEditorProps) {
         onChange={(value) => handleContentChange(value)}
         modules={modules}
         formats={formats}
-        placeholder={'내용을 입력하세요'}
         value={content}
         theme="snow"
       />
