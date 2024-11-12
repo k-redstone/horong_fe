@@ -1,7 +1,7 @@
 'use client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import toast, { LoaderIcon } from 'react-hot-toast'
 
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
@@ -34,6 +34,7 @@ interface InboxMessagePageProps {
 function InboxMessagePage({ params }: InboxMessagePageProps) {
   const queryClient = useQueryClient()
   const router = useRouter()
+  const scrollDiv = useRef<HTMLDivElement>(null)
   const lang = useLangStore((state) => state.lang)
 
   const [inputValue, setInputValue] = useState<string>('')
@@ -162,6 +163,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
     if (isSuccess && !chatRoomData) {
       router.push('/inbox')
     }
+    scrollDiv.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [chatRoomData, isSuccess, queryClient, router])
 
   return (
@@ -199,6 +201,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
                 })}
               </div>
             ))}
+            <div ref={scrollDiv} />
           </div>
         )}
         {isMessagePending && (
