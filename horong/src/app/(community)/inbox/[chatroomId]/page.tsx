@@ -161,7 +161,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       queryClient.invalidateQueries({ queryKey: ['message', { type: 'all' }] })
     }
     if (isSuccess && !chatRoomData) {
-      router.push('/inbox')
+      router.replace('/inbox')
     }
     scrollDiv.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [chatRoomData, isSuccess, queryClient, router])
