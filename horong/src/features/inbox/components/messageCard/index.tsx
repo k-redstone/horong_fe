@@ -2,6 +2,7 @@ import Image from 'next/image'
 
 import { transDateFormat } from '@/features/community/utils/datetime/index.ts'
 import { MessageAllPromise } from '@/features/inbox/types/message/index.ts'
+import ImgIcon from '@/static/svg/inbox/inbox-img-icon.svg'
 interface MessageCardProps {
   data: MessageAllPromise
 }
@@ -29,7 +30,9 @@ function MessageCard({ data }: MessageCardProps) {
           </span>
           <span>{data.messageCount}</span>
         </div>
-        <p className="line-clamp-2 h-8 grow text-xs">{data.content}</p>
+        <p className="line-clamp-2 h-8 grow text-xs">
+          {data.content ? data.content : <ImgIcon />}
+        </p>
       </div>
     </div>
   )

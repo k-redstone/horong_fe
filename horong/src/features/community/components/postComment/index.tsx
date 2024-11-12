@@ -17,7 +17,9 @@ import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import SendDMBtn from '@/features/inbox/components/sendDMBtn/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useUserId from '@/hooks/useUserId.ts'
+import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
+
 interface PostCommentProps {
   data: CommentPromise
   postId: number
@@ -107,12 +109,16 @@ function PostComment(props: PostCommentProps) {
         <div className="flex gap-x-2">
           {/* 프로필 이미지 */}
           <div className="h-[2rem] w-[2rem] shrink-0">
-            <Image
-              src={props.data.profileImage}
-              alt={'profile'}
-              width={32}
-              height={32}
-            />
+            {props.data.profileImage === null ? (
+              <HorongSVG className="h-full w-full" />
+            ) : (
+              <Image
+                src={props.data.profileImage}
+                alt={'profile'}
+                width={32}
+                height={32}
+              />
+            )}
           </div>
 
           <div className="flex grow flex-col gap-y-2">
