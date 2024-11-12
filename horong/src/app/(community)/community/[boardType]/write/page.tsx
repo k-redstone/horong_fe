@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+import { notFound, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -96,6 +96,11 @@ function CommunityPostWritePage({ params }: CommunityPostWritePageProps) {
       },
     )
   }
+
+  if (params.boardType === 'notice') {
+    notFound()
+  }
+
   return (
     <div className="flex h-full w-full flex-col">
       {/* 헤더 */}

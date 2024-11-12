@@ -31,7 +31,7 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
       {isSuccess ? (
         <div className="flex grow flex-col gap-y-4 bg-grey-80 px-5 py-4">
           {/* 본문 */}
-          <div className="flex h-[36rem] flex-col gap-y-4 overflow-y-scroll">
+          <div className="flex h-[calc(100dvh-10.25rem)] flex-col gap-y-4 overflow-y-scroll">
             <PostContent data={data} />
 
             {/* 댓글 수 */}

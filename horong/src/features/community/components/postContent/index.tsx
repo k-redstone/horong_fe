@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dompurify from 'dompurify'
+import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -13,7 +14,6 @@ import { PostPromise } from '@/features/community/types/post/index.ts'
 import { transFullDateTime } from '@/features/community/utils/datetime/index.ts'
 import SendDMBtn from '@/features/inbox/components/sendDMBtn/index.tsx'
 import useUserId from '@/hooks/useUserId.ts'
-import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
 
 interface PostContentProps {
@@ -100,9 +100,13 @@ function PostContent({ data }: PostContentProps) {
       <div className="flex flex-col gap-y-4">
         {/* user info */}
         <div className="flex gap-x-2 py-1">
-          {/* todo: profile image `*/}
           <div className="h-[2.875rem] w-[2.875rem] shrink-0">
-            <HorongSVG className="h-full w-full" />
+            <Image
+              src={data.profileImage}
+              alt={'profile'}
+              width={46}
+              height={46}
+            />
           </div>
           <div className="flex grow flex-col gap-y-1 px-2">
             <span className="font-bold">{data.nickname}</span>
