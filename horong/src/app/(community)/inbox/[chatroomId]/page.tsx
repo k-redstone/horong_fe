@@ -132,7 +132,6 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         const imgURL = await uploadS3AnddInsertEmbed(file)
         const payload = {
           chatRoomId: parseInt(params.chatroomId),
-          contentsByLanguages: [],
           contentImageRequest: [
             {
               imageUrl: `https://horong-service.s3.ap-northeast-2.amazonaws.com/${imgURL}`,

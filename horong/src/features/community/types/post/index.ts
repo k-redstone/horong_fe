@@ -109,7 +109,7 @@ type CommentCreatePayload = {
 
 type MessageSendPayload = {
   chatRoomId: number
-  contentsByLanguages: CommentContentPaylaod[]
+  contentsByLanguages?: CommentContentPaylaod[]
   contentImageRequest: ContentImageRequest[]
 }
 
