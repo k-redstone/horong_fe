@@ -37,29 +37,45 @@ const messaging = firebase.messaging()
 // 클릭시
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const data = event.notification.data
-  const { contentType, boardType, id } = data
 
-  event.waitUntil(
-    clients.openWindow(
-      contentType === 'COMMENT'
-        ? `https://horong.kr/community/${boardType}/${id}`
-        : `https://horong.kr/inbox`,
-    ),
-  )
+  const urlToOpen = event.notification.data.url
+
+  // 클라이언트에 해당 사이트가 열려있는지 체크
+  const promiseChain = clients
+    .matchAll({
+      type: 'window',
+      includeUncontrolled: true,
+    })
+    .then(function (windowClients) {
+      let matchingClient = null
+
+      for (let i = 0; i < windowClients.length; i++) {
+        const windowClient = windowClients[i]
+        if (windowClient.url.includes(urlToOpen)) {
+          matchingClient = windowClient
+          break
+        }
+      }
+
+      // 열려있다면 focus, 아니면 새로 open
+      if (matchingClient) {
+        return matchingClient.focus()
+      } else {
+        return clients.openWindow(urlToOpen)
+      }
+    })
+
+  event.waitUntil(promiseChain)
 })
 
 self.addEventListener('push', function (event) {
-  // console.log(event.data.json().data)
   if (event.data) {
-    // 알림 메세지일 경우엔 event.data.json().notification;
     const data = event.data.json().data
     const notificationTitle = data.title
     const notificationOptions = {
       body: data.body,
-      data: data,
+      data: { url: data.url },
     }
-    console.log('send')
     event.waitUntil(
       self.registration.showNotification(
         notificationTitle,

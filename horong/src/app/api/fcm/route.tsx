@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import privateAPI from '@/api/privateAPI/index.ts'
 import { FCM_CONSTANT } from '@/constants/fcm/index.ts'
 import admin from '@/util/fcmAdmin.ts'
 
@@ -10,9 +9,11 @@ export async function POST(request: NextRequest) {
     type,
     contentId,
     boardType,
+    lang,
   }: {
     userId: number
     type: 'COMMENT' | 'MESSAGE'
+    lang: string
     contentId?: number
     boardType?: string
   } = await request.json()
@@ -40,18 +41,20 @@ export async function POST(request: NextRequest) {
         { status: 404 },
       )
     }
-    const lang = await privateAPI.get(`/notifications/language/${userId}`)
     // FCM 메시지 구성
     const message = {
       data: {
         contentType: type,
-        id: `${contentId}`,
         boardType: `${boardType}`,
         title:
           type === 'COMMENT'
-            ? `${FCM_CONSTANT[lang.data.result]['fcm-push-title-comment-txt']}`
-            : `${FCM_CONSTANT[lang.data.result]['fcm-push-title-message-txt']}`,
-        body: `${FCM_CONSTANT[lang.data.result]['fcm-push-body-txt']}`,
+            ? `${FCM_CONSTANT[lang]['fcm-push-title-comment-txt']}`
+            : `${FCM_CONSTANT[lang]['fcm-push-title-message-txt']}`,
+        body: `${FCM_CONSTANT[lang]['fcm-push-body-txt']}`,
+        url:
+          type === 'COMMENT'
+            ? `https://horong.kr/community/${boardType}/${contentId}`
+            : `https://horong.kr/inbox`,
       },
       token,
     }

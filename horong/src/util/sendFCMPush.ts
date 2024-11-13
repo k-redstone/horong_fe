@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// import privateAPI from '@/api/privateAPI/index.ts'
+import privateAPI from '@/api/privateAPI/index.ts'
 
 async function sendFCMPush(
   userId: number,
@@ -9,11 +9,14 @@ async function sendFCMPush(
   boardType?: string,
 ) {
   try {
+    const lang = await privateAPI.get(`/notifications/language/${userId}`)
+    const userLang = lang.data.result
     await axios.post(
       '/api/fcm',
       {
-        type,
         userId,
+        type,
+        lang: userLang,
         contentId,
         boardType,
       },
