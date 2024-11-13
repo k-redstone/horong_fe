@@ -24,6 +24,7 @@ import { MessagePromise } from '@/features/inbox/types/message/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import ImgIcon from '@/static/svg/inbox/inbox-input-img-icon.svg'
 import SendIcon from '@/static/svg/inbox/inbox-send-icon.svg'
+import { sendFCMPush } from '@/util/sendFCMPush.ts'
 
 interface InboxMessagePageProps {
   params: {
@@ -58,7 +59,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       queryClient.invalidateQueries({
         queryKey: ['message', { type: parseInt(params.chatroomId) }],
       })
-
+      sendFCMPush(chatRoomData?.messageList[0].senderId as number, 'MESSAGE')
       setInputValue('')
       setIsPending(false)
     },
