@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { ISSUE_CONSTANTS } from '@/constants/issue/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
@@ -18,6 +18,7 @@ function IssueDetail() {
   const [liked, setLiked] = useState(false)
   const [unliked, setUnliked] = useState(false)
   const [scraped, setScraped] = useState(false)
+  const scrollPos = useRef<HTMLDivElement>(null)
 
   const [isCollapsed, setIsCollapsed] = useState(false)
   //1~3까지 랜덤으로 뽑기
@@ -30,25 +31,32 @@ function IssueDetail() {
       {isCollapsed && (
         <button
           onClick={() => setIsCollapsed(false)}
-          className="absolute bottom-0 z-30 h-full w-full bg-black bg-opacity-60"
+          className="absolute bottom-0 z-30 h-full w-full bg-black bg-opacity-30"
         />
       )}
       <Image
         src={random === 1 ? NewJeansImg : random === 2 ? ARKImg : LoLImg}
         alt="new jeans"
         layout="fill"
-        className="h-full w-full object-cover"
+        className="h-full w-full object-contain"
       />
 
-      <div className="absolute bottom-0 z-50 flex items-end justify-between">
+      <div className="absolute bottom-0 z-50 flex w-full items-end justify-between">
         {/* text */}
         <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`${isCollapsed ? 'h-[80dvh]' : 'h-4'} flex flex-1 flex-col gap-y-2 px-4 transition-all duration-300 ease-in-out`}
+          onClick={() => {
+            scrollPos.current?.scrollTo(0, 0)
+            setIsCollapsed(!isCollapsed)
+          }}
+          className={`${isCollapsed ? 'h-[20dvh]' : 'h-[6dvh]'} flex flex-1 flex-col gap-y-2 px-4 transition-all duration-300 ease-in-out`}
         >
           <p className="text-xs-bold">타이틀</p>
-          <div className="text-start text-2xs">
-            텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?
+          <div
+            className={`${isCollapsed ? 'overflow-y-scroll' : 'line-clamp-2 overflow-y-hidden'} w-full text-start text-2xs`}
+            // 스크롤 탑으로
+            ref={scrollPos}
+          >
+            텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?텍스튼데요이게너무길어서마링죠?
           </div>
         </button>
         {/* icons */}
