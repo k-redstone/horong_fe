@@ -37,8 +37,15 @@ messaging.onMessage((payload) => {
 self.addEventListener('notificationclick', (event) => {
   console.log('Notification clicked:', event.notification)
   event.notification.close()
-
-  event.waitUntil(clients.openWindow('https://pwa-study-xi.vercel.app/fcm'))
+  if (event.data.contentType === 'COMMENT') {
+    event.waitUntil(
+      clients.openWindow(
+        `https://horong.kr/community/${event.data.boardType}/${event.data.id}`,
+      ),
+    )
+  } else {
+    event.waitUntil(clients.openWindow(`https://horong.kr/inbox`))
+  }
 })
 
 self.addEventListener('push', function (event) {

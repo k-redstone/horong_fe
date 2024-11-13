@@ -4,10 +4,16 @@ import admin from '@/util/fcmAdmin.ts'
 
 export async function POST(request: NextRequest) {
   const {
-    title,
-    body,
     userId,
-  }: { title: string; body: string; userId: number } = await request.json()
+    type,
+    contentId,
+    boardType,
+  }: {
+    userId: number
+    type: 'COMMENT' | 'MESSAGE'
+    contentId?: number
+    boardType?: string
+  } = await request.json()
   try {
     // 특정 userId에 해당하는 사용자 토큰 가져오기
     const snapshot = await admin
@@ -18,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     if (snapshot.empty) {
       return NextResponse.json(
-        { message: `No user found with userId: ${userId}` },
+        { message: `No user found with userId` },
         { status: 404 },
       )
     }
@@ -28,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { message: `No FCM token found for userId: ${userId}` },
+        { message: `No FCM token found` },
         { status: 404 },
       )
     }
@@ -36,8 +42,16 @@ export async function POST(request: NextRequest) {
     // FCM 메시지 구성
     const message = {
       notification: {
-        title,
-        body,
+        title:
+          type === 'COMMENT'
+            ? '새로운 댓글이 달렸습니다.'
+            : '새로운 쪽지가 왔습니다.',
+        body: '지금 눌러서 확인하기',
+      },
+      data: {
+        contentType: type,
+        id: `${contentId}`,
+        boardType: `${boardType}`,
       },
       token,
     }

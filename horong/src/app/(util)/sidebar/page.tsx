@@ -21,7 +21,7 @@ import IssueIcon from '@/static/svg/sidebar/sidebar-issue-icon.svg'
 import MicIcon from '@/static/svg/sidebar/sidebar-mic-icon.svg'
 // fcm
 import { handlePermissionRequest } from '@/util/handlePushPermissionRequest.ts'
-import { sendPush } from '@/util/sendpush.ts'
+// import { sendPush } from '@/util/sendpush.ts'
 
 type UserDataType = {
   nickname: string
@@ -167,7 +167,7 @@ function SideBar() {
           </LinkWrapperBtn>
 
           <span onClick={() => handlePermissionRequest()}>notification</span>
-          <span onClick={() => sendPush()}>send noti</span>
+          {/* <span onClick={() => sendPush(2, 'COMMENT')}>send noti</span> */}
         </div>
       </div>
 
