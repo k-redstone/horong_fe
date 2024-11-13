@@ -25,7 +25,7 @@ const useNotificationStore = create<NotificationStore>()((set, get) => ({
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        heartbeatTimeout: 20000,
+        heartbeatTimeout: 70 * 1000,
       },
     )
 
