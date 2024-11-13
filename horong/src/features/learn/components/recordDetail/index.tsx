@@ -6,17 +6,16 @@ import useLangStore from '@/hooks/useLangStore.ts'
 import ArrowDownSVG from '@/static/svg/learn/learn-bottomarrow-icon.svg'
 import PlaySVG from '@/static/svg/learn/learn-play-icon.svg'
 import ArrowUpSVG from '@/static/svg/learn/learn-toparrow-icon.svg'
-import TranshSVG from '@/static/svg/learn/learn-trash-icon.svg'
 
 interface RecordType {
   id: number
-  word: string
+  text: string
   cer: number
   gtIdx: number[]
   hypIdx: number[]
-  date: string
   audio: string
 }
+
 function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const lang = useLangStore((state) => state.lang)
@@ -26,9 +25,6 @@ function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
     if (audioRef.current) {
       audioRef.current.play()
     }
-  }
-  const deleteRecord = () => {
-    alert(record.word + '삭제')
   }
   return (
     <>
@@ -58,9 +54,9 @@ function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
       </button>
 
       {isCollapsed && (
-        <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-grey-70 px-6 pb-5 pt-2">
+        <div className="flex w-full flex-col gap-y-4 rounded-3xl bg-grey-70 px-6 pb-5 pt-10">
           {/* 삭제 */}
-          <button
+          {/* <button
             onClick={deleteRecord}
             className="flex items-center justify-end gap-x-1"
           >
@@ -68,11 +64,11 @@ function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
               {LEARN_CONSTANTS[lang]['word-delete']}
             </span>
             <TranshSVG className="h-3 w-3" />
-          </button>
+          </button> */}
 
           {/* 단어 */}
           <div className="flex items-center justify-center text-2xl text-text-high">
-            {record.word.split('').map((char, index) => (
+            {record.text.split('').map((char, index) => (
               <span
                 // @이하림
                 className={`${record.gtIdx.includes(index) && 'text-primary'} transition-colors duration-500 ease-in-out`}

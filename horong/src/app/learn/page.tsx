@@ -11,12 +11,29 @@ import LastLearnListBtn from '@/features/learn/components/lastListBtn/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
 import LearnRightArrowIcon from '@/static/svg/learn/learn-rightarrow-icon.svg'
 import StampOffSVG from '@/static/svg/learn/learn-stamp-off-icon.svg'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import StampOnSVG from '@/static/svg/learn/learn-stamp-on-icon.svg'
 
 type ValuePiece = Date | null
 type Value = ValuePiece | [ValuePiece, ValuePiece]
+interface recordType {
+  date: string
+  educationRecordList: wordType[]
+}
 
+interface wordType {
+  word: string
+  wordId: number
+  educationRecordList: resultType[]
+}
+
+interface resultType {
+  id: number
+  text: string
+  cer: number
+  gtIdx: number[]
+  hpyIdx: number[]
+  audio: string
+}
 function LearnPage() {
   const [clickedDate, setClickedDate] = useState<Value>()
   const lang = useLangStore((state) => state.lang)
@@ -29,6 +46,26 @@ function LearnPage() {
       return res.data.result
     },
   })
+
+  const { data: stamp } = useQuery({
+    queryKey: ['stamp'],
+    queryFn: async () => {
+      const res = await privateAPI.get('/education/stamps')
+
+      return res.data
+    },
+  })
+
+  //교육기록이 있는 날짜에 한해서만 클릭하면 밑에 보이게
+  const { data: recordList } = useQuery({
+    queryKey: ['record-list'],
+    queryFn: async () => {
+      const res = await privateAPI.get('/education/records')
+
+      return res.data.result
+    },
+  })
+
   return (
     <div className="flex grow flex-col items-center gap-y-8 overflow-y-scroll px-5 py-8 text-sm text-text-high">
       {/* 오늘의 학습 */}
@@ -67,15 +104,24 @@ function LearnPage() {
         </div>
 
         <div className="grid w-full grid-cols-5 place-items-center gap-y-2 rounded-3xl bg-grey-70 px-4 py-3">
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i: number) => (
             <div
               key={'stamp_' + i}
               className="relative"
             >
-              <StampOffSVG />
-              <span className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center justify-center text-3xs">
-                11/11
-              </span>
+              {stamp?.result.length >= i + 1 ? (
+                <>
+                  <StampOnSVG />
+                  <span className="absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center justify-center text-3xs">
+                    {new Date(stamp?.result[i]).toLocaleDateString('en', {
+                      month: '2-digit',
+                      day: '2-digit',
+                    })}
+                  </span>
+                </>
+              ) : (
+                <StampOffSVG />
+              )}
             </div>
           ))}
         </div>
@@ -112,7 +158,23 @@ function LearnPage() {
                 <div
                   className={`${
                     view === 'month' &&
-                    clickedDate?.toString() === date.toString()
+                    recordList?.educationRecordList.some(
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      (record: any) => {
+                        return (
+                          new Date(record.date).toLocaleDateString('en', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          }) ===
+                          date.toLocaleDateString('en', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          })
+                        )
+                      },
+                    )
                       ? 'block'
                       : 'invisible'
                   } flex w-full items-center justify-center`}
@@ -167,12 +229,43 @@ function LearnPage() {
                   <div className="flex-1" />
                 </div>
                 {/* 아이템 */}
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <LastLearnListBtn
-                    key={'last_learn_list_btn_' + i}
-                    wordId={i}
-                  />
-                ))}
+                {recordList?.educationRecordList.map((record: recordType) => {
+                  if (
+                    new Date(record?.date).toLocaleString('en', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    }) ===
+                    clickedDate.toLocaleString('en', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })
+                  ) {
+                    return (
+                      <div
+                        className="flex w-full flex-col items-center justify-between gap-y-1"
+                        key={'last_learn_list_wrapper_' + record.date}
+                      >
+                        {record.educationRecordList.map(
+                          (word: wordType, index: number) => (
+                            <LastLearnListBtn
+                              key={
+                                'last_learn_list_btn_' +
+                                record.date +
+                                '_' +
+                                word.word +
+                                '_' +
+                                index
+                              }
+                              word={word}
+                            />
+                          ),
+                        )}
+                      </div>
+                    )
+                  }
+                })}
               </div>
             </div>
           </>

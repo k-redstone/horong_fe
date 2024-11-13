@@ -19,6 +19,17 @@ interface LearnConstantsType {
     'word-record': string
     'word-listen': string
     'word-delete': string
+
+    // ---
+    'today-example-txt': string
+    'today-result-txt': string
+    'today-mic-txt': string
+    'today-again-mic-txt': string
+
+    'today-move-before': string
+    'today-move-next': string
+
+    'today-cer-txt': string
   }
 }
 
@@ -44,6 +55,17 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'word-record': '녹음',
     'word-listen': '내 발음 듣기',
     'word-delete': '녹음 삭제',
+
+    // ---
+    'today-example-txt': '예문',
+    'today-result-txt': '아직 결과가 없습니다.',
+    'today-mic-txt': '발음 연습하기',
+    'today-again-mic-txt': '다시 연습하기',
+
+    'today-move-before': '이전 단어로',
+    'today-move-next': '다음 단어로',
+
+    'today-cer-txt': '정확도',
   },
 
   ENGLISH: {
@@ -68,6 +90,17 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'word-record': 'Record',
     'word-listen': 'Listen to My Pronunciation',
     'word-delete': 'Delete Recording',
+
+    // ---
+    'today-example-txt': 'Example',
+    'today-result-txt': 'No results yet.',
+    'today-mic-txt': 'Practice Pronunciation',
+    'today-again-mic-txt': 'Practice again',
+
+    'today-move-before': 'To the previous word',
+    'today-move-next': 'To the next word',
+
+    'today-cer-txt': 'Accuracy',
   },
 
   CHINESE: {
@@ -91,6 +124,17 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'word-record': '录音',
     'word-listen': '听我的发音',
     'word-delete': '删除录音',
+
+    // ---
+    'today-example-txt': '例句',
+    'today-result-txt': '尚无结果。',
+    'today-mic-txt': '练习发音',
+    'today-again-mic-txt': '再次练习',
+
+    'today-move-before': '到上一个单词',
+    'today-move-next': '到下一个单词',
+
+    'today-cer-txt': '准确度',
   },
 
   JAPANESE: {
@@ -114,5 +158,16 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'word-record': '録音',
     'word-listen': '私の発音を聞く',
     'word-delete': '録音を削除',
+
+    // ---
+    'today-example-txt': '例文',
+    'today-result-txt': 'まだ結果がありません。',
+    'today-mic-txt': '発音練習',
+    'today-again-mic-txt': 'もう一度練習',
+
+    'today-move-before': '前の単語へ',
+    'today-move-next': '次の単語へ',
+
+    'today-cer-txt': '正確度',
   },
 }
