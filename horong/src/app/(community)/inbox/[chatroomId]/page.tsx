@@ -59,7 +59,10 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       queryClient.invalidateQueries({
         queryKey: ['message', { type: parseInt(params.chatroomId) }],
       })
-      sendFCMPush(chatRoomData?.messageList[0].senderId as number, 'MESSAGE')
+
+      if (chatRoomData) {
+        sendFCMPush(chatRoomData.otherId, 'MESSAGE')
+      }
       setInputValue('')
       setIsPending(false)
     },

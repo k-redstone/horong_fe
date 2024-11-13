@@ -13,50 +13,53 @@ firebase.initializeApp({
   measurementId: 'G-K1PL5SF9D1',
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const messaging = firebase.messaging()
 
 // background
-messaging.onBackgroundMessage((payload) => {
-  console.log('Received background message:', payload)
+// messaging.onBackgroundMessage((payload) => {
+//   console.log('Received background message:', payload)
 
-  const notificationTitle = payload.notification.title
-  const notificationOptions = {
-    body: payload.notification.body,
-  }
+//   const notificationTitle = payload.notification.title
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//   }
 
-  self.registration.showNotification(notificationTitle, notificationOptions)
-})
+//   self.registration.showNotification(notificationTitle, notificationOptions)
+// })
 
 // foreground
-messaging.onMessage((payload) => {
-  console.log('Message received in foreground:', payload)
-  alert(`New Message: ${payload.notification.title}`)
-})
+// messaging.onMessage((payload) => {
+//   console.log('Message received in foreground:', payload)
+//   alert(`New Message: ${payload.notification.title}`)
+// })
 
 // 클릭시
 self.addEventListener('notificationclick', (event) => {
-  console.log('Notification clicked:', event.notification)
   event.notification.close()
-  if (event.data.contentType === 'COMMENT') {
-    event.waitUntil(
-      clients.openWindow(
-        `https://horong.kr/community/${event.data.boardType}/${event.data.id}`,
-      ),
-    )
-  } else {
-    event.waitUntil(clients.openWindow(`https://horong.kr/inbox`))
-  }
+  const data = event.notification.data
+  const { contentType, boardType, id } = data
+
+  event.waitUntil(
+    clients.openWindow(
+      contentType === 'COMMENT'
+        ? `https://horong.kr/community/${boardType}/${id}`
+        : `https://horong.kr/inbox`,
+    ),
+  )
 })
 
 self.addEventListener('push', function (event) {
+  // console.log(event.data.json().data)
   if (event.data) {
     // 알림 메세지일 경우엔 event.data.json().notification;
-    const data = event.data.json().notification
+    const data = event.data.json().data
     const notificationTitle = data.title
     const notificationOptions = {
       body: data.body,
+      data: data,
     }
-    console.log(notificationTitle)
+    console.log('send')
     event.waitUntil(
       self.registration.showNotification(
         notificationTitle,
