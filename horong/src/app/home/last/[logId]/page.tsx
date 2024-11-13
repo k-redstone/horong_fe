@@ -45,7 +45,7 @@ function HorongChatLogDetail({ params }: HorongChatLogDetailProps) {
 
   useEffect(() => {
     if (isSuccess && !data) {
-      router.replace('/home/log')
+      router.replace('/home/last')
     }
     scrollDiv.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [data, isSuccess, router])
