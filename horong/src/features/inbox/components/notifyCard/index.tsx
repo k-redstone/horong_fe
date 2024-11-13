@@ -11,7 +11,6 @@ interface NotifyCardProps {
 
 function NotifyCard({ data }: NotifyCardProps) {
   const lang = useLangStore((state) => state.lang)
-  console.log(data)
 
   return (
     <div className="flex w-[21rem] flex-col gap-y-1 rounded-xl border border-grey-60 px-4 py-3">

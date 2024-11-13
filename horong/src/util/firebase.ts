@@ -25,6 +25,7 @@ const setTokenHandler = async () => {
     const userId = res.data?.result?.userId
 
     if (!userId) {
+      // eslint-disable-next-line no-console
       console.error('User ID is not available in the response.')
       return
     }
@@ -33,8 +34,8 @@ const setTokenHandler = async () => {
     const currentToken = await getToken(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPI,
     })
-    console.log('asdfasdfasdfasdfasdf', currentToken)
     if (!currentToken) {
+      // eslint-disable-next-line no-console
       console.error(
         'No registration token available. Request permission to generate one.',
       )
@@ -47,10 +48,7 @@ const setTokenHandler = async () => {
       { userId, token: currentToken },
       { headers: { 'Content-Type': 'application/json' } },
     )
-
-    console.log('Token successfully saved to server.')
-  } catch (error) {
-    console.error('An error occurred while handling the token:', error)
+  } catch {
     throw new Error('An error occurred while handling the token:')
   }
 }

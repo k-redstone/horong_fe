@@ -34,11 +34,11 @@ const useNotificationStore = create<NotificationStore>()((set, get) => ({
     }
 
     eventSource.onopen = () => {
+      // eslint-disable-next-line no-console
       console.log('EventSource connection opened')
     }
 
-    eventSource.onerror = (error) => {
-      console.error('EventSource failed:', error)
+    eventSource.onerror = () => {
       eventSource.close()
       set({ eventSource: null })
     }
@@ -53,7 +53,6 @@ const useNotificationStore = create<NotificationStore>()((set, get) => ({
           messages: [...state.messages, parsedData],
         }))
       }
-      console.log(parsedData)
     })
 
     set({ eventSource })

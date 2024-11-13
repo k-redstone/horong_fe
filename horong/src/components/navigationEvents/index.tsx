@@ -13,8 +13,6 @@ export function NavigationEvents() {
   const { chatList } = useHorongChatStore()
 
   const saveLog = () => {
-    console.log('채팅 로그 저장중...')
-    console.log(chatList)
     if (chatList.length >= 2) {
       const payload: SaveChatLogPayload = {
         chatContents: chatList.map((item) => {
@@ -29,9 +27,6 @@ export function NavigationEvents() {
   }
 
   useEffect(() => {
-    const url = `${pathname}?${searchParams}`
-    console.log(url)
-
     // Check if we're navigating away from '/home'
     if (prevPathname.current === '/home' && pathname !== '/home') {
       // Call your specific function here
@@ -43,7 +38,6 @@ export function NavigationEvents() {
   }, [pathname, searchParams])
 
   const handleNavigateFromHome = () => {
-    console.log('Navigating away from home page!')
     saveLog()
     // Add your specific logic here
   }

@@ -113,7 +113,7 @@ function PostEditor(props: PostEditorProps) {
         )
         editor.setSelection(range ? range.index + 1 : 1)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     })
   }
@@ -156,7 +156,7 @@ function PostEditor(props: PostEditorProps) {
         )
         editor.setSelection(range ? range.index + 1 : 1)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

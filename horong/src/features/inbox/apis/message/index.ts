@@ -17,7 +17,7 @@ async function fetchMessage(
   chatroomId: number,
 ): Promise<MessageListPromise | null> {
   const fetchAllRes = await fetchAllMessage()
-  console.log(fetchAllRes, typeof chatroomId)
+
   if (!fetchAllRes.some((item) => item.roomId === chatroomId)) {
     return null
   }
@@ -27,7 +27,6 @@ async function fetchMessage(
 
 async function fetchNotifyStream() {
   const res = await privateAPI.get(`/nocifications/notifications/stream`)
-  console.log('stream', res)
   return res.data.result
 }
 
@@ -35,7 +34,6 @@ async function createChatroom(payload: { userId: number; postId: number }) {
   const res = await privateAPI.post(`/community/chatroom`, null, {
     params: payload,
   })
-  console.log('chat', res)
   return res.data.result
 }
 
@@ -46,12 +44,10 @@ async function sendFirstMessage(data: {
 }) {
   try {
     // 첫 번째 요청
-    console.log({ userId: data.userId, postId: data.postId })
     const chatroomId = await createChatroom({
       userId: data.userId,
       postId: data.postId,
     })
-    console.log('asdfasdfasdf', chatroomId)
 
     // 두 번째 요청
     const sendChatPayload = {

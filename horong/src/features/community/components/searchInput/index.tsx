@@ -11,16 +11,15 @@ interface SearchInputProps {
 }
 
 function SearchInput({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   boardType,
   setIsSearchTriggered,
   setSearchTxt,
 }: SearchInputProps) {
   const [isFocused, setIsFocused] = useState(false)
   const [inputValue, setInputVale] = useState<string>('')
-  console.log(boardType)
 
   const handleSearch = () => {
-    console.log(inputValue)
     setSearchTxt(inputValue)
     setIsSearchTriggered(true)
     setInputVale('')
