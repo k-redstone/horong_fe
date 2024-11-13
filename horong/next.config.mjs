@@ -21,6 +21,11 @@ const nextConfig = {
         pathname: '/**',
         hostname: 'horong-service.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        pathname: '/**',
+        hostname: 'horong-service.s3.amazonaws.com',
+      },
     ],
   },
 }
