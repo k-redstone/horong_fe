@@ -11,15 +11,18 @@ import {
   transText,
 } from '@/features/community/utils/editor/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
+import useUserId from '@/hooks/useUserId.ts'
 import CommentSendSVG from '@/static/svg/community/community-comment-send-icon.svg'
-
+import { sendFCMPush } from '@/util/sendFCMPush.ts'
 interface CommentInputProps {
   postId: number
   boardType: string
+  boardUserId: number
 }
 
 function CommentInput(props: CommentInputProps) {
-  const { postId, boardType } = props
+  const { postId, boardType, boardUserId } = props
+  const { loginUserId } = useUserId()
   const queryClient = useQueryClient()
   const lang = useLangStore((state) => state.lang)
   const [inputValue, setInputValue] = useState<string>('')
@@ -36,7 +39,9 @@ function CommentInput(props: CommentInputProps) {
       queryClient.invalidateQueries({
         queryKey: ['boardList', { type: 'preview' }],
       })
-
+      if (loginUserId !== boardUserId) {
+        sendFCMPush(boardUserId, 'COMMENT', postId, boardType)
+      }
       setInputValue('')
       setIsPending(false)
     },
@@ -91,7 +96,7 @@ function CommentInput(props: CommentInputProps) {
         type="text"
         value={inputValue}
         onChange={(e) => handleChangeInput(e)}
-        placeholder="댓글을 입력해주세요."
+        placeholder={COMMUNITY_CONSTANT[lang]['comment-input-placeholder']}
       />
       <button
         className="shrink-0"

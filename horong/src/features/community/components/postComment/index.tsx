@@ -1,6 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -18,6 +19,7 @@ import useLangStore from '@/hooks/useLangStore.ts'
 import useUserId from '@/hooks/useUserId.ts'
 import HorongSVG from '@/static/svg/common/common-horong.svg'
 import MenuIcon from '@/static/svg/community/community-menu-icon.svg'
+
 interface PostCommentProps {
   data: CommentPromise
   postId: number
@@ -106,8 +108,17 @@ function PostComment(props: PostCommentProps) {
       <div className="py-2">
         <div className="flex gap-x-2">
           {/* 프로필 이미지 */}
-          <div className="h-[2.875rem] w-[2.875rem] shrink-0">
-            <HorongSVG className="h-full w-full" />
+          <div className="h-[2rem] w-[2rem] shrink-0">
+            {props.data.profileImage === null ? (
+              <HorongSVG className="h-full w-full" />
+            ) : (
+              <Image
+                src={props.data.profileImage}
+                alt={'profile'}
+                width={32}
+                height={32}
+              />
+            )}
           </div>
 
           <div className="flex grow flex-col gap-y-2">

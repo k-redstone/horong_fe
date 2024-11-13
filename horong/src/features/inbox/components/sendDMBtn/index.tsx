@@ -16,6 +16,7 @@ import {
 import { sendFirstMessage } from '@/features/inbox/apis/message/index.ts'
 import MessageInputModal from '@/features/inbox/components/messageInputModal/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
+import { sendFCMPush } from '@/util/sendFCMPush.ts'
 
 interface SendDMBtnProps {
   userId: number
@@ -43,6 +44,7 @@ function SendDMBtn({ userId, postId }: SendDMBtnProps) {
           },
         ],
       })
+      sendFCMPush(userId, 'MESSAGE')
       setIsPending(false)
     },
     onError: () => {

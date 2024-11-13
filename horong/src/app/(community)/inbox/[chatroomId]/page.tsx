@@ -1,7 +1,7 @@
 'use client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import toast, { LoaderIcon } from 'react-hot-toast'
 
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
@@ -24,6 +24,7 @@ import { MessagePromise } from '@/features/inbox/types/message/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import ImgIcon from '@/static/svg/inbox/inbox-input-img-icon.svg'
 import SendIcon from '@/static/svg/inbox/inbox-send-icon.svg'
+import { sendFCMPush } from '@/util/sendFCMPush.ts'
 
 interface InboxMessagePageProps {
   params: {
@@ -34,6 +35,7 @@ interface InboxMessagePageProps {
 function InboxMessagePage({ params }: InboxMessagePageProps) {
   const queryClient = useQueryClient()
   const router = useRouter()
+  const scrollDiv = useRef<HTMLDivElement>(null)
   const lang = useLangStore((state) => state.lang)
 
   const [inputValue, setInputValue] = useState<string>('')
@@ -57,7 +59,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       queryClient.invalidateQueries({
         queryKey: ['message', { type: parseInt(params.chatroomId) }],
       })
-
+      sendFCMPush(chatRoomData?.messageList[0].senderId as number, 'MESSAGE')
       setInputValue('')
       setIsPending(false)
     },
@@ -132,7 +134,6 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
         const imgURL = await uploadS3AnddInsertEmbed(file)
         const payload = {
           chatRoomId: parseInt(params.chatroomId),
-          contentsByLanguages: [],
           contentImageRequest: [
             {
               imageUrl: `https://horong-service.s3.ap-northeast-2.amazonaws.com/${imgURL}`,
@@ -161,8 +162,9 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
       queryClient.invalidateQueries({ queryKey: ['message', { type: 'all' }] })
     }
     if (isSuccess && !chatRoomData) {
-      router.push('/inbox')
+      router.replace('/inbox')
     }
+    scrollDiv.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [chatRoomData, isSuccess, queryClient, router])
 
   return (
@@ -200,6 +202,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
                 })}
               </div>
             ))}
+            <div ref={scrollDiv} />
           </div>
         )}
         {isMessagePending && (

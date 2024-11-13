@@ -68,6 +68,16 @@ async function fetchPreviewBoard(): Promise<BaordPreviewPromise> {
   return res.data.result
 }
 
+async function fetchSearchResult(
+  keyword: string,
+  params: { page: number },
+): Promise<BaordListPromise> {
+  const res = await privateAPI.get(`/community/posts/search/${keyword}`, {
+    params,
+  })
+  return res.data.result
+}
+
 export {
   createPost,
   deletePost,
@@ -80,4 +90,5 @@ export {
   updateComment,
   deleteComment,
   fetchOriginalComment,
+  fetchSearchResult,
 }

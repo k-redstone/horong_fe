@@ -51,6 +51,7 @@ type PostPromise = {
   contents: string
   createdAt: string
   comments: CommentPromise[]
+  profileImage: string
 }
 
 type PostOriginalPromise = {
@@ -84,6 +85,7 @@ type CommentPromise = {
   contents: string
   userId: number
   createdDate: string
+  profileImage: string
 }
 
 type CommentContentPaylaod = {
@@ -107,7 +109,7 @@ type CommentCreatePayload = {
 
 type MessageSendPayload = {
   chatRoomId: number
-  contentsByLanguages: CommentContentPaylaod[]
+  contentsByLanguages?: CommentContentPaylaod[]
   contentImageRequest: ContentImageRequest[]
 }
 
