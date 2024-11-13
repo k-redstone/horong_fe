@@ -67,7 +67,7 @@ function SideBar() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col justify-between gap-y-3 bg-grey-80">
+    <div className="flex h-full w-full flex-col justify-between gap-y-3 overflow-y-scroll bg-grey-80">
       <div className="flex w-full items-center justify-end px-3 py-2">
         <button onClick={() => router.back()}>
           <CloseIcon className="h-5 w-5" />
@@ -103,7 +103,7 @@ function SideBar() {
         </div>
 
         {/* 메뉴 */}
-        <div className="flex w-full flex-col justify-center gap-y-3 overflow-y-scroll px-6 py-3">
+        <div className="flex w-full flex-col justify-center gap-y-3 px-6 py-3">
           {/* 홈 collapse*/}
           <div className="flex flex-col text-text-high">
             <div className="flex w-full items-center gap-x-3 bg-inherit px-3 py-2">
@@ -173,7 +173,7 @@ function SideBar() {
 
       <button
         onClick={handleLogout}
-        className="flex w-full grow items-center justify-start px-6 text-xs text-warning"
+        className="flex w-full grow items-center justify-start px-6 pb-5 text-xs text-warning"
       >
         {MYPAGE_CONSTANT[lang]['sidebar-logout-txt']}
       </button>

@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
@@ -44,9 +45,12 @@ function groupChatsByDate(data: AllChatLogPromise[]): GroupedData {
 
   // 데이터 그룹화
   data.forEach((room) => {
-    room.chatContentList.forEach((chatContent) => {
-      const groupKey = getDateGroup(chatContent.createdAt)
-      groups[groupKey].push({ ...chatContent, roomId: room.roomId })
+    const lastChatContent =
+      room.chatContentList[room.chatContentList.length - 1]
+    const groupKey = getDateGroup(lastChatContent.createdAt)
+    groups[groupKey].push({
+      ...room.chatContentList[room.chatContentList.length - 1],
+      roomId: room.roomId,
     })
   })
 
@@ -55,118 +59,23 @@ function groupChatsByDate(data: AllChatLogPromise[]): GroupedData {
 
 function HorongChatLogPage() {
   const lang = useLangStore((state) => state.lang)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [groupedData, setGroupedData] = useState<GroupedData>({
+    today: [],
+    yesterday: [],
+    week: [],
+    older: [],
+  })
   const { data, isSuccess, isPending, isError } = useQuery({
     queryKey: ['horongLog'],
     queryFn: fetchAllChatLog,
   })
 
-  // 더미임
-  const chatRoomData: AllChatLogPromise[] = [
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-09T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'BOT',
-          createdAt: '2024-11-10T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-11T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-11T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-11T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-11T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-11T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세asdfasdf 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-01T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'USER',
-          createdAt: '2024-11-12T08:31:56.877Z',
-        },
-      ],
-    },
-    {
-      roomId: 0,
-      chatContentList: [
-        {
-          content: '한국의 전세 제도와 월세 제도에 대해서 알려줘',
-          authorType: 'BOT',
-          createdAt: '2024-11-13T08:31:56.877Z',
-        },
-      ],
-    },
-  ]
-
-  const groupedData = groupChatsByDate(chatRoomData)
-  console.log(groupedData)
+  // const groupedData = groupChatsByDate(data)
+  useEffect(() => {
+    if (isSuccess) {
+      setGroupedData(groupChatsByDate(data))
+    }
+  }, [data])
 
   return (
     <div className="flex h-full flex-col gap-y-6 px-6 py-8">
@@ -180,7 +89,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.today.map((item) => (
                   <Link
-                    href={`/home/log/${item.roomId}`}
+                    href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >
                     {item.content}
@@ -195,7 +104,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.yesterday.map((item) => (
                   <Link
-                    href={`/home/log/${item.roomId}`}
+                    href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >
                     {item.content}
@@ -210,7 +119,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.week.map((item) => (
                   <Link
-                    href={`/home/log/${item.roomId}`}
+                    href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >
                     {item.content}
