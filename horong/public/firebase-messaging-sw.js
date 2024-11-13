@@ -38,34 +38,45 @@ const messaging = firebase.messaging()
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
 
-  const urlToOpen = event.notification.data.url
+  const urlToOpen = new URL(event.notification.data.url)
 
-  // 클라이언트에 해당 사이트가 열려있는지 체크
-  const promiseChain = clients
-    .matchAll({
-      type: 'window',
-      includeUncontrolled: true,
-    })
-    .then(function (windowClients) {
-      let matchingClient = null
+  event.waitUntil(
+    clients // 서비스 워커에서 현재 제어하는 클라이언트 목록
+      .matchAll({
+        type: 'window',
+        includeUncontrolled: true, // 제어하고 있지 않은 클라이언트까지 포함 (백그라운드)
+      })
+      .then((windowClients) => {
+        let foundWindowClient = null
+        // 이미 열려 있는 창에서 서비스와 관련된 URL을 찾기 위한 로직 추가
+        for (let i = 0; i < windowClients.length; i++) {
+          const client = windowClients[i]
 
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i]
-        if (windowClient.url.includes(urlToOpen)) {
-          matchingClient = windowClient
-          break
+          if (
+            new URL(client.url).hostname.includes('docent') &&
+            'focus' in client
+          ) {
+            foundWindowClient = client
+            break
+          }
         }
-      }
 
-      // 열려있다면 focus, 아니면 새로 open
-      if (matchingClient) {
-        return matchingClient.focus()
-      } else {
-        return clients.openWindow(urlToOpen)
-      }
-    })
+        // 만약 백그라운드에 해당 서비스가 있다면
+        if (foundWindowClient) {
+          // 해당 탭을 focus하여 이동시킴
+          return foundWindowClient.focus().then((focusedClient) => {
+            if ('navigate' in focusedClient) {
+              // 원하는 주소로 이동
+              focusedClient.postMessage(urlToOpen.href)
+            }
+          })
 
-  event.waitUntil(promiseChain)
+          // 그게 아니라면 새창을 열어서 원하는 URL로 이동시킴
+        } else if (clients.openWindow) {
+          return clients.openWindow(urlToOpen.href)
+        }
+      }),
+  )
 })
 
 self.addEventListener('push', function (event) {
