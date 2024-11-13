@@ -68,6 +68,19 @@ function LearnPage() {
 
   return (
     <div className="flex grow flex-col items-center gap-y-8 overflow-y-scroll px-5 py-8 text-sm text-text-high">
+      {stamp?.result.length % 10 === 0 && (
+        <div className="flex w-full flex-col items-center justify-center gap-y-1 rounded-3xl bg-grey-70 px-6 py-3 text-2xs">
+          <p>{LEARN_CONSTANTS[lang]['profile-stamp-txt1']}</p>
+          <p>{LEARN_CONSTANTS[lang]['profile-stamp-txt2']}</p>
+
+          <Link
+            href="/mypage"
+            className="mt-3 flex w-full items-center justify-center rounded-full bg-primary py-2 text-3xs text-grey-100"
+          >
+            {LEARN_CONSTANTS[lang]['mypage-btn']}
+          </Link>
+        </div>
+      )}
       {/* 오늘의 학습 */}
       <div className="flex w-full flex-col justify-center gap-y-4">
         <h3 className="w-full font-bold">
