@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import privateAPI from '@/api/privateAPI/index.ts'
+import { FCM_CONSTANT } from '@/constants/fcm/index.ts'
 import admin from '@/util/fcmAdmin.ts'
 
 export async function POST(request: NextRequest) {
@@ -38,20 +40,18 @@ export async function POST(request: NextRequest) {
         { status: 404 },
       )
     }
-
+    const lang = await privateAPI.get(`/notifications/language/${userId}`)
     // FCM 메시지 구성
     const message = {
-      notification: {
-        title:
-          type === 'COMMENT'
-            ? '새로운 댓글이 달렸습니다.'
-            : '새로운 쪽지가 왔습니다.',
-        body: '지금 눌러서 확인하기',
-      },
       data: {
         contentType: type,
         id: `${contentId}`,
         boardType: `${boardType}`,
+        title:
+          type === 'COMMENT'
+            ? `${FCM_CONSTANT[lang.data.result]['fcm-push-title-comment-txt']}`
+            : `${FCM_CONSTANT[lang.data.result]['fcm-push-title-message-txt']}`,
+        body: `${FCM_CONSTANT[lang.data.result]['fcm-push-body-txt']}`,
       },
       token,
     }
@@ -62,7 +62,6 @@ export async function POST(request: NextRequest) {
       { status: 200 },
     )
   } catch (error) {
-    console.error('Error sending notification:', error)
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 },

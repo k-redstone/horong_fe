@@ -9,6 +9,7 @@ type MessagePromise = {
 
 type MessageListPromise = {
   postId: number
+  otherId: number
   messageList: MessagePromise[]
 }
 
