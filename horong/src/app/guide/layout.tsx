@@ -7,7 +7,7 @@ import useLangStore from '@/hooks/useLangStore.ts'
 function GuideLayout({ children }: { children: React.ReactNode }) {
   const lang = useLangStore((state) => state.lang)
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col bg-grey-80">
       <GlobalHeader pageName={GUIDE_CONSTANT[lang]['guide-header']} />
       {children}
 
