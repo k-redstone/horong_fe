@@ -2,16 +2,22 @@
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 import privateAPI from '@/api/privateAPI/index.ts'
 import GlobalHeader from '@/components/globalHeader/index.tsx'
 import { MYPAGE_CONSTANT } from '@/constants/mypage/index.ts'
 import CommunityAlarmToggle from '@/features/mypage/components/toggle/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
+import useUserId from '@/hooks/useUserId.ts'
 import ArrowRightIcon from '@/static/svg/mypage/mypage-arrowright-icon.svg'
 import ProfileEditIcon from '@/static/svg/mypage/mypage-profile-edit-icon.svg'
-
+import {
+  checkTokenHandler,
+  deleteTokenHandler,
+  setTokenHandler,
+} from '@/util/firebase.ts'
 type UserDataType = {
   nickname: string
   profilePreSignedUrl: string
@@ -20,7 +26,7 @@ type UserDataType = {
 function MyPage() {
   const [isToggle, setIsToggle] = useState(false)
   const lang = useLangStore((state) => state.lang)
-
+  const { loginUserId } = useUserId()
   const { data: user } = useQuery<UserDataType>({
     queryKey: ['user-info'],
     queryFn: async () => {
@@ -29,8 +35,48 @@ function MyPage() {
     },
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const toggleCommunityAlarm = () => {}
+  const toggleCommunityAlarm = async () => {
+    if (!loginUserId) return
+
+    try {
+      if (!isToggle) {
+        const permission: NotificationPermission =
+          await Notification.requestPermission()
+
+        if (permission === 'granted') {
+          await setTokenHandler()
+          setIsToggle(true)
+          return
+        }
+        if (permission === 'denied') {
+          toast.error(`${MYPAGE_CONSTANT[lang]['mypage-alarm-permission-txt']}`)
+        }
+        setIsToggle(false)
+      } else {
+        await deleteTokenHandler(loginUserId)
+        setIsToggle(false)
+      }
+    } catch {
+      toast.error(`${MYPAGE_CONSTANT[lang]['mypage-alarm-error-txt']}`)
+    }
+  }
+
+  useEffect(() => {
+    if (loginUserId) {
+      const fetchData = async () => {
+        const res = await checkTokenHandler(loginUserId)
+
+        if (res) {
+          setIsToggle(true)
+        } else {
+          setIsToggle(false)
+        }
+      }
+
+      fetchData()
+    }
+  }, [loginUserId])
+
   return (
     <div className="flex h-full w-full flex-col justify-between gap-y-6 bg-grey-80">
       <GlobalHeader pageName={MYPAGE_CONSTANT[lang]['mypage-header']} />
@@ -84,7 +130,7 @@ function MyPage() {
 
           <button
             className="flex w-full items-center justify-between border-y border-transparent px-2 py-5"
-            onClick={() => setIsToggle(!isToggle)}
+            onClick={() => toggleCommunityAlarm()}
           >
             <span>{MYPAGE_CONSTANT[lang]['mypage-alarm-txt']}</span>
             <CommunityAlarmToggle isToggle={isToggle} />
