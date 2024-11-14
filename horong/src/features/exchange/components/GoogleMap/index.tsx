@@ -9,7 +9,7 @@ import ExchangeModal from '@/features/exchange/components/ExchangeModal/index.ts
 import MapMarker from '@/features/exchange/components/MapMarker/index.tsx'
 import MapSearchBox from '@/features/exchange/components/MapSearchBox/index.tsx'
 import MoveCurrentPosBtn from '@/features/exchange/components/MoveCurrentPosBtn/index.tsx'
-import { InfowindowProvider } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
+// import { InfowindowProvider } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 export default function GoogleMap() {
   const [zoom, setZoom] = useState<number>(0)
   const [isModal, setIsModal] = useState<boolean>(false)
@@ -42,7 +42,7 @@ export default function GoogleMap() {
         }}
       >
         {isSuccess && (
-          <InfowindowProvider>
+          <>
             {zoom >= 13 &&
               data.map((item) => (
                 <MapMarker
@@ -63,7 +63,7 @@ export default function GoogleMap() {
                 data={data}
               />
             </div>
-          </InfowindowProvider>
+          </>
         )}
       </Map>
     </APIProvider>

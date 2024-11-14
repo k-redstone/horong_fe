@@ -9,7 +9,7 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
-import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
+// import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
 import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
@@ -28,14 +28,14 @@ function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
   const map = useMap()
   const [markerRef, marker] = useAdvancedMarkerRef()
-  const {
-    setPlace,
-    setMarker,
-    setGlobalInfoWindowShow,
-    isGlobalInfowindowShow,
-    placeData: globalplaceData,
-    handleGlobalClose,
-  } = useInfowindow()
+  // const {
+  //   setPlace,
+  //   setMarker,
+  //   setGlobalInfoWindowShow,
+  //   isGlobalInfowindowShow,
+  //   placeData: globalplaceData,
+  //   handleGlobalClose,
+  // } = useInfowindow()
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -56,36 +56,36 @@ function ExchangeModal(props: ExchangeModalProps) {
     setDropdownOpen(false)
   }
 
-  const handleExchangeClick = (item: ExchangePromise) => {
-    if (isGlobalInfowindowShow) {
-      setPlace(undefined)
-      setMarker(null)
-      handleGlobalClose()
-    }
+  // const handleExchangeClick = (item: ExchangePromise) => {
+  //   if (isGlobalInfowindowShow) {
+  //     setPlace(undefined)
+  //     setMarker(null)
+  //     handleGlobalClose()
+  //   }
 
-    setPlaceData(item)
-    setPlace(item)
-    setInfoWindowShown(true)
-    setGlobalInfoWindowShow(true)
-    handleModal()
-    map?.setZoom(16)
-    map?.setCenter({ lat: item.latitude, lng: item.longitude })
-  }
+  //   setPlaceData(item)
+  //   setPlace(item)
+  //   setInfoWindowShown(true)
+  //   setGlobalInfoWindowShow(true)
+  //   handleModal()
+  //   map?.setZoom(16)
+  //   map?.setCenter({ lat: item.latitude, lng: item.longitude })
+  // }
 
-  useEffect(() => {
-    if (!infoWindowShown) {
-      handleClose()
-    }
-    if (globalplaceData?.id !== placeData?.id) {
-      handleClose()
-    }
-  }, [
-    handleClose,
-    infoWindowShown,
-    isGlobalInfowindowShow,
-    globalplaceData,
-    placeData?.id,
-  ])
+  // useEffect(() => {
+  //   if (!infoWindowShown) {
+  //     handleClose()
+  //   }
+  //   if (globalplaceData?.id !== placeData?.id) {
+  //     handleClose()
+  //   }
+  // }, [
+  //   handleClose,
+  //   infoWindowShown,
+  //   isGlobalInfowindowShow,
+  //   globalplaceData,
+  //   placeData?.id,
+  // ])
   return (
     <div
       className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[80dvh]' : `h-[4.625rem]`}`}

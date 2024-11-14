@@ -10,13 +10,11 @@ import {
 } from '@vis.gl/react-google-maps'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
 import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 export default function MapSearchBox() {
   const places = useMapsLibrary('places')
-  const {} = useInfowindow()
   const [markerRef, marker] = useAdvancedMarkerRef()
 
   const input = useRef<HTMLInputElement>(null)
