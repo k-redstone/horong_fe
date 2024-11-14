@@ -17,7 +17,7 @@ function SignupComplete() {
         <div className="flex flex-col items-center justify-center gap-y-10 pb-32">
           <LogoIcon className="h-32 w-32" />
           <div className="flex flex-col items-center justify-center gap-y-3">
-            <LogoTxtIcon className="w-[8.25rem]" />
+            <LogoTxtIcon className="w-[10rem]" />
             <p className="text-lg">{AUTH_CONSTANT[lang]['complete-txt1']}</p>
           </div>
         </div>

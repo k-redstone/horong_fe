@@ -76,7 +76,7 @@ function Login() {
     <div className="flex w-full flex-col items-start justify-center overflow-y-scroll">
       <div className="flex w-full flex-col items-center justify-center gap-y-5 pb-20">
         <LogoIcon className="h-20 w-20" />
-        <LogoTextIcon className="w-[9.5rem]" />
+        <LogoTextIcon className="w-[10rem]" />
       </div>
 
       {/* 로그인 인풋 컨테이너 */}
