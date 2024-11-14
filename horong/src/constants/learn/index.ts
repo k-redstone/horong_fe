@@ -72,7 +72,7 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
 
     'today-cer-txt': '정확도',
 
-    'profile-stamp-txt1': '10번의 스탬프를 모아 새로운 프로필을 획득했어요!',
+    'profile-stamp-txt1': ' 새로운 프로필을 획득했어요!',
     'profile-stamp-txt2': '획득한 프로필은 마이페이지에서 확인 가능해요 :D',
 
     'mypage-btn': '마이페이지에서 확인하기',
@@ -112,7 +112,7 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
 
     'today-cer-txt': 'Accuracy',
 
-    'profile-stamp-txt1': 'Collected 10 stamps to get a new profile!',
+    'profile-stamp-txt1': 'You have acquired a new profile!',
     'profile-stamp-txt2':
       'The acquired profile can be checked on the My Page :D',
 
@@ -152,7 +152,7 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
 
     'today-cer-txt': '准确度',
 
-    'profile-stamp-txt1': '收集10个印章以获得新的个人资料！',
+    'profile-stamp-txt1': '您已获得新的个人资料！',
     'profile-stamp-txt2': '获得的个人资料可以在我的页面上查看 :D',
 
     'mypage-btn': '在我的页面上查看',
@@ -191,8 +191,7 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
 
     'today-cer-txt': '正確度',
 
-    'profile-stamp-txt1':
-      '10個のスタンプを集めて新しいプロフィールを取得しました！',
+    'profile-stamp-txt1': '新しいプロフィールを取得しました！',
     'profile-stamp-txt2': '取得したプロフィールはマイページで確認できます :D',
 
     'mypage-btn': 'マイページで確認する',
