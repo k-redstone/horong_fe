@@ -92,7 +92,7 @@ function CommentInput(props: CommentInputProps) {
   return (
     <div className="flex gap-x-3 py-2">
       <input
-        className="box-border grow rounded-lg border border-text-disabled bg-grey-80 px-3 text-xs text-text-md focus:outline-none"
+        className="box-border grow rounded-lg border border-text-disabled bg-grey-80 px-3 text-xs text-text-high focus:outline-none"
         type="text"
         value={inputValue}
         onChange={(e) => handleChangeInput(e)}
