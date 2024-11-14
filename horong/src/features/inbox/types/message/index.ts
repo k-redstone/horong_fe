@@ -4,6 +4,7 @@ type MessagePromise = {
   senderId: number
   createdAt: string
   profileImage: string
+  image: string
   userMessageType: 'USER' | 'OPPONENT'
 }
 

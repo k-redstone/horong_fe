@@ -174,7 +174,7 @@ function InboxMessagePage({ params }: InboxMessagePageProps) {
     <div className="flex h-full w-full flex-col">
       <div className="grow bg-grey-80">
         {isSuccess && chatRoomData !== null && (
-          <div className="flex h-[calc(100dvh-12.625rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-4">
+          <div className="flex h-[calc(100dvh-9.125rem)] flex-col gap-y-4 overflow-y-scroll px-3 py-4">
             {Object.keys(groupedData).map((date) => (
               <div
                 className="flex flex-col gap-y-4"

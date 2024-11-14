@@ -18,6 +18,8 @@ interface MyPageType {
     'mypage-alarm-txt': string
     'mypage-pw-txt': string
     'mypage-delete-txt': string
+    'mypage-alarm-error-txt': string
+    'mypage-alarm-permission-txt': string
 
     // 'mypage-change-profile-btn': string
   }
@@ -40,6 +42,9 @@ export const MYPAGE_CONSTANT: MyPageType = {
     'mypage-alarm-txt': '커뮤니티 알림 받기',
     'mypage-pw-txt': '비밀번호 재설정',
     'mypage-delete-txt': '회원 탈퇴',
+    'mypage-alarm-error-txt': '푸시 알람 설정 중 오류가 발생했습니다.',
+    'mypage-alarm-permission-txt':
+      '알림 권한이 차단되어 있습니다. 허용으로 변경 후 다시 시도하세요.',
   },
 
   ENGLISH: {
@@ -59,6 +64,10 @@ export const MYPAGE_CONSTANT: MyPageType = {
     'mypage-alarm-txt': 'Receive Community Notifications',
     'mypage-pw-txt': 'Reset Password',
     'mypage-delete-txt': 'Withdrawal',
+    'mypage-alarm-error-txt':
+      'An error occurred while setting up push notifications.',
+    'mypage-alarm-permission-txt':
+      'Notification permissions are blocked. Please change to allow and try again.',
   },
 
   JAPANESE: {
@@ -78,6 +87,9 @@ export const MYPAGE_CONSTANT: MyPageType = {
     'mypage-alarm-txt': 'コミュニティ通知を受け取る',
     'mypage-pw-txt': 'パスワード再設定',
     'mypage-delete-txt': '会員退会',
+    'mypage-alarm-error-txt': 'プッシュ通知の設定中にエラーが発生しました。',
+    'mypage-alarm-permission-txt':
+      '通知の権限がブロックされています。許可に変更してから、もう一度お試しください。',
   },
 
   CHINESE: {
@@ -97,5 +109,7 @@ export const MYPAGE_CONSTANT: MyPageType = {
     'mypage-alarm-txt': '接收社区通知',
     'mypage-pw-txt': '重设密码',
     'mypage-delete-txt': '会员退会',
+    'mypage-alarm-error-txt': '设置推送通知时发生错误。',
+    'mypage-alarm-permission-txt': '通知权限已被阻止。请更改为允许后重试。',
   },
 }
