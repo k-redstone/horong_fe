@@ -25,34 +25,47 @@ const setTokenHandler = async () => {
     const userId = res.data?.result?.userId
 
     if (!userId) {
-      console.error('User ID is not available in the response.')
-      return
+      throw new Error('User ID is not available in the response.')
     }
 
-    // FCM 토큰 발급
     const currentToken = await getToken(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPI,
     })
-    console.log('asdfasdfasdfasdfasdf', currentToken)
     if (!currentToken) {
-      console.error(
+      throw new Error(
         'No registration token available. Request permission to generate one.',
       )
-      return
     }
 
-    // 토큰과 사용자 ID를 백엔드로 전송
     await axios.post(
-      '/api/fcm/savetoken',
+      '/api/fcm/token',
       { userId, token: currentToken },
       { headers: { 'Content-Type': 'application/json' } },
     )
-
-    console.log('Token successfully saved to server.')
-  } catch (error) {
-    console.error('An error occurred while handling the token:', error)
-    throw new Error('An error occurred while handling the token:')
+  } catch {
+    throw new Error('An error occurred while handling the push')
   }
 }
 
-export { setTokenHandler }
+async function deleteTokenHandler(userId: number) {
+  await axios
+    .delete('/api/fcm/token', {
+      data: { userId },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .catch(() => {
+      throw new Error('An error occurred while handling the push')
+    })
+}
+
+async function checkTokenHandler(userId: number): Promise<boolean> {
+  const res = await axios.get(`/api/fcm/token?userId=${userId}`, {
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  return res.data.result
+}
+
+export { setTokenHandler, checkTokenHandler, deleteTokenHandler }

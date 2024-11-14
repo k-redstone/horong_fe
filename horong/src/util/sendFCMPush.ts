@@ -26,8 +26,8 @@ async function sendFCMPush(
         },
       },
     )
-  } catch (error) {
-    console.error('Error sending push notification:', error)
+  } catch {
+    throw new Error('Error sending push notification:')
   }
 }
 

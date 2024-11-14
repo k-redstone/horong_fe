@@ -16,7 +16,7 @@ export default function ChatArea() {
   useEffect(() => {
     initializeChat()
   }, [initializeChat, lang])
-  console.log(chatList)
+
   return (
     <div className="relative flex h-full flex-col">
       {chatList.length < 2 ? (

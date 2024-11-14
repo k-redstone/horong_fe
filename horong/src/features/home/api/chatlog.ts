@@ -13,12 +13,10 @@ async function fetchAllChatLog(): Promise<AllChatLogPromise[]> {
 async function fetchChatLog(roomId: number): Promise<AllChatLogPromise | null> {
   try {
     const allChatRes = await fetchAllChatLog()
-    // console.log(allChatRes)
     if (!allChatRes.some((item) => item.roomId === roomId)) {
       throw new Error('Chat room not found')
     }
     const res = await privateAPI.get(`/chat/${roomId}`)
-    // const res = await privateAPI.get(`/chat/9067348062333586300`)
 
     return res.data.result
   } catch {
