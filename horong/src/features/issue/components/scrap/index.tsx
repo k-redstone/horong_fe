@@ -19,7 +19,7 @@ function IssueScrap() {
   const { data: shorformLike, isLoading } = useQuery({
     queryKey: ['short-form-grid-like'],
     queryFn: async () => {
-      const res = await privateAPI.get('/shortForm')
+      const res = await privateAPI.get('/shortForm/preferences')
       return res.data.result
     },
   })
@@ -30,9 +30,9 @@ function IssueScrap() {
         <LoaderIcon />
       </div>
     )
-  if (shorformLike) {
+  if (shorformLike.length) {
     return (
-      <div className="grid grow grid-cols-3 place-items-center gap-y-4 overflow-y-scroll px-2">
+      <div className="grid grow grid-cols-3 place-content-start place-items-center gap-y-4 overflow-y-scroll px-2">
         {/* post card */}
         {shorformLike.map((item: ShortFormGridType) => (
           <Link

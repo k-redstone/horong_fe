@@ -20,6 +20,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
 
   const [action, setAction] = useState<number>(0) //1: like, 2: unlike 0: none
   const scrollPos = useRef<HTMLDivElement>(null)
+  // const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
 
   const [isCollapsed, setIsCollapsed] = useState(false)
 
@@ -30,15 +31,21 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     queryFn: async () => {
       const res = await privateAPI.get('/shortForm/' + params.postId)
 
-      if (res.status === 200) {
-        //오디오 플레이
-        const audio = new Audio(res.data.result.audio)
-        audio.play()
-      }
+      // if (res.status === 200) {
+      //   //오디오 플레이
+      //   const tempAudio = new Audio(res.data.result.audio)
+      //   setAudio(tempAudio)
+      // }
 
       return res.data.result
     },
   })
+
+  // useEffect(() => {
+  //   if (audio) {
+  //     audio.play()
+  //   }
+  // }, [audio])
 
   const queryClient = useQueryClient()
   const { mutate: mutateScrap } = useMutation({
@@ -64,7 +71,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
   const { mutate: mutateLike } = useMutation({
     mutationFn: async ({ num }: { num: number }) => {
       const res = await privateAPI.post('/shortForm/preference', {
-        shortFormId: params.postId,
+        shortFormId: Number(params.postId),
         preference: num,
       })
       return res.data.result

@@ -31,7 +31,7 @@ function IssueGrid() {
       </div>
     )
   return (
-    <div className="grid grow grid-cols-3 place-items-center gap-y-4 overflow-y-scroll px-2">
+    <div className="grid grow grid-cols-3 place-content-start place-items-center gap-y-4 overflow-y-scroll px-2">
       {/* post card */}
       {shorformGrid &&
         shorformGrid.map((item: ShortFormGridType) => (
