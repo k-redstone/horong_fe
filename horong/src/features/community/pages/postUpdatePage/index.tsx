@@ -77,10 +77,7 @@ function PostUpdatePage(props: PostUpdatePageProps) {
       (async () => {
         const translatedContent = await transHTML(content.trim())
         const translatedTitle = await transText(title.trim())
-        console.log(
-          transContentToPostPayload(translatedContent, translatedTitle),
-        )
-        console.log(imgList)
+
         const contentListPaylaod = transContentToPostPayload(
           translatedContent,
           translatedTitle,
@@ -99,7 +96,7 @@ function PostUpdatePage(props: PostUpdatePageProps) {
             }
           }),
         }
-        console.log('asdfasdfasdfasdfasd', payload)
+
         await postMutation(payload)
       })(),
       {

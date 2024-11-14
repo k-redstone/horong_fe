@@ -3,13 +3,14 @@ import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import { transFullTime } from '@/features/community/utils/datetime/index.ts'
 import { NotifyPromise } from '@/features/inbox/types/message/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
+import ImgIcon from '@/static/svg/inbox/inbox-img-icon.svg'
+
 interface NotifyCardProps {
   data: NotifyPromise
 }
 
 function NotifyCard({ data }: NotifyCardProps) {
   const lang = useLangStore((state) => state.lang)
-  console.log(data)
 
   return (
     <div className="flex w-[21rem] flex-col gap-y-1 rounded-xl border border-grey-60 px-4 py-3">
@@ -20,7 +21,18 @@ function NotifyCard({ data }: NotifyCardProps) {
         </span>
       </div>
       <div className="text-xs">
-        <span className="font-bold">제목</span>
+        <span className="font-bold">
+          {data.type === 'COMMENT' && <span>{data.postContent?.title}</span>}
+          {data.type === 'MESSAGE' && (
+            <span>
+              {data.messageContent?.message == '' ? (
+                <ImgIcon />
+              ) : (
+                data.messageContent?.message
+              )}
+            </span>
+          )}
+        </span>
       </div>
       <div className="text-xs">
         {data.type === 'COMMENT' && (

@@ -147,7 +147,7 @@ function SignupPassword({ setStep }: SignupProps) {
                     </button>
                     <button
                       className="focus-visible:outline-primary"
-                      onClick={clickedXmark}
+                      onClick={() => setConfirmPw('')}
                     >
                       <XmarkIcon />
                     </button>

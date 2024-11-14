@@ -1,14 +1,27 @@
 'use client'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import { useRecordVoice } from '@/hooks/useRecordVoice.ts'
-import StartSVG from '@/static/svg/learn/learn-start-icon.svg'
-import StopSVG from '@/static/svg/learn/learn-stop-icon.svg'
+import MicIcon from '@/static/svg/learn/learn-mic-icon.svg'
 
-function VoiceRecordBox() {
+interface ResponseType {
+  audio: string
+  cer: number
+  gtIdx: number[]
+  hypIdx: number[]
+  id: number
+  text: string
+}
+function VoiceRecordBox({
+  word,
+  setResult,
+}: {
+  word: string
+  setResult: React.Dispatch<React.SetStateAction<ResponseType | undefined>>
+}) {
   const [isRecording, setIsRecording] = useState(false)
-  const { startRecording, stopRecording } = useRecordVoice()
+  const { startRecording, stopRecording, response } = useRecordVoice({ word })
   useEffect(() => {
     const checkAudioPermission = async () => {
       try {
@@ -31,24 +44,27 @@ function VoiceRecordBox() {
     setIsRecording(false)
     stopRecording()
   }
+
+  useEffect(() => {
+    if (response) {
+      setResult(response)
+    }
+  }, [response, setResult])
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-y-4 py-40">
+    <>
       {!isRecording ? (
-        <button
-          onClick={startRecord}
-          className="rounded-full bg-white p-4 drop-shadow-lg"
-        >
-          <StartSVG className="h-12 w-12" />
+        <button onClick={startRecord}>
+          <MicIcon className="h-6 w-6" />
         </button>
       ) : (
         <button
           onClick={stopRecord}
-          className="animate-pulse rounded-full bg-black bg-opacity-20 p-4 drop-shadow-lg"
+          className="animate-pulse"
         >
-          <StopSVG className="h-12 w-12" />
+          <MicIcon className="h-6 w-6" />
         </button>
       )}
-    </div>
+    </>
   )
 }
 

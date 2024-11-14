@@ -66,6 +66,7 @@ function CommunityPostDetailPage({ params }: CommunityPostDetailPage) {
           {/* 댓글 입력 컴포 */}
           <CommentInput
             postId={parseInt(params.postId)}
+            boardUserId={data.userId}
             boardType={params.boardType}
           />
         </div>

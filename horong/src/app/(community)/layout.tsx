@@ -83,7 +83,7 @@ function CommunityLayout({
                 )}
                 <NotifyIcon
                   className="cursor-pointer"
-                  onClick={() => router.push('/inbox')}
+                  onClick={() => router.push('/inbox?type=2')}
                 />
               </div>
               <Link

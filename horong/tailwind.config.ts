@@ -37,6 +37,7 @@ const config: Config = {
         xs: ['.75rem', { lineHeight: '1rem' }],
         'xs-bold': ['.75rem', { lineHeight: '1rem', fontWeight: 'bold' }],
         '2xs': ['.6875rem', { lineHeight: '.875rem' }],
+        '3xs': ['.625rem', { lineHeight: '.875rem' }],
       },
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],

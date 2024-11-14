@@ -1,35 +1,52 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
-import publicAPI from '@/api/publicAPI/index.ts'
+import privateAPI from '@/api/privateAPI/index.ts'
 
-export const useRecordVoice = () => {
+interface ResponseType {
+  audio: string
+  cer: number
+  gtIdx: number[]
+  hypIdx: number[]
+  id: number
+  text: string
+}
+export const useRecordVoice = ({ word }: { word: string }) => {
   //미디어 레코더 인스턴스
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
   const [recording, setRecording] = useState(false)
+  const [response, setResponse] = useState<ResponseType>()
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const queryClient = useQueryClient()
   const { mutate: postAudio } = useMutation({
-    mutationFn: async (audio: Blob) => {
+    mutationFn: async ({ audio, word }: { audio: Blob; word: string }) => {
       const formData = new FormData()
       if (!audio) return
-      formData.append('mp3', audio, 'audio.mp3')
+      formData.append('audio', audio, 'audio.mp3')
+      formData.append('word', word)
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }
-      const res = await publicAPI.post('/health/audio', formData, config)
+      const res = await privateAPI.post('/education/record', formData, config)
+      // eslint-disable-next-line no-console
+      console.log(res.data)
       return res.data
     },
 
-    onSuccess: () => {
-      toast.success('오디오가 성공적으로 전송되었습니다.')
+    onSuccess: (data) => {
+      setResponse(data.result)
+      queryClient.invalidateQueries({
+        queryKey: ['today-learn'],
+      })
+      toast.success('audio sent successfully')
     },
 
     onError: (error) => {
-      toast.error('오디오 전송에 실패했습니다.')
+      toast.error('Failed to send audio')
+      // eslint-disable-next-line no-console
       console.error(error)
     },
   })
@@ -62,11 +79,8 @@ export const useRecordVoice = () => {
     }
 
     mediaRecorder.onstop = () => {
-      // const audioBlob = new Blob(chunks.current, { type: 'audio/mpeg' })
-
-      // 백엔드로 오디오 전송
-      // postAudio(audioBlob)
-      toast.success('오디오가 성공적으로 전송되었습니다.')
+      const blob = new Blob(chunks.current, { type: 'audio/mp3' })
+      postAudio({ audio: blob, word })
     }
 
     setMediaRecorder(mediaRecorder)
@@ -78,7 +92,8 @@ export const useRecordVoice = () => {
         .getUserMedia({ audio: true })
         .then(initialMediaRecorder)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { recording, startRecording, stopRecording }
+  return { recording, startRecording, stopRecording, response }
 }

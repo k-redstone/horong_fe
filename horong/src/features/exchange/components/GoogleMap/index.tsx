@@ -39,12 +39,6 @@ export default function GoogleMap() {
         defaultCenter={{ lat: 37.558005440695396, lng: 127.00869391175185 }}
         onCameraChanged={(event) => {
           setZoom(event.detail.zoom)
-          console.log(
-            'camera changed:',
-            event.detail.center,
-            'zoom:',
-            event.detail.zoom,
-          )
         }}
       >
         {isSuccess && (

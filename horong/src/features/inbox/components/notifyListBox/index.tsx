@@ -1,21 +1,14 @@
 'use client'
-// import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
+
 import Link from 'next/link'
-// import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 import privateAPI from '@/api/privateAPI/index.ts'
 import { INBOX_CONSTANT } from '@/constants/inbox/index.ts'
 import NotifyCard from '@/features/inbox/components/notifyCard/index.tsx'
-// import { NotifyPromise } from '@/features/inbox/types/message/index.ts'
+import { NotifyPromise } from '@/features/inbox/types/message/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useNotificationStore from '@/hooks/useNotificationStore.ts'
-
-// declare global {
-//   interface EventSourceEventMap {
-//     notification: MessageEvent
-//     testNotification: MessageEvent
-//   }
-// }
 
 function NotifyListBox() {
   const lang = useLangStore((state) => state.lang)
@@ -34,78 +27,60 @@ function NotifyListBox() {
     removeMessage(notificationId)
   }
 
-  // useEffect(() => {
-  //   const EventSource = EventSourcePolyfill || NativeEventSource
-  //   const accessToken = sessionStorage.getItem('token')
-  //   const eventSource = new EventSource(
-  //     `${process.env.NEXT_PUBLIC_SERVER_URL}/notifications/stream`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //       heartbeatTimeout: 20000,
-  //     },
-  //   )
+  const groupedData = useMemo<Record<string, NotifyPromise[]>>(() => {
+    if (!messages) return {}
+    return messages.reduce(
+      (acc, item) => {
+        const dateKey = new Date(item.createdAt)
+          .toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replaceAll('. ', '.')
 
-  //   // 기본 메시지 이벤트 수신기 설정
-  //   eventSource.onmessage = function () {
-  //     // setMessages((prevMessages) => [...prevMessages, event.data])
-  //   }
-
-  //   // 연결이 열렸을 때
-  //   eventSource.onopen = () => {
-  //     console.log('EventSource connection opened')
-  //   }
-
-  //   // 에러 발생 시
-  //   eventSource.onerror = function (error) {
-  //     console.error('EventSource failed:', error)
-  //     eventSource.close() // 에러 발생 시 연결 종료
-  //   }
-
-  //   eventSource.addEventListener('connect', () => {
-  //     console.log('first connect')
-  //   })
-
-  //   // 'notification' 커스텀 이벤트 수신기
-  //   eventSource.addEventListener('notification', (event) => {
-  //     console.log('Received notification message:')
-  //     const newMessage = (event as MessageEvent).data
-  //     const parsedData = JSON.parse(newMessage)
-
-  //     // `id`를 기준으로 데이터 저장
-  //     setMessages((prevData) => {
-  //       const exists = prevData.find((item) => item.id === parsedData.id)
-  //       if (!exists) {
-  //         return [...prevData, parsedData]
-  //       }
-  //       return prevData
-  //     })
-  //     console.log(parsedData)
-  //   })
-
-  //   // 컴포넌트 언마운트 시 연결 종료
-  //   return () => {
-  //     eventSource.close()
-  //   }
-  // }, [])
+        if (!acc[dateKey]) acc[dateKey] = []
+        acc[dateKey].push(item)
+        return acc
+      },
+      {} as Record<string, NotifyPromise[]>,
+    )
+  }, [messages])
 
   return (
-    <div className="flex max-h-[calc(100dvh-13.25rem)] flex-col items-center gap-y-3 overflow-y-scroll px-6 pb-8">
-      {messages.map((item) => (
-        <Link
+    <div className="flex max-h-[calc(100dvh-13.25rem)] flex-col items-center gap-y-3 overflow-y-scroll px-3 pb-8">
+      {Object.keys(groupedData).map((date) => (
+        <div
+          className="flex flex-col gap-y-4"
           key={crypto.randomUUID()}
-          // todo: 게시글 타입 반영
-          href={
-            item.type === 'COMMENT'
-              ? `/community/free/${item.postId}`
-              : `/inbox/${item.chatRoomId}`
-          }
-          onClick={() => handleReadNotify(item.id, item.type)}
         >
-          <NotifyCard data={item} />
-        </Link>
+          <div
+            className="flex w-full justify-center"
+            key={crypto.randomUUID()}
+          >
+            {/* 날짜 헤더 */}
+
+            <div className="rounded-xl bg-grey-70 px-3 py-2 text-2xs">
+              {date}
+            </div>
+          </div>
+          {messages.map((item) => (
+            <Link
+              key={crypto.randomUUID()}
+              // todo: 게시글 타입 반영
+              href={
+                item.type === 'COMMENT'
+                  ? `/community/${item.postContent?.type.toLowerCase()}/${item.postContent?.postId}`
+                  : `/inbox/${item.messageContent?.roomId}`
+              }
+              onClick={() => handleReadNotify(item.id, item.type)}
+            >
+              <NotifyCard data={item} />
+            </Link>
+          ))}
+        </div>
       ))}
+
       {messages.length === 0 && (
         <div>
           <p>{INBOX_CONSTANT[lang]['notify-no-item-txt']}</p>

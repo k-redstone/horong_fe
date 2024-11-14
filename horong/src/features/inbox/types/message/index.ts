@@ -4,11 +4,13 @@ type MessagePromise = {
   senderId: number
   createdAt: string
   profileImage: string
+  image: string
   userMessageType: 'USER' | 'OPPONENT'
 }
 
 type MessageListPromise = {
   postId: number
+  otherId: number
   messageList: MessagePromise[]
 }
 
@@ -19,12 +21,21 @@ type MessageAllPromise = {
 
 type NotifyPromise = {
   id: number
-  chatRoomId: number | null
-  postId: number | null
   type: 'MESSAGE' | 'COMMENT'
-  senderName: string
-  senderId: number
   message: string
+  postContent: {
+    type: string
+    postId: number
+    title: string
+  } | null
+  messageContent: {
+    messageId: number
+    message: string
+    type: string
+    roomId: number
+  } | null
+  senderId: 3
+  senderName: string
   createdAt: string
 }
 
