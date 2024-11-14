@@ -2800,7 +2800,11 @@ color-name@~1.1.4:
   resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
+<<<<<<< HEAD
+combined-stream@^1.0.8:
+=======
 combined-stream@^1.0.6, combined-stream@^1.0.8:
+>>>>>>> 7c2a3d8206825e8972130009cc266e37506637fe
   version "1.0.8"
   resolved "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -5256,6 +5260,8 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+<<<<<<< HEAD
+=======
 react-calendar@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-5.1.0.tgz#f5d3342a872cbb8907099ca5651bc936046033b8"
@@ -5266,6 +5272,7 @@ react-calendar@^5.1.0:
     get-user-locale "^2.2.1"
     warning "^4.0.0"
 
+>>>>>>> 7c2a3d8206825e8972130009cc266e37506637fe
 react-dom@^18:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
@@ -5506,7 +5513,11 @@ schema-utils@^3.1.1, schema-utils@^3.2.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
+<<<<<<< HEAD
+semver@7.6.3, semver@^7.6.0, semver@^7.6.3:
+=======
 semver@7.6.3, semver@^7.5.4, semver@^7.6.0, semver@^7.6.3:
+>>>>>>> 7c2a3d8206825e8972130009cc266e37506637fe
   version "7.6.3"
   resolved "https://registry.npmjs.org/semver/-/semver-7.6.3.tgz"
   integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
