@@ -66,6 +66,12 @@ function ExchangeModal(props: ExchangeModalProps) {
     handleModal()
   }
 
+  const filteredData = filterExchangeRates(
+    data,
+    { maxDistance: 1000, geometry: geometry, mapCenter: mapCenter },
+    { currency, exchangeType, order },
+  )
+
   useEffect(() => {
     if (infoWindowShown && placeData) {
       initInfoWindowStore()
@@ -166,13 +172,9 @@ function ExchangeModal(props: ExchangeModalProps) {
         className="mb-10 flex w-full flex-col gap-y-3 overflow-y-scroll"
       >
         <p>
-          <span className="text-xs-bold">전체 {data.length}개</span>
+          <span className="text-xs-bold">전체 {filteredData.length}개</span>
         </p>
-        {filterExchangeRates(
-          data,
-          { maxDistance: 1000, geometry: geometry, mapCenter: mapCenter },
-          { currency, exchangeType, order },
-        ).map((filteredItem) => (
+        {filteredData.map((filteredItem) => (
           <div
             key={filteredItem.id}
             className="cursor-pointer"
