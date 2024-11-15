@@ -9,13 +9,16 @@ import {
 } from '@vis.gl/react-google-maps'
 import { useEffect, useRef, useState } from 'react'
 
+import { EXCHANGE_CONSTANT } from '@/constants/exchange/index.ts'
 import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
 import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 export default function MapSearchBox() {
   const places = useMapsLibrary('places')
   const [markerRef, marker] = useAdvancedMarkerRef()
+  const lang = useLangStore((state) => state.lang)
 
   const input = useRef<HTMLInputElement>(null)
   const [apiError, setApiError] = useState<boolean>(false)
@@ -60,7 +63,7 @@ export default function MapSearchBox() {
         google.maps.event.clearInstanceListeners(searchBox)
       }
     } catch (error) {
-      console.error('Google Maps API 로딩 중 오류가 발생했습니다:', error)
+      console.error('Loading Google Maps API Error', error)
       setApiError(true)
     }
   }, [map, mapAPIisLoaded, places])
@@ -100,7 +103,7 @@ export default function MapSearchBox() {
         className="grow bg-grey-80 bg-none text-sm focus:outline-none"
         type="text"
         ref={input}
-        placeholder="Search here"
+        placeholder={EXCHANGE_CONSTANT[lang]['exchage-search-txt']}
       />
       {infoWindowShown && placeData && (
         <AdvancedMarker

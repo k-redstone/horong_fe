@@ -8,10 +8,12 @@ import {
 } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
 
+import { EXCHANGE_CONSTANT } from '@/constants/exchange/index.ts'
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
 import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import ArrowDownSVG from '@/static/svg/exchange/exchange-arrow-down.svg'
 import ArrowUpSVG from '@/static/svg/exchange/exchange-arrow-up.svg'
 import DashIconSVG from '@/static/svg/exchange/exchange-dash-icon.svg'
@@ -25,6 +27,7 @@ interface ExchangeModalProps {
 
 function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
+  const lang = useLangStore((state) => state.lang)
   const map = useMap()
   const mapCenter = map
     ? map.getCenter()
@@ -101,7 +104,7 @@ function ExchangeModal(props: ExchangeModalProps) {
       >
         <DashIconSVG />
         <p className="text-md">
-          <span>사설 환전소 리스트 </span>
+          <span>{EXCHANGE_CONSTANT[lang]['exchange-sub-header']} </span>
         </p>
       </button>
 
@@ -115,7 +118,7 @@ function ExchangeModal(props: ExchangeModalProps) {
               setOrder('asc')
             }}
           >
-            살 때
+            {EXCHANGE_CONSTANT[lang]['exchange-buy-txt']}
           </button>
           <button
             className={`rounded-lg px-7 py-1 ${exchangeType === 'SELL' ? 'bg-primary' : 'bg-grey-70'}`}
@@ -124,7 +127,7 @@ function ExchangeModal(props: ExchangeModalProps) {
               setOrder('desc')
             }}
           >
-            팔 때
+            {EXCHANGE_CONSTANT[lang]['exchange-sell-txt']}
           </button>
         </div>
         <div className="flex flex-col items-end">
@@ -138,7 +141,7 @@ function ExchangeModal(props: ExchangeModalProps) {
           </button>
           <div className="relative">
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-1 flex w-20 flex-col bg-grey-70 text-start">
+              <div className="absolute right-0 z-40 mt-1 flex w-20 flex-col bg-grey-70 text-start">
                 <button
                   type="button"
                   className="px-3 py-1 hover:bg-grey-60"
@@ -172,7 +175,9 @@ function ExchangeModal(props: ExchangeModalProps) {
         className="mb-10 flex w-full flex-col gap-y-3 overflow-y-scroll"
       >
         <p>
-          <span className="text-xs-bold">전체 {filteredData.length}개</span>
+          <span className="text-xs-bold">
+            {EXCHANGE_CONSTANT[lang]['exchange-all-txt']} {filteredData.length}
+          </span>
         </p>
         {filteredData.map((filteredItem) => (
           <div

@@ -69,37 +69,6 @@ function DefaultInfoWindow() {
       </InfoWindow>
     )
   }
-  // return (
-  //   <>
-  //     {isGlobalInfowindowOpen && (
-  //       <InfoWindow
-  //         anchor={markerRef}
-  //         className="rounded-2xl"
-  //         onClose={() => closeGlobalInfowindow()}
-  //         maxWidth={300}
-  //         headerContent={<h3 className="text-xs text-black">{data.name}</h3>}
-  //       >
-  //         <ul className="flex list-inside list-disc flex-col gap-y-2 text-[.625rem] text-black">
-  //           <li>
-  //             <span>{decodeHtmlEntities(data.address)}</span>
-  //             <br />
-  //           </li>
-  //           {data.phone !== '' && (
-  //             <li>
-  //               <span>{decodeHtmlEntities(data.phone)}</span>
-  //               <br />
-  //             </li>
-  //           )}
-  //           {data?.description !== '' && (
-  //             <li>
-  //               <span>{decodeHtmlEntities(data?.description)}</span>
-  //             </li>
-  //           )}
-  //         </ul>
-  //       </InfoWindow>
-  //     )}
-  //   </>
-  // )
 }
 
 export default DefaultInfoWindow
