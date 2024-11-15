@@ -8,7 +8,8 @@ interface DefaultInfoWindowProps {
 }
 
 function DefaultInfoWindow({ first }: DefaultInfoWindowProps) {
-  const { isGlobalInfowindowOpen, closeGlobalInfowindow } = useInfoWindowStore()
+  const { isGlobalInfowindowOpen, closeGlobalInfowindow, infoWindowType } =
+    useInfoWindowStore()
 
   return (
     <>
