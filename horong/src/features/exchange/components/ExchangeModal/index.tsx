@@ -4,6 +4,7 @@ import {
   AdvancedMarker,
   useAdvancedMarkerRef,
   useMap,
+  useMapsLibrary,
 } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
 
@@ -25,6 +26,11 @@ interface ExchangeModalProps {
 function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
   const map = useMap()
+  const mapCenter = map
+    ? map.getCenter()
+    : { lat: 37.558005440695396, lng: 127.00869391175185 }
+  const geometry = useMapsLibrary('geometry')
+
   const [markerRef, marker] = useAdvancedMarkerRef()
   const {
     openGlobalInfowindow,
@@ -162,17 +168,19 @@ function ExchangeModal(props: ExchangeModalProps) {
         <p>
           <span className="text-xs-bold">전체 {data.length}개</span>
         </p>
-        {filterExchangeRates(data, { currency, exchangeType, order }).map(
-          (filteredItem) => (
-            <div
-              key={filteredItem.id}
-              className="cursor-pointer"
-              onClick={() => handleExchangeClick(filteredItem)}
-            >
-              <ExchangeCard data={filteredItem} />
-            </div>
-          ),
-        )}
+        {filterExchangeRates(
+          data,
+          { maxDistance: 1000, geometry: geometry, mapCenter: mapCenter },
+          { currency, exchangeType, order },
+        ).map((filteredItem) => (
+          <div
+            key={filteredItem.id}
+            className="cursor-pointer"
+            onClick={() => handleExchangeClick(filteredItem)}
+          >
+            <ExchangeCard data={filteredItem} />
+          </div>
+        ))}
       </div>
       {infoWindowShown && placeData && (
         <>

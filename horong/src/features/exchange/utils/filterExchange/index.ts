@@ -11,20 +11,48 @@ interface FilterInterface {
 
 export function filterExchangeRates(
   data: ExchangePromise[],
+  distance: {
+    maxDistance: number
+    geometry: google.maps.GeometryLibrary | null
+    mapCenter:
+      | google.maps.LatLng
+      | {
+          lat: number
+          lng: number
+        }
+      | undefined
+  },
   filters: FilterInterface,
 ) {
   const { currency, exchangeType, order } = filters
-  const filteredData = data.map((item) => {
-    const filteredRate = item.exchangeRates.filter((rate) => {
-      const currencyMatch = currency ? rate.currency === currency : true
-      const typeMatch = exchangeType ? rate.exchangeType === exchangeType : true
-      return currencyMatch && typeMatch
+  const { maxDistance, geometry, mapCenter } = distance
+  const filteredData = data
+    .map((item) => {
+      const filteredRate = item.exchangeRates.filter((rate) => {
+        const currencyMatch = currency ? rate.currency === currency : true
+        const typeMatch = exchangeType
+          ? rate.exchangeType === exchangeType
+          : true
+        return currencyMatch && typeMatch
+      })
+      return {
+        ...item,
+        exchangeRates: filteredRate,
+      }
     })
-    return {
-      ...item,
-      exchangeRates: filteredRate,
-    }
-  })
+    .filter((item) => {
+      if (!geometry || !mapCenter) return false
+
+      const itemLocation = new google.maps.LatLng(item.latitude, item.longitude)
+
+      const distanceBetween = geometry.spherical.computeDistanceBetween(
+        mapCenter,
+        itemLocation,
+      )
+
+      return distanceBetween <= maxDistance
+    })
+
   const returnData = sortExchangeRates(filteredData, 'amount', order)
   return returnData
 }
