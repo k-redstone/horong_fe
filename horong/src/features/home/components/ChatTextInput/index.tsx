@@ -38,7 +38,7 @@ export default function ChatTextInput() {
   return (
     <div className="flex gap-x-2.5 p-2.5">
       <div className="grow rounded-[.625rem] bg-gradient-to-br from-[#22DFEB] to-[#ACBEFF] p-[.0625rem]">
-        <div className="flex h-full items-center rounded-[.625rem] bg-[#1B1D24] px-3 py-1 text-xs">
+        <div className="flex h-full items-center rounded-[.625rem] bg-[#1B1D24] px-4 py-2 text-xs">
           <textarea
             id="horong-chat-textarea"
             ref={textareaRef}

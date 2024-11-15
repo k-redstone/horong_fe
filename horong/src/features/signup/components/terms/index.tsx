@@ -39,7 +39,7 @@ function SignupTerms({ setStep }: SignupProps) {
   return (
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
-        <LogoTxtIcon className="w-[8.25rem]" />
+        <LogoTxtIcon className="w-[10rem]" />
         <Image
           src={Progress2}
           alt="signup_progress2"
