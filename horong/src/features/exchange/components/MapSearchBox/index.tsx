@@ -2,14 +2,14 @@
 
 import {
   AdvancedMarker,
-  InfoWindow,
   useAdvancedMarkerRef,
   useApiIsLoaded,
   useMap,
   useMapsLibrary,
 } from '@vis.gl/react-google-maps'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
 import GoogleIconSVG from '@/static/svg/exchange/exchange-google-icon.svg'
 import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
@@ -20,14 +20,21 @@ export default function MapSearchBox() {
   const input = useRef<HTMLInputElement>(null)
   const [apiError, setApiError] = useState<boolean>(false)
   const [infoWindowShown, setInfoWindowShown] = useState<boolean>(false)
+
+  const {
+    openGlobalInfowindow,
+    setMarkRef,
+    setInfoWindowType,
+    setSearchPlaceData,
+    initInfoWindowStore,
+  } = useInfoWindowStore()
+
   const [placeData, setPlaceData] = useState<
     google.maps.places.PlaceResult | undefined
   >(undefined)
   const map = useMap()
 
   const mapAPIisLoaded = useApiIsLoaded()
-
-  const handleClose = useCallback(() => setInfoWindowShown(false), [])
 
   useEffect(() => {
     if (!places || !input.current || !map || !mapAPIisLoaded) return
@@ -58,11 +65,30 @@ export default function MapSearchBox() {
     }
   }, [map, mapAPIisLoaded, places])
 
+  useEffect(() => {
+    if (infoWindowShown && placeData) {
+      initInfoWindowStore()
+      openGlobalInfowindow()
+      setSearchPlaceData(placeData)
+      setInfoWindowType('search')
+      setMarkRef(marker)
+    }
+  }, [
+    infoWindowShown,
+    initInfoWindowStore,
+    marker,
+    openGlobalInfowindow,
+    placeData,
+    setInfoWindowType,
+    setMarkRef,
+    setSearchPlaceData,
+  ])
+
   if (apiError) {
     return (
       <div style={{ color: 'red', textAlign: 'center', marginTop: '20px' }}>
-        Google Maps API를 불러오지 못했습니다. <br />
-        API 키가 유효한지 확인해주세요.
+        Loading Google Maps API Error <br />
+        Check API key is available
       </div>
     )
   }
@@ -76,24 +102,12 @@ export default function MapSearchBox() {
         ref={input}
         placeholder="Search here"
       />
-      {infoWindowShown && (
+      {infoWindowShown && placeData && (
         <AdvancedMarker
           ref={markerRef}
           position={placeData?.geometry?.location}
         >
           <MapPinSVG />
-          <InfoWindow
-            anchor={marker}
-            onClose={() => handleClose()}
-            maxWidth={300}
-            headerContent={
-              <h3 className="tex-xs text-black">{placeData?.name}</h3>
-            }
-          >
-            <div className="flex flex-col text-[.625rem] text-black">
-              <span className="py-2">{placeData?.formatted_address}</span>
-            </div>
-          </InfoWindow>
         </AdvancedMarker>
       )}
     </div>

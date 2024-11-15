@@ -2,16 +2,14 @@
 
 import {
   AdvancedMarker,
-  InfoWindow,
   useAdvancedMarkerRef,
   useMap,
 } from '@vis.gl/react-google-maps'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
-// import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
+import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
-import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
 import ArrowDownSVG from '@/static/svg/exchange/exchange-arrow-down.svg'
 import ArrowUpSVG from '@/static/svg/exchange/exchange-arrow-up.svg'
@@ -28,14 +26,13 @@ function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
   const map = useMap()
   const [markerRef, marker] = useAdvancedMarkerRef()
-  // const {
-  //   setPlace,
-  //   setMarker,
-  //   setGlobalInfoWindowShow,
-  //   isGlobalInfowindowShow,
-  //   placeData: globalplaceData,
-  //   handleGlobalClose,
-  // } = useInfowindow()
+  const {
+    openGlobalInfowindow,
+    setMarkRef,
+    setInfoWindowType,
+    setExchangePlaceData,
+    initInfoWindowStore,
+  } = useInfoWindowStore()
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -46,8 +43,6 @@ function ExchangeModal(props: ExchangeModalProps) {
     undefined,
   )
 
-  const handleClose = useCallback(() => setInfoWindowShown(false), [])
-
   const handleModal = () => {
     setIsModal(!isModal)
   }
@@ -56,36 +51,34 @@ function ExchangeModal(props: ExchangeModalProps) {
     setDropdownOpen(false)
   }
 
-  // const handleExchangeClick = (item: ExchangePromise) => {
-  //   if (isGlobalInfowindowShow) {
-  //     setPlace(undefined)
-  //     setMarker(null)
-  //     handleGlobalClose()
-  //   }
+  const handleExchangeClick = (item: ExchangePromise) => {
+    map?.setZoom(16)
+    map?.setCenter({ lat: item.latitude, lng: item.longitude })
+    setPlaceData(item)
+    setInfoWindowShown(true)
 
-  //   setPlaceData(item)
-  //   setPlace(item)
-  //   setInfoWindowShown(true)
-  //   setGlobalInfoWindowShow(true)
-  //   handleModal()
-  //   map?.setZoom(16)
-  //   map?.setCenter({ lat: item.latitude, lng: item.longitude })
-  // }
+    handleModal()
+  }
 
-  // useEffect(() => {
-  //   if (!infoWindowShown) {
-  //     handleClose()
-  //   }
-  //   if (globalplaceData?.id !== placeData?.id) {
-  //     handleClose()
-  //   }
-  // }, [
-  //   handleClose,
-  //   infoWindowShown,
-  //   isGlobalInfowindowShow,
-  //   globalplaceData,
-  //   placeData?.id,
-  // ])
+  useEffect(() => {
+    if (infoWindowShown && placeData) {
+      initInfoWindowStore()
+      openGlobalInfowindow()
+      setExchangePlaceData(placeData)
+      setInfoWindowType('exchange')
+      setMarkRef(marker)
+    }
+  }, [
+    infoWindowShown,
+    initInfoWindowStore,
+    marker,
+    openGlobalInfowindow,
+    placeData,
+    setInfoWindowType,
+    setMarkRef,
+    setExchangePlaceData,
+  ])
+
   return (
     <div
       className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[80dvh]' : `h-[4.625rem]`}`}
@@ -189,33 +182,6 @@ function ExchangeModal(props: ExchangeModalProps) {
           >
             <MapPinSVG />
           </AdvancedMarker>
-          <InfoWindow
-            anchor={marker}
-            className="rounded-2xl"
-            onClose={() => handleClose()}
-            maxWidth={300}
-            headerContent={
-              <h3 className="text-xs text-black">{placeData.name}</h3>
-            }
-          >
-            <ul className="flex list-inside list-disc flex-col gap-y-2 text-[.625rem] text-black">
-              <li>
-                <span>{decodeHtmlEntities(placeData.address)}</span>
-                <br />
-              </li>
-              {placeData.phone !== '' && (
-                <li>
-                  <span>{decodeHtmlEntities(placeData.phone)}</span>
-                  <br />
-                </li>
-              )}
-              {placeData?.description !== '' && (
-                <li>
-                  <span>{decodeHtmlEntities(placeData?.description)}</span>
-                </li>
-              )}
-            </ul>
-          </InfoWindow>
         </>
       )}
     </div>

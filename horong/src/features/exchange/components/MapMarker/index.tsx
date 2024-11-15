@@ -1,14 +1,7 @@
-import {
-  AdvancedMarker,
-  InfoWindow,
-  useAdvancedMarkerRef,
-} from '@vis.gl/react-google-maps'
-import { useCallback } from 'react'
+import { AdvancedMarker, useAdvancedMarkerRef } from '@vis.gl/react-google-maps'
 
-// import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
 import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
-import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
 import MapPinSVG from '@/static/svg/exchange/exchange-map-pin-icon.svg'
 
 interface MapMarkerProps {
@@ -18,17 +11,19 @@ interface MapMarkerProps {
 export default function MapMarker({ data }: MapMarkerProps) {
   const [markerRef, marker] = useAdvancedMarkerRef()
   const {
-    isGlobalInfowindowOpen,
     openGlobalInfowindow,
-    closeGlobalInfowindow,
     setMarkRef,
+    setInfoWindowType,
+    setExchangePlaceData,
+    initInfoWindowStore,
   } = useInfoWindowStore()
 
   const handleMarkerClick = () => {
-    if (isGlobalInfowindowOpen) {
-      closeGlobalInfowindow()
-    }
+    initInfoWindowStore()
+
     openGlobalInfowindow()
+    setExchangePlaceData(data)
+    setInfoWindowType('exchange')
     setMarkRef(marker)
   }
 
