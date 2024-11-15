@@ -62,8 +62,7 @@ export default function MapSearchBox() {
       return () => {
         google.maps.event.clearInstanceListeners(searchBox)
       }
-    } catch (error) {
-      console.error('Loading Google Maps API Error', error)
+    } catch {
       setApiError(true)
     }
   }, [map, mapAPIisLoaded, places])
