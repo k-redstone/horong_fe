@@ -2,17 +2,18 @@
 
 import {
   AdvancedMarker,
-  InfoWindow,
   useAdvancedMarkerRef,
   useMap,
+  useMapsLibrary,
 } from '@vis.gl/react-google-maps'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { EXCHANGE_CONSTANT } from '@/constants/exchange/index.ts'
 import ExchangeCard from '@/features/exchange/components/ExchangeCard/index.tsx'
-import { useInfowindow } from '@/features/exchange/contexts/infowindowProvider/index.tsx'
+import useInfoWindowStore from '@/features/exchange/hooks/useInfoWindowStore.ts'
 import { ExchangePromise } from '@/features/exchange/types/ExchangeType.ts'
-import { decodeHtmlEntities } from '@/features/exchange/utils/decodeHtmlEntities/index.ts'
 import { filterExchangeRates } from '@/features/exchange/utils/filterExchange/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 import ArrowDownSVG from '@/static/svg/exchange/exchange-arrow-down.svg'
 import ArrowUpSVG from '@/static/svg/exchange/exchange-arrow-up.svg'
 import DashIconSVG from '@/static/svg/exchange/exchange-dash-icon.svg'
@@ -26,16 +27,21 @@ interface ExchangeModalProps {
 
 function ExchangeModal(props: ExchangeModalProps) {
   const { setIsModal, isModal, data } = props
+  const lang = useLangStore((state) => state.lang)
   const map = useMap()
+  const mapCenter = map
+    ? map.getCenter()
+    : { lat: 37.558005440695396, lng: 127.00869391175185 }
+  const geometry = useMapsLibrary('geometry')
+
   const [markerRef, marker] = useAdvancedMarkerRef()
   const {
-    setPlace,
-    setMarker,
-    setGlobalInfoWindowShow,
-    isGlobalInfowindowShow,
-    placeData: globalplaceData,
-    handleGlobalClose,
-  } = useInfowindow()
+    openGlobalInfowindow,
+    setMarkRef,
+    setInfoWindowType,
+    setExchangePlaceData,
+    initInfoWindowStore,
+  } = useInfoWindowStore()
 
   const [order, setOrder] = useState<'asc' | 'desc'>('asc')
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -46,8 +52,6 @@ function ExchangeModal(props: ExchangeModalProps) {
     undefined,
   )
 
-  const handleClose = useCallback(() => setInfoWindowShown(false), [])
-
   const handleModal = () => {
     setIsModal(!isModal)
   }
@@ -57,35 +61,39 @@ function ExchangeModal(props: ExchangeModalProps) {
   }
 
   const handleExchangeClick = (item: ExchangePromise) => {
-    if (isGlobalInfowindowShow) {
-      setPlace(undefined)
-      setMarker(null)
-      handleGlobalClose()
-    }
-
-    setPlaceData(item)
-    setPlace(item)
-    setInfoWindowShown(true)
-    setGlobalInfoWindowShow(true)
-    handleModal()
     map?.setZoom(16)
     map?.setCenter({ lat: item.latitude, lng: item.longitude })
+    setPlaceData(item)
+    setInfoWindowShown(true)
+
+    handleModal()
   }
 
+  const filteredData = filterExchangeRates(
+    data,
+    { maxDistance: 1000, geometry: geometry, mapCenter: mapCenter },
+    { currency, exchangeType, order },
+  )
+
   useEffect(() => {
-    if (!infoWindowShown) {
-      handleClose()
-    }
-    if (globalplaceData?.id !== placeData?.id) {
-      handleClose()
+    if (infoWindowShown && placeData) {
+      initInfoWindowStore()
+      openGlobalInfowindow()
+      setExchangePlaceData(placeData)
+      setInfoWindowType('exchange')
+      setMarkRef(marker)
     }
   }, [
-    handleClose,
     infoWindowShown,
-    isGlobalInfowindowShow,
-    globalplaceData,
-    placeData?.id,
+    initInfoWindowStore,
+    marker,
+    openGlobalInfowindow,
+    placeData,
+    setInfoWindowType,
+    setMarkRef,
+    setExchangePlaceData,
   ])
+
   return (
     <div
       className={`flex w-full flex-col items-center gap-y-5 rounded-tl-xl rounded-tr-xl bg-grey-80 px-6 transition-all duration-500 ease-in-out ${isModal ? 'h-[80dvh]' : `h-[4.625rem]`}`}
@@ -96,7 +104,7 @@ function ExchangeModal(props: ExchangeModalProps) {
       >
         <DashIconSVG />
         <p className="text-md">
-          <span>사설 환전소 리스트 </span>
+          <span>{EXCHANGE_CONSTANT[lang]['exchange-sub-header']} </span>
         </p>
       </button>
 
@@ -110,7 +118,7 @@ function ExchangeModal(props: ExchangeModalProps) {
               setOrder('asc')
             }}
           >
-            살 때
+            {EXCHANGE_CONSTANT[lang]['exchange-buy-txt']}
           </button>
           <button
             className={`rounded-lg px-7 py-1 ${exchangeType === 'SELL' ? 'bg-primary' : 'bg-grey-70'}`}
@@ -119,7 +127,7 @@ function ExchangeModal(props: ExchangeModalProps) {
               setOrder('desc')
             }}
           >
-            팔 때
+            {EXCHANGE_CONSTANT[lang]['exchange-sell-txt']}
           </button>
         </div>
         <div className="flex flex-col items-end">
@@ -133,7 +141,7 @@ function ExchangeModal(props: ExchangeModalProps) {
           </button>
           <div className="relative">
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-1 flex w-20 flex-col bg-grey-70 text-start">
+              <div className="absolute right-0 z-40 mt-1 flex w-20 flex-col bg-grey-70 text-start">
                 <button
                   type="button"
                   className="px-3 py-1 hover:bg-grey-60"
@@ -167,19 +175,19 @@ function ExchangeModal(props: ExchangeModalProps) {
         className="mb-10 flex w-full flex-col gap-y-3 overflow-y-scroll"
       >
         <p>
-          <span className="text-xs-bold">전체 {data.length}개</span>
+          <span className="text-xs-bold">
+            {EXCHANGE_CONSTANT[lang]['exchange-all-txt']} {filteredData.length}
+          </span>
         </p>
-        {filterExchangeRates(data, { currency, exchangeType, order }).map(
-          (filteredItem) => (
-            <div
-              key={filteredItem.id}
-              className="cursor-pointer"
-              onClick={() => handleExchangeClick(filteredItem)}
-            >
-              <ExchangeCard data={filteredItem} />
-            </div>
-          ),
-        )}
+        {filteredData.map((filteredItem) => (
+          <div
+            key={filteredItem.id}
+            className="cursor-pointer"
+            onClick={() => handleExchangeClick(filteredItem)}
+          >
+            <ExchangeCard data={filteredItem} />
+          </div>
+        ))}
       </div>
       {infoWindowShown && placeData && (
         <>
@@ -189,33 +197,6 @@ function ExchangeModal(props: ExchangeModalProps) {
           >
             <MapPinSVG />
           </AdvancedMarker>
-          <InfoWindow
-            anchor={marker}
-            className="rounded-2xl"
-            onClose={() => handleClose()}
-            maxWidth={300}
-            headerContent={
-              <h3 className="text-xs text-black">{placeData.name}</h3>
-            }
-          >
-            <ul className="flex list-inside list-disc flex-col gap-y-2 text-[.625rem] text-black">
-              <li>
-                <span>{decodeHtmlEntities(placeData.address)}</span>
-                <br />
-              </li>
-              {placeData.phone !== '' && (
-                <li>
-                  <span>{decodeHtmlEntities(placeData.phone)}</span>
-                  <br />
-                </li>
-              )}
-              {placeData?.description !== '' && (
-                <li>
-                  <span>{decodeHtmlEntities(placeData?.description)}</span>
-                </li>
-              )}
-            </ul>
-          </InfoWindow>
         </>
       )}
     </div>
