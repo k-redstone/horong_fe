@@ -1,0 +1,20 @@
+<svg width="165" height="20" viewBox="0 0 165 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="36" height="2" transform="translate(11 9)" fill="#ACBEFF"/>
+<rect width="36" height="2" transform="translate(47 9)" fill="#BDC1CF"/>
+<rect width="36" height="2" transform="translate(83 9)" fill="#BDC1CF"/>
+<rect width="36" height="2" transform="translate(119 9)" fill="#BDC1CF"/>
+<rect x="145.5" y="0.5" width="19" height="19" rx="9.5" fill="#888EA1"/>
+<rect x="145.5" y="0.5" width="19" height="19" rx="9.5" stroke="#ACBEFF"/>
+<circle cx="155" cy="10" r="2" fill="#ACBEFF"/>
+<rect x="109.5" y="0.5" width="19" height="19" rx="9.5" fill="#888EA1"/>
+<rect x="109.5" y="0.5" width="19" height="19" rx="9.5" stroke="#ACBEFF"/>
+<circle cx="119" cy="10" r="2" fill="#ACBEFF"/>
+<rect x="73.5" y="0.5" width="19" height="19" rx="9.5" fill="#888EA1"/>
+<rect x="73.5" y="0.5" width="19" height="19" rx="9.5" stroke="#ACBEFF"/>
+<circle cx="83" cy="10" r="2" fill="#ACBEFF"/>
+<rect x="0.5" width="20" height="20" rx="10" fill="#ACBEFF"/>
+<path d="M9.55334 12.3867C9.42 12.3867 9.29334 12.3333 9.2 12.24L7.31333 10.3533C7.12 10.16 7.12 9.84 7.31333 9.64667C7.50667 9.45334 7.82667 9.45334 8.02 9.64667L9.55334 11.18L12.98 7.75334C13.1733 7.56 13.4933 7.56 13.6867 7.75334C13.88 7.94667 13.88 8.26667 13.6867 8.46L9.90667 12.24C9.81334 12.3333 9.68667 12.3867 9.55334 12.3867Z" fill="white" fill-opacity="0.87"/>
+<rect x="37.5" y="0.5" width="19" height="19" rx="9.5" fill="#888EA1"/>
+<rect x="37.5" y="0.5" width="19" height="19" rx="9.5" stroke="#ACBEFF"/>
+<circle cx="47" cy="10" r="2" fill="#ACBEFF"/>
+</svg>

@@ -1,14 +1,13 @@
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
-import Progress4 from '@/static/imgs/signup-progress4-icon.png'
 import SuccessIcon from '@/static/svg/auth/auth-checked-term-icon.svg'
 import InvisibleIcon from '@/static/svg/auth/auth-invisible-icon.svg'
 import VisibleIcon from '@/static/svg/auth/auth-visible-icon.svg'
 import XmarkIcon from '@/static/svg/auth/auth-xmark-icon.svg'
+import Progress4 from '@/static/svg/auth/signup-progress4-icon.svg'
 import LogoTxtIcon from '@/static/svg/logo-text-icon.svg'
 interface SignupProps {
   setStep: React.Dispatch<React.SetStateAction<number>>
@@ -64,11 +63,7 @@ function SignupPassword({ setStep }: SignupProps) {
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
         <LogoTxtIcon className="w-[10rem]" />
-        <Image
-          src={Progress4}
-          alt="signup_progress4"
-          className="w-[10.3125rem]"
-        />
+        <Progress4 className="w-[10.3125rem]" />
       </div>
 
       <div className="mb-10 w-full text-lg">

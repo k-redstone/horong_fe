@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -7,9 +6,9 @@ import publicAPI from '@/api/publicAPI/index.ts'
 import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
-import Progress5 from '@/static/imgs/signup-progress5-icon.png'
 import ProfileIcon from '@/static/svg/auth/auth-profile-icon.svg'
 import XmarkIcon from '@/static/svg/auth/auth-xmark-icon.svg'
+import Progress5 from '@/static/svg/auth/signup-progress5-icon.svg'
 import LogoTxtIcon from '@/static/svg/logo-text-icon.svg'
 
 function SignupProfile() {
@@ -84,11 +83,7 @@ function SignupProfile() {
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
         <LogoTxtIcon className="w-[10rem]" />
-        <Image
-          src={Progress5}
-          alt="signup_progress5"
-          className="w-[10.3125rem]"
-        />
+        <Progress5 className="w-[10.3125rem]" />
       </div>
       <div className="mb-20 w-full text-lg">
         {AUTH_CONSTANT[lang]['signup-profile-txt1']}
