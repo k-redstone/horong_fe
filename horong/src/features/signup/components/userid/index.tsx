@@ -41,10 +41,25 @@ function SignupId({ setStep }: SignupProps) {
         })
     }
 
+    //조건 걸기 조건 만족 시 fetchData 실행
+    if (userId.length < 2 || userId.length > 16) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-id-length'])
+      setIsIdAllowed(false)
+      return
+    }
+
+    if (!/^[a-zA-Z0-9-_]*$/.test(userId)) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-id-regex'])
+      setIsIdAllowed(false)
+      return
+    }
+
     if (userId) {
       fetchData()
     }
-  }, [userId])
+  }, [userId, lang])
 
   const clickedXmark = () => {
     setUserId('')

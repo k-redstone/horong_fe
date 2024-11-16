@@ -36,11 +36,24 @@ function SignupProfile() {
           setErrTxt(err.response.data.message)
         })
     }
+    //2-20
+    if (nickname.length < 2 || nickname.length > 20) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-nickname-length'])
+      return
+    }
+
+    //영어 한국어 중국어 일어 숫자만 가능
+    if (!/^[a-zA-Z0-9가-힣一-龥ぁ-んァ-ヶｦ-ﾟ]*$/.test(nickname)) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-nickname-regex'])
+      return
+    }
 
     if (nickname) {
       fetchData()
     }
-  }, [nickname])
+  }, [lang, nickname])
 
   //회원정보
   const userId = useSignupStore((state) => state.userId)
