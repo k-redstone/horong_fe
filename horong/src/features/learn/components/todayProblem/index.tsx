@@ -21,6 +21,18 @@ interface TranslateWordType {
   pronunciation: string
 }
 
+interface wordEduType {
+  id: number
+  word: string
+  pronunciation: string
+  definition: string
+  example1: string
+  example2: string
+  audio: string
+  day: number
+  slang: boolean
+}
+
 interface ResponseType {
   audio: string
   cer: number
@@ -33,10 +45,12 @@ function TodayProblem({
   translateWords,
   snapBefore,
   snapNext,
+  word,
 }: {
   translateWords: TranslateWordType
   snapBefore: () => void
   snapNext: () => void
+  word: wordEduType
 }) {
   const [result, setResult] = useState<ResponseType | undefined>()
   const lang = useLangStore((state) => state.lang)
@@ -79,12 +93,12 @@ function TodayProblem({
           <h5 className="w-full text-start text-xs-bold">
             {LEARN_CONSTANTS[lang]['today-example-txt']}
           </h5>
-          <p className="">{translateWords.transExample1}</p>
+          <p className="">{word?.example1}</p>
           <li className="list-outside list-disc">
             {translateWords.transExample1}
           </li>
 
-          <p>{translateWords.transExample2}</p>
+          <p>{word?.example2}</p>
           <li className="list-outside list-disc">
             {translateWords.transExample2}
           </li>
