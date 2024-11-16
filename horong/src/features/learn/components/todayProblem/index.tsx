@@ -103,11 +103,11 @@ function TodayProblem({
                 {result.cer.toFixed(2) + '%'}
               </span>
             </div>
-            <span className="flex items-center justify-center text-2xl">
+            <span className="flex flex-wrap items-center justify-center text-2xl">
               {' '}
               {result.text.split('').map((char, index) => (
                 <span
-                  className={`${result.gtIdx.includes(index) && 'bg-blue-500'} transition-colors duration-500 ease-in-out`}
+                  className={`${result.hypIdx.includes(index) && 'bg-blue-500'} transition-colors duration-500 ease-in-out`}
                   key={char + '__result__' + index}
                 >
                   {char}
