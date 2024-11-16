@@ -21,6 +21,8 @@ function SignupTerms({ setStep }: SignupProps) {
   useEffect(() => {
     if (serviceChecked && privacyChecked && marketingChecked) {
       setAllChecked(true)
+    } else {
+      setAllChecked(false)
     }
   }, [serviceChecked, privacyChecked, marketingChecked])
 
