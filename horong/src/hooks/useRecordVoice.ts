@@ -41,6 +41,13 @@ export const useRecordVoice = ({ word }: { word: string }) => {
       queryClient.invalidateQueries({
         queryKey: ['today-learn'],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['stamp'],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['record-list'],
+      })
+
       toast.success('audio sent successfully')
     },
 

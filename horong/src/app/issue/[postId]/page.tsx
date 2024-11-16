@@ -37,6 +37,11 @@ function IssueDetail({ params }: { params: { postId: string } }) {
       //   setAudio(tempAudio)
       // }
 
+      if (res.status === 200) {
+        setScraped(res.data.result.is_saved)
+        setAction(res.data.result.preference)
+      }
+
       return res.data.result
     },
   })
@@ -61,6 +66,9 @@ function IssueDetail({ params }: { params: { postId: string } }) {
       queryClient.invalidateQueries({
         queryKey: ['short-form-grid-detail', params.postId],
       })
+      queryClient.invalidateQueries({
+        queryKey: ['short-form-grid-scrap'],
+      })
     },
   })
 
@@ -80,6 +88,9 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['short-form-grid-detail', params.postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['short-form-grid-like'],
       })
     },
   })

@@ -13,6 +13,7 @@ import RadioUnCheckdIcon from '@/static/svg/auth/auth-unchecked-radio-icon.svg'
 
 function EditLang() {
   const lang = useLangStore((state) => state.lang)
+  const setLang = useLangStore((state) => state.setLang)
 
   const router = useRouter()
   const { mutate: changeNicknameMutation } = useMutation({
@@ -26,7 +27,7 @@ function EditLang() {
 
       //로컬스토리지 변경 + langstore 변경
       localStorage.setItem('langState', lang)
-
+      setLang(lang)
       router.back()
     },
   })

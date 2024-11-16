@@ -71,7 +71,7 @@ function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
             {record.text.split('').map((char, index) => (
               <span
                 // @이하림
-                className={`${record.gtIdx.includes(index) && 'text-primary'} transition-colors duration-500 ease-in-out`}
+                className={`${record.hypIdx.includes(index) && 'text-primary'} transition-colors duration-500 ease-in-out`}
                 key={char + '__lecture__' + index}
               >
                 {char}

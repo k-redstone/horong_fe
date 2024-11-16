@@ -1,14 +1,14 @@
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import publicAPI from '@/api/publicAPI/index.ts'
 import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
-import Progress3 from '@/static/imgs/signup-progress3-icon.png'
 import SuccessIcon from '@/static/svg/auth/auth-checked-term-icon.svg'
 import XmarkIcon from '@/static/svg/auth/auth-xmark-icon.svg'
+import Progress3 from '@/static/svg/auth/signup-progress3-icon.svg'
 import LogoTxtIcon from '@/static/svg/logo-text-icon.svg'
+
 interface SignupProps {
   setStep: React.Dispatch<React.SetStateAction<number>>
 }
@@ -41,10 +41,25 @@ function SignupId({ setStep }: SignupProps) {
         })
     }
 
+    //조건 걸기 조건 만족 시 fetchData 실행
+    if (userId.length < 2 || userId.length > 16) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-id-length'])
+      setIsIdAllowed(false)
+      return
+    }
+
+    if (!/^[a-zA-Z0-9-_]*$/.test(userId)) {
+      setIsError(true)
+      setErrTxt(AUTH_CONSTANT[lang]['signup-id-regex'])
+      setIsIdAllowed(false)
+      return
+    }
+
     if (userId) {
       fetchData()
     }
-  }, [userId])
+  }, [userId, lang])
 
   const clickedXmark = () => {
     setUserId('')
@@ -55,11 +70,7 @@ function SignupId({ setStep }: SignupProps) {
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
         <LogoTxtIcon className="w-[10rem]" />
-        <Image
-          src={Progress3}
-          alt="signup_progress3"
-          className="w-[10.3125rem]"
-        />
+        <Progress3 className="w-[10.3125rem]" />
       </div>
 
       <div className="mb-10 w-full text-lg">

@@ -91,6 +91,11 @@ function TodayLearn() {
             snapNext={snapNext}
             snapBefore={snapBefore}
             key={translateWords.id}
+            word={
+              data.words.find(
+                (word: wordType) => word.education.word === translateWords.word,
+              ).education
+            }
             translateWords={translateWords}
           />
         ))}

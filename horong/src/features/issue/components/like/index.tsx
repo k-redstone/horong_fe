@@ -19,7 +19,7 @@ function IssueLike() {
   const { data: shorformLike, isLoading } = useQuery({
     queryKey: ['short-form-grid-like'],
     queryFn: async () => {
-      const res = await privateAPI.get('/shortForm/liked')
+      const res = await privateAPI.get('/shortForm/preferences')
       return res.data.result
     },
   })
