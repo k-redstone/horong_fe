@@ -5,6 +5,7 @@ import {
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
+  swcMinify: true,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

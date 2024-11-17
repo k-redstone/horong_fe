@@ -108,7 +108,7 @@ function PostComment(props: PostCommentProps) {
       <div className="py-2">
         <div className="flex gap-x-2">
           {/* 프로필 이미지 */}
-          <div className="h-[2rem] w-[2rem] shrink-0">
+          <div className="h-8 w-8 shrink-0">
             {props.data.profileImage === null ? (
               <HorongSVG className="h-full w-full" />
             ) : (
@@ -124,41 +124,42 @@ function PostComment(props: PostCommentProps) {
           <div className="flex grow flex-col gap-y-2">
             <div className="flex gap-x-2">
               {/* 작성자 및 작성 시간 */}
-              <div className="flex grow flex-col gap-y-1">
+              <div className="flex grow items-center justify-between">
                 <span className="text-xs">
                   {userId
                     ? nickname
                     : COMMUNITY_CONSTANT[lang]['comment-deleted-text1']}
                 </span>
-                <span className="text-2xs opacity-60">
-                  {userId && transFullDateTime(createdDate)}
-                </span>
-              </div>
-              {/* dm 전송 버튼 */}
-              <div>
-                {loginUserId === userId ? (
-                  <button
-                    type="button"
-                    onClick={() => handleModalOpen()}
-                  >
-                    <MenuIcon />
-                  </button>
-                ) : (
-                  userId && (
-                    <SendDMBtn
-                      userId={userId}
-                      postId={props.postId}
-                    />
-                  )
-                )}
+                {/* dm 전송 버튼 */}
+                <div>
+                  {loginUserId === userId ? (
+                    <button
+                      type="button"
+                      onClick={() => handleModalOpen()}
+                    >
+                      <MenuIcon />
+                    </button>
+                  ) : (
+                    userId && (
+                      <SendDMBtn
+                        userId={userId}
+                        postId={props.postId}
+                      />
+                    )
+                  )}
+                </div>
               </div>
             </div>
-
             {/* 실제 댓글 */}
             <p className="text-xs opacity-60">
               {userId
                 ? contents
                 : COMMUNITY_CONSTANT[lang]['comment-deleted-text2']}
+            </p>
+            <p className="flex justify-end">
+              <span className="text-3xs opacity-60">
+                {userId && transFullDateTime(createdDate)}
+              </span>
             </p>
           </div>
         </div>

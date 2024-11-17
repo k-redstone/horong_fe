@@ -100,18 +100,18 @@ function PostContent({ data }: PostContentProps) {
       <div className="flex flex-col gap-y-4">
         {/* user info */}
         <div className="flex gap-x-2 py-1">
-          <div className="h-[2.875rem] w-[2.875rem] shrink-0">
+          <div className="h-10 w-10 shrink-0">
             <Image
               src={data.profileImage}
               alt={'profile'}
-              width={46}
-              height={46}
+              width={40}
+              height={40}
             />
           </div>
           <div className="flex grow flex-col gap-y-1 px-2">
-            <span className="font-bold">{data.nickname}</span>
+            <span className="text-sm font-bold">{data.nickname}</span>
 
-            <span className="text-xs opacity-60">
+            <span className="text-3xs opacity-60">
               {transFullDateTime(data.createdAt)}
             </span>
           </div>
