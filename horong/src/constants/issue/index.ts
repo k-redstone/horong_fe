@@ -9,6 +9,7 @@ interface IssueConstantsType {
     'scrap-title': string
     'scrap-content': string
 
+    'detail-tts-text': string
     'detail-like-text': string
     'detail-unlike-text': string
     'detail-scrap-text': string
@@ -26,6 +27,7 @@ export const ISSUE_CONSTANTS: IssueConstantsType = {
     'scrap-title': '저장한 항목이 없습니다.',
     'scrap-content': '마음에 드는 소식을 저장해보세요.',
 
+    'detail-tts-text': '듣기',
     'detail-like-text': '좋아요',
     'detail-unlike-text': '싫어요',
     'detail-scrap-text': '북마크',
@@ -41,6 +43,7 @@ export const ISSUE_CONSTANTS: IssueConstantsType = {
     'scrap-title': 'No saved items.',
     'scrap-content': 'Try saving news you like.',
 
+    'detail-tts-text': 'Listen',
     'detail-like-text': 'Like',
     'detail-unlike-text': 'Unlike',
     'detail-scrap-text': 'Bookmark',
@@ -56,6 +59,7 @@ export const ISSUE_CONSTANTS: IssueConstantsType = {
     'scrap-title': '没有保存的项目。',
     'scrap-content': '尝试保存您喜欢的消息。',
 
+    'detail-tts-text': '听',
     'detail-like-text': '喜欢',
     'detail-unlike-text': '不喜欢',
     'detail-scrap-text': '书签',
@@ -71,6 +75,7 @@ export const ISSUE_CONSTANTS: IssueConstantsType = {
     'scrap-title': '保存されたアイテムはありません。',
     'scrap-content': '気に入ったニュースを保存してみてください。',
 
+    'detail-tts-text': '聞く',
     'detail-like-text': 'いいね',
     'detail-unlike-text': 'いいね解除',
     'detail-scrap-text': 'ブックマーク',
