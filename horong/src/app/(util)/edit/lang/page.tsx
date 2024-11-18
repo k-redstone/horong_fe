@@ -1,5 +1,5 @@
 'use client'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
@@ -12,7 +12,9 @@ import RadioCheckedIcon from '@/static/svg/auth/auth-checked-radio-icon.svg'
 import RadioUnCheckdIcon from '@/static/svg/auth/auth-unchecked-radio-icon.svg'
 
 function EditLang() {
+  const queryClient = useQueryClient()
   const lang = useLangStore((state) => state.lang)
+  const setLang = useLangStore((state) => state.setLang)
 
   const router = useRouter()
   const { mutate: changeNicknameMutation } = useMutation({
@@ -26,7 +28,8 @@ function EditLang() {
 
       //로컬스토리지 변경 + langstore 변경
       localStorage.setItem('langState', lang)
-
+      setLang(lang)
+      queryClient.resetQueries()
       router.back()
     },
   })

@@ -7,22 +7,22 @@ interface GuideHospitalConstantType {
 
 export const GUIDE_HOSPITAL_CONSTANT: GuideHospitalConstantType = {
   KOREAN: {
-    'guide-hospital': '공휴일',
+    'guide-hospital': '국제 병원',
     'guide-hospital-detail': '내용',
   },
 
   ENGLISH: {
-    'guide-hospital': 'hospital',
+    'guide-hospital': 'International Hospital',
     'guide-hospital-detail': 'content',
   },
 
   CHINESE: {
-    'guide-hospital': '公休日',
+    'guide-hospital': '国际医院',
     'guide-hospital-detail': 'content',
   },
 
   JAPANESE: {
-    'guide-hospital': '祝日',
+    'guide-hospital': '国際病院',
     'guide-hospital-detail': '内容',
   },
 }

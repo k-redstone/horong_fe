@@ -35,6 +35,8 @@ interface AuthConstantType {
 
     //id process
     'signup-id-txt1': string
+    'signup-id-length': string
+    'signup-id-regex': string
 
     //password process
     'signup-pw-txt1': string
@@ -49,6 +51,8 @@ interface AuthConstantType {
     'signup-nickname-placeholder': string
     'signup-profile-click-toast': string
     'signup-nickname-success': string
+    'signup-nickname-length': string
+    'signup-nickname-regex': string
 
     'signup-complete-btn': string
     'signup-complete-toast-load': string
@@ -91,6 +95,8 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-term-optional': '(선택)',
 
     'signup-id-txt1': 'ID를 설정해주세요.',
+    'signup-id-length': 'ID는 2자 이상 16자 이하여야합니다.',
+    'signup-id-regex': '영어, 숫자만 사용 가능합니다.',
 
     'signup-pw-txt1': '비밀번호를 설정해주세요.',
     'signup-pw-error1': '· 비밀번호 조건을 확인해주세요.',
@@ -104,6 +110,9 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-nickname-placeholder': '닉네임을 입력해주세요',
     'signup-profile-click-toast': '죄송합니다, 아직 준비중인 기능입니다.',
     'signup-nickname-success': '사용 가능한 닉네임입니다.',
+    'signup-nickname-length': '닉네임은 2자 이상 20자 이하여야합니다.',
+    'signup-nickname-regex':
+      '영어, 한국어, 중국어, 일어, 숫자만 사용 가능합니다.',
 
     'signup-complete-btn': '가입하기',
     'signup-complete-toast-load': '회원가입 중...',
@@ -143,6 +152,8 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-term-optional': '(Optional)',
 
     'signup-id-txt1': 'Please set your ID.',
+    'signup-id-length': 'IDs must be between 2 and 16 characters.',
+    'signup-id-regex': 'Only English, numbers are allowed.',
 
     'signup-pw-txt1': 'Please set your password.',
     'signup-pw-error1': '· Please check the password conditions.',
@@ -157,6 +168,9 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-profile-click-toast':
       'Sorry, this feature is still under development.',
     'signup-nickname-success': 'This nickname is available.',
+    'signup-nickname-length': 'Nicknames must be between 2 and 20 characters.',
+    'signup-nickname-regex':
+      'Only English, Korean, Chinese, Japanese, and numbers are allowed.',
 
     'signup-complete-btn': 'Sign up',
     'signup-complete-toast-load': 'Signing up...',
@@ -195,6 +209,8 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-term-optional': '(可选的)',
 
     'signup-id-txt1': '请设置您的ID。',
+    'signup-id-length': 'ID必须在2到16个字符之间。',
+    'signup-id-regex': '只允许使用英文和数字。',
 
     'signup-pw-txt1': '请设置您的密码。',
     'signup-pw-error1': '· 请检查密码条件。',
@@ -207,6 +223,8 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-nickname-placeholder': '请输入您的昵称',
     'signup-profile-click-toast': '抱歉，此功能仍在开发中。',
     'signup-nickname-success': '此昵称可用。',
+    'signup-nickname-length': '昵称必须在2到20个字符之间。',
+    'signup-nickname-regex': '只允许使用英文，韩文，中文，日文和数字。',
 
     'signup-complete-btn': '注册',
     'signup-complete-toast-load': '注册中...',
@@ -245,6 +263,8 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-term-optional': '(オプション)',
 
     'signup-id-txt1': 'IDを設定してください。',
+    'signup-id-length': 'IDは2〜16文字である必要があります。',
+    'signup-id-regex': '英語、数字のみが許可されています。',
 
     'signup-pw-txt1': 'パスワードを設定してください。',
     'signup-pw-error1': '· パスワード条件を確認してください。',
@@ -259,6 +279,9 @@ export const AUTH_CONSTANT: AuthConstantType = {
     'signup-profile-click-toast':
       '申し訳ありませんが、この機能はまだ開発中です。',
     'signup-nickname-success': 'このニックネームは利用可能です。',
+    'signup-nickname-length': 'ニックネームは2〜20文字である必要があります。',
+    'signup-nickname-regex':
+      '英語、韓国語、中国語、日本語、数字のみが許可されています。',
 
     'signup-complete-btn': 'サインアップ',
     'signup-complete-toast-load': 'サインアップ中...',

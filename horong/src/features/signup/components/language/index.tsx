@@ -1,12 +1,10 @@
-import Image from 'next/image'
-
 import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
 import LanguageRadioBtn from '@/features/signup/components/language/radio/index.tsx'
 import useLangStore from '@/hooks/useLangStore.ts'
 import useSignupStore from '@/hooks/useSignupStore.ts'
-import Progress1 from '@/static/imgs/signup-progress1-icon.png'
 import RadioCheckedIcon from '@/static/svg/auth/auth-checked-radio-icon.svg'
 import RadioUnCheckdIcon from '@/static/svg/auth/auth-unchecked-radio-icon.svg'
+import Progress1 from '@/static/svg/auth/signup-progress1-icon.svg'
 import LogoTxtIcon from '@/static/svg/logo-text-icon.svg'
 
 interface SignupProps {
@@ -19,11 +17,7 @@ function SignupLanguage({ setStep }: SignupProps) {
     <div className="flex w-full flex-col px-6 pt-10">
       <div className="mb-10 flex flex-col gap-y-6">
         <LogoTxtIcon className="w-[10rem]" />
-        <Image
-          src={Progress1}
-          alt="signup_progress1"
-          className="w-[10.3125rem]"
-        />
+        <Progress1 className="w-[10.3125rem]" />
       </div>
       <div className="mb-20 h-20 w-full text-lg">
         {AUTH_CONSTANT[lang]['signup-lang-txt1']}

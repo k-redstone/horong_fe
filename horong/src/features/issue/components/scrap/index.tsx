@@ -17,9 +17,9 @@ interface ShortFormGridType {
 }
 function IssueScrap() {
   const { data: shorformLike, isLoading } = useQuery({
-    queryKey: ['short-form-grid-like'],
+    queryKey: ['short-form-grid-scrap'],
     queryFn: async () => {
-      const res = await privateAPI.get('/shortForm/preferences')
+      const res = await privateAPI.get('/shortForm/liked')
       return res.data.result
     },
   })
