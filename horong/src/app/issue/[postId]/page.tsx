@@ -17,9 +17,8 @@ import UnLikeOnSVG from '@/static/svg/issue/issue-post-unlike-on-icon.svg'
 import TTSSVG from '@/static/svg/issue/issue-tts-icon.svg'
 
 function IssueDetail({ params }: { params: { postId: string } }) {
-  const [scraped, setScraped] = useState(false)
-
-  const [action, setAction] = useState<number>(0) //1: like, 2: unlike 0: none
+  const [scraped, setScraped] = useState<boolean | null>(null)
+  const [action, setAction] = useState<number | null>(null) //1: like, 2: unlike 0: none
   const scrollPos = useRef<HTMLDivElement>(null)
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
 
@@ -45,6 +44,8 @@ function IssueDetail({ params }: { params: { postId: string } }) {
 
       return res.data.result
     },
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
 
   // useEffect(() => {
@@ -64,6 +65,9 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     },
     onSuccess: () => {
       setScraped(!scraped)
+      queryClient.invalidateQueries({
+        queryKey: ['short-form-grid-detail'],
+      })
       queryClient.invalidateQueries({
         queryKey: ['short-form-grid-detail', params.postId],
       })
@@ -87,6 +91,9 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['short-form-grid-detail'],
+      })
       queryClient.invalidateQueries({
         queryKey: ['short-form-grid-detail', params.postId],
       })
@@ -179,7 +186,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
             onClick={handleLike}
             className="flex flex-col items-center justify-center gap-y-1"
           >
-            {action === 1 ? (
+            {action && action === 1 ? (
               <LikeOnSVG className="h-6 w-6" />
             ) : (
               <LikeOffSVG className="h-6 w-6" />
@@ -193,7 +200,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
             onClick={handleUnLike}
             className="flex flex-col items-center justify-center gap-y-1"
           >
-            {action === 2 ? (
+            {action && action === 2 ? (
               <UnLikeOnSVG className="h-6 w-6" />
             ) : (
               <UnLikeOffSVG className="h-6 w-6" />
@@ -208,7 +215,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
             className="flex flex-col items-center justify-center gap-y-1"
           >
             <div className="flex h-6 w-6 items-center justify-center">
-              {scraped ? <ScrapOnSVG /> : <ScrapOffSVG />}
+              {scraped && scraped ? <ScrapOnSVG /> : <ScrapOffSVG />}
             </div>
             <span className="text-2xs">
               {ISSUE_CONSTANTS[lang]['detail-scrap-text']}
