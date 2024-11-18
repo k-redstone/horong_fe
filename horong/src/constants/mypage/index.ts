@@ -97,7 +97,7 @@ export const MYPAGE_CONSTANT: MyPageType = {
     'sidebar-home-txt': '主页 / HorongChat',
     'sidebar-last-txt': '最后的HorongChat',
     'sidebar-mic-txt': '韩语学习',
-    'sidebar-issue-txt': '韩国趋势 / 问题短片',
+    'sidebar-issue-txt': '韩国趋势',
     'sidebar-community-txt': '社区',
     'sidebar-exchange-txt': '私人交换',
     'sidebar-guide-txt': '韩国指南',

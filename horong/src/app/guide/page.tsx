@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
+import GlobalFooterNav from '@/components/globalFooterNav/index.tsx'
 import { GUIDE_CONSTANT } from '@/constants/guide/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 
@@ -9,10 +10,8 @@ function GuidePage() {
   const [tab, setTab] = useState(0)
   const lang = useLangStore((state) => state.lang)
   return (
-    <div className="mx-auto w-full grow">
-      {' '}
+    <div className="mx-auto flex w-full grow flex-col">
       <div className="grid w-full grid-cols-3 place-items-center px-2 py-2 text-sm">
-        {' '}
         <button
           onClick={() => setTab(0)}
           className={`${tab === 0 && '!border-primary'} flex w-full items-center justify-center border-b border-transparent px-3 pb-4 pt-3`}
@@ -38,8 +37,7 @@ function GuidePage() {
           </span>
         </button>
       </div>
-      <div className="space-y-6 p-6">
-        {' '}
+      <div className="grow space-y-6 p-6">
         {tab === 0 && (
           <div className="space-y-4">
             <Link href="/guide/visa">
@@ -88,6 +86,7 @@ function GuidePage() {
           </div>
         )}
       </div>
+      <GlobalFooterNav />
     </div>
   )
 }

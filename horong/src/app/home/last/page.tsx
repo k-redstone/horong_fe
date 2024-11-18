@@ -70,7 +70,6 @@ function HorongChatLogPage() {
     queryFn: fetchAllChatLog,
   })
 
-  // const groupedData = groupChatsByDate(data)
   useEffect(() => {
     if (isSuccess) {
       setGroupedData(groupChatsByDate(data))
@@ -89,6 +88,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.today.map((item) => (
                   <Link
+                    className="line-clamp-2"
                     href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >
@@ -104,6 +104,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.yesterday.map((item) => (
                   <Link
+                    className="line-clamp-2"
                     href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >
@@ -119,6 +120,7 @@ function HorongChatLogPage() {
                 </p>
                 {groupedData.week.map((item) => (
                   <Link
+                    className="line-clamp-2"
                     href={`/home/last/${item.roomId}`}
                     key={crypto.randomUUID()}
                   >

@@ -35,6 +35,8 @@ interface LearnConstantsType {
     'profile-stamp-txt2': string
 
     'mypage-btn': string
+    'record-toast-success': string
+    'record-toast-error': string
   }
 }
 
@@ -76,6 +78,8 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'profile-stamp-txt2': '획득한 프로필은 마이페이지에서 확인 가능해요 :D',
 
     'mypage-btn': '마이페이지에서 확인하기',
+    'record-toast-success': '음성을 성공적으로 저장했습니다.',
+    'record-toast-error': '음성을 저장하는데 실패했습니다.',
   },
 
   ENGLISH: {
@@ -117,6 +121,8 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
       'The acquired profile can be checked on the My Page :D',
 
     'mypage-btn': 'Check on My Page',
+    'record-toast-success': 'audio sent successfully',
+    'record-toast-error': 'Failed to send audio',
   },
 
   CHINESE: {
@@ -156,6 +162,8 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'profile-stamp-txt2': '获得的个人资料可以在我的页面上查看 :D',
 
     'mypage-btn': '在我的页面上查看',
+    'record-toast-success': '语音已成功保存。',
+    'record-toast-error': '保存语音失败。',
   },
 
   JAPANESE: {
@@ -195,5 +203,7 @@ export const LEARN_CONSTANTS: LearnConstantsType = {
     'profile-stamp-txt2': '取得したプロフィールはマイページで確認できます :D',
 
     'mypage-btn': 'マイページで確認する',
+    'record-toast-success': '音声を正常に保存しました。',
+    'record-toast-error': '音声の保存に失敗しました。',
   },
 }
