@@ -14,10 +14,12 @@ const useLangStore = create(
     (set) => ({
       lang: 'ENGLISH',
       initLang: async () => {
-        const res = await privateAPI.get('/user/language')
-        if (res.status === 200) {
-          set({ lang: res.data.result })
-        } else {
+        try {
+          const res = await privateAPI.get('/user/language')
+          if (res.status === 200) {
+            set({ lang: res.data.result })
+          }
+        } catch {
           return
         }
       },
