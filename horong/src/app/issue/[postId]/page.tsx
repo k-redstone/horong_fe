@@ -151,9 +151,10 @@ function IssueDetail({ params }: { params: { postId: string } }) {
             className={`${isCollapsed ? 'overflow-y-scroll' : 'line-clamp-2 overflow-y-hidden'} w-full whitespace-pre-line text-start text-2xs`}
             // 스크롤 탑으로
             ref={scrollPos}
-          >
-            {shorformGrid.content}
-          </div>
+            dangerouslySetInnerHTML={{
+              __html: santinizer(shorformGrid.content),
+            }}
+          />
         </button>
         {/* icons */}
         <div className="flex flex-col gap-y-5 px-4 py-5">
@@ -192,12 +193,9 @@ function IssueDetail({ params }: { params: { postId: string } }) {
             <div className="flex h-6 w-6 items-center justify-center">
               {scraped ? <ScrapOnSVG /> : <ScrapOffSVG />}
             </div>
-            <span
-              className="text-2xs"
-              dangerouslySetInnerHTML={{
-                __html: santinizer(ISSUE_CONSTANTS[lang]['detail-scrap-text']),
-              }}
-            />
+            <span className="text-2xs">
+              {ISSUE_CONSTANTS[lang]['detail-scrap-text']}
+            </span>{' '}
           </button>
         </div>
       </div>

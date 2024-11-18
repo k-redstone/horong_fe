@@ -53,7 +53,7 @@ function VoiceRecordBox({
   }, [response, setResult])
   return (
     <>
-      {isRecording ? (
+      {!isRecording ? (
         <button onClick={startRecord}>
           <MicIcon className="h-6 w-6" />
         </button>
