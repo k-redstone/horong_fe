@@ -2,7 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 
 import privateAPI from '@/api/privateAPI/index.ts'
@@ -48,11 +48,27 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     gcTime: Infinity,
   })
 
-  // useEffect(() => {
-  //   if (audio) {
-  //     audio.play()
-  //   }
-  // }, [audio])
+  const startTime = useRef<string | null>(null)
+  const endTime = useRef<string | null>(null)
+
+  useEffect(() => {
+    const tempStart = new Date().toISOString()
+    startTime.current = tempStart
+
+    const handleUnload = async () => {
+      const tempEnd = new Date().toISOString()
+      endTime.current = tempEnd
+      await privateAPI.post('/shortForm/log', {
+        shortFormId: Number(params.postId),
+        startAt: startTime.current,
+        endAt: endTime.current,
+      })
+    }
+
+    return () => {
+      handleUnload()
+    }
+  }, [params.postId])
 
   const queryClient = useQueryClient()
   const { mutate: mutateScrap } = useMutation({
