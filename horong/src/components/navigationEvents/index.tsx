@@ -6,11 +6,13 @@ import { useEffect, useRef } from 'react'
 import { saveChatLog } from '@/features/home/api/chatlog.ts'
 import { SaveChatLogPayload } from '@/features/home/types/chatlogType.ts'
 import useHorongChatStore from '@/hooks/useHorongChatStore.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 export function NavigationEvents() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const prevPathname = useRef(pathname)
   const { chatList } = useHorongChatStore()
+  const initLnag = useLangStore((state) => state.initLang)
 
   const saveLog = () => {
     if (chatList.length >= 2) {
@@ -27,19 +29,17 @@ export function NavigationEvents() {
   }
 
   useEffect(() => {
-    // Check if we're navigating away from '/home'
     if (prevPathname.current === '/home' && pathname !== '/home') {
-      // Call your specific function here
       handleNavigateFromHome()
     }
 
-    // Update the previous pathname
     prevPathname.current = pathname
+
+    initLnag()
   }, [pathname, searchParams])
 
   const handleNavigateFromHome = () => {
     saveLog()
-    // Add your specific logic here
   }
 
   return null
