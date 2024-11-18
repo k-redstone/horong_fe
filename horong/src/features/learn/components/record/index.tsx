@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 
 import { useRecordVoice } from '@/hooks/useRecordVoice.ts'
 import MicIcon from '@/static/svg/learn/learn-mic-icon.svg'
+import StopIcon from '@/static/svg/learn/learn-stop-icon.svg'
 
 interface ResponseType {
   audio: string
@@ -52,16 +53,16 @@ function VoiceRecordBox({
   }, [response, setResult])
   return (
     <>
-      {!isRecording ? (
+      {isRecording ? (
         <button onClick={startRecord}>
           <MicIcon className="h-6 w-6" />
         </button>
       ) : (
         <button
           onClick={stopRecord}
-          className="animate-pulse"
+          className="flex h-6 w-6 items-center justify-center rounded-full border border-text-high p-1"
         >
-          <MicIcon className="h-6 w-6" />
+          <StopIcon className="h-2 w-2 animate-pulse bg-text-high" />
         </button>
       )}
     </>
