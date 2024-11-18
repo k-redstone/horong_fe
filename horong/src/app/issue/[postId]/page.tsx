@@ -70,6 +70,16 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     }
   }, [params.postId])
 
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause()
+        audio.currentTime = 0
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const queryClient = useQueryClient()
   const { mutate: mutateScrap } = useMutation({
     mutationFn: async () => {
