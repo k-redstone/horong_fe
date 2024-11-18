@@ -16,7 +16,13 @@ interface RecordType {
   audio: string
 }
 
-function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
+function RecordDetailCollapseBtn({
+  record,
+  index,
+}: {
+  record: RecordType
+  index: number
+}) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const lang = useLangStore((state) => state.lang)
 
@@ -33,15 +39,16 @@ function RecordDetailCollapseBtn({ record }: { record: RecordType }) {
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="flex w-full items-center justify-between rounded-3xl bg-grey-70 px-6 py-4"
       >
-        <div className="flex items-center justify-between gap-x-4 text-2xs">
+        <div className="flex w-full items-center justify-between gap-x-4 text-2xs">
           <p className="text-text-high">
-            {LEARN_CONSTANTS[lang]['word-record'] + ' ' + record.id}
+            {LEARN_CONSTANTS[lang]['word-record'] + ' ' + (index + 1)}
           </p>
-          <span
-            className={`${record.cer < 50 ? 'text-warning' : record.cer < 80 ? 'text-[#f2d76b]' : record.cer < 100 ? 'text-[#ccf26b]' : 'text-primary'}`}
+          <p className="w-[8.75rem] truncate text-start">{record.text}</p>
+          <div
+            className={`mr-10 ${record.cer < 50 ? 'text-warning' : record.cer < 80 ? 'text-[#f2d76b]' : record.cer < 100 ? 'text-[#ccf26b]' : 'text-primary'}`}
           >
             {record.cer}%
-          </span>
+          </div>
         </div>
 
         <div>

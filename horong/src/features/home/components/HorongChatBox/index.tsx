@@ -19,7 +19,7 @@ export default function HorongChatBox({ text }: HorongChatBoxProps) {
           <span>호롱</span>
         </p>
         {/* 내용 */}
-        <div>{text}</div>
+        <div className="whitespace-pre-line">{text}</div>
       </div>
     </div>
   )
