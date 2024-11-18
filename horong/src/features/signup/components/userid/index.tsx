@@ -85,16 +85,16 @@ function SignupId({ setStep }: SignupProps) {
         >
           ID
         </label>
-        <div className="flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
+        <div className="relative flex w-full items-center justify-between rounded-xl border border-grey-60 bg-transparent py-3 pl-6 pr-4 text-sm text-text-high focus-within:border-primary">
           <input
             id="id"
             type="text"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
-            className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
+            className="flex-1 bg-transparent pr-12 outline-none placeholder:text-text-disabled"
             placeholder={AUTH_CONSTANT[lang]['id-placeholder']}
           />
-          <div className="flex items-center gap-x-2">
+          <div className="absolute right-0 mr-4 flex items-center gap-x-2">
             {isIdAllowed && <SuccessIcon />}
 
             {userId && (
