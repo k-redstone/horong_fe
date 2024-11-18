@@ -1,5 +1,6 @@
 'use client'
 import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -7,6 +8,7 @@ import toast from 'react-hot-toast'
 
 import publicAPI from '@/api/publicAPI/index.ts'
 import { AUTH_CONSTANT } from '@/constants/auth/index.ts'
+import { ERROR_CONSTANT } from '@/constants/error/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 import InvisibleIcon from '@/static/svg/auth/auth-invisible-icon.svg'
 import VisibleIcon from '@/static/svg/auth/auth-visible-icon.svg'
@@ -56,11 +58,16 @@ function Login() {
     },
 
     onError: (error) => {
-      setUserId('')
-      setUserPassword('')
-
-      setIsError(true)
-      setErrorMessage(error.message)
+      // eslint-disable-next-line import/no-named-as-default-member
+      if (axios.isAxiosError(error) && error.response?.data) {
+        const message = error.response.data.code
+        setUserId('')
+        setUserPassword('')
+        setIsError(true)
+        setErrorMessage(ERROR_CONSTANT[lang][message])
+      } else {
+        setErrorMessage('예상치 못한 에러 발생')
+      }
     },
   })
 
