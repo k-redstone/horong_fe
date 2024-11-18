@@ -18,8 +18,8 @@ function HolidayPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-grey-80 p-4">
-      <div className="sticky top-0 flex flex-col items-center">
+    <div className="flex h-full flex-col overflow-y-scroll bg-grey-80 p-4 pb-10">
+      <div className="flex flex-col items-center">
         <h1 className="text-md font-bold text-text-high">
           {GUIDE_HOLIDAY_CONSTANT[lang]['guide-holiday']}
         </h1>

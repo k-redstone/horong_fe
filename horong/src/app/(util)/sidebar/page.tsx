@@ -1,5 +1,5 @@
 'use client'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -28,6 +28,7 @@ type UserDataType = {
 function SideBar() {
   const [isCollapse, setIsCollapse] = useState<boolean>(false)
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const lang = useLangStore((state) => state.lang)
 
@@ -44,6 +45,7 @@ function SideBar() {
       const res = await privateAPI.post('/auth/logout')
 
       if (res.status === 200) {
+        queryClient.clear()
         localStorage.removeItem('token')
         sessionStorage.removeItem('token')
         router.push('/')

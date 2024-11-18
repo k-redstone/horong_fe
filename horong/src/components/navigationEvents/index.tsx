@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 
@@ -11,6 +12,7 @@ export function NavigationEvents() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const prevPathname = useRef(pathname)
+  const queryClient = useQueryClient()
   const { chatList } = useHorongChatStore()
   const initLnag = useLangStore((state) => state.initLang)
 
@@ -24,7 +26,9 @@ export function NavigationEvents() {
           }
         }),
       }
-      saveChatLog(payload)
+      saveChatLog(payload).then(() => {
+        queryClient.invalidateQueries({ queryKey: ['horongLog'] })
+      })
     }
   }
 

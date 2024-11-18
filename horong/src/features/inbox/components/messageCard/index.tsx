@@ -28,7 +28,6 @@ function MessageCard({ data }: MessageCardProps) {
           <span className="text-2xs text-text-md">
             {transDateFormat(data.createdAt)}
           </span>
-          <span>{data.messageCount}</span>
         </div>
         <p className="line-clamp-2 h-8 grow text-xs">
           {data.content ? data.content : <ImgIcon />}
