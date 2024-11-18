@@ -1,8 +1,10 @@
 'use client'
+import Image from 'next/image'
 import React from 'react'
 
 import { GUIDE_HOSPITAL_CONSTANT } from '@/constants/guide/hospital/index.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
+import InternationalHospitalIMG from '@/static/imgs/international-medical-center.png'
 
 function HospitalPage() {
   const lang = useLangStore((state) => state.lang)
@@ -16,9 +18,10 @@ function HospitalPage() {
       </div>
 
       <div className="mx-4 flex max-w-md flex-1 items-start justify-start">
-        <p className="text-xs text-text-high">
-          {GUIDE_HOSPITAL_CONSTANT[lang]['guide-hospital-detail']}
-        </p>
+        <Image
+          src={InternationalHospitalIMG}
+          alt="International Medical Center"
+        />
       </div>
     </div>
   )
