@@ -38,7 +38,7 @@ function IssueScrap() {
           <Link
             key={'short-form-grid-' + item.id}
             href={`/issue/${item.id}`}
-            className="relative items-center justify-center"
+            className="relative flex min-h-[10.75rem] items-center justify-center"
           >
             <Image
               width={100}

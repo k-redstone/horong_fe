@@ -44,8 +44,7 @@ function IssueDetail({ params }: { params: { postId: string } }) {
 
       return res.data.result
     },
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 0,
   })
 
   const startTime = useRef<string | null>(null)
@@ -69,6 +68,14 @@ function IssueDetail({ params }: { params: { postId: string } }) {
       handleUnload()
     }
   }, [params.postId])
+
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause()
+      }
+    }
+  }, [audio])
 
   const queryClient = useQueryClient()
   const { mutate: mutateScrap } = useMutation({
