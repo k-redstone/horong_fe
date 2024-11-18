@@ -4,7 +4,6 @@ import { LoaderIcon } from 'react-hot-toast'
 import { create } from 'zustand'
 
 import { HOME_CONSTANT } from '@/constants/home/index.ts'
-import { transLanguageTypetoDeepL } from '@/features/community/utils/editor/index.ts'
 import { ChatType } from '@/features/home/types/chatType.ts'
 import useLangStore from '@/hooks/useLangStore.ts'
 
@@ -59,14 +58,8 @@ const useHorongChatStore = create<HorongChatStore>()((set) => ({
     const lang = useLangStore.getState().lang
 
     try {
-      let payload = {
-        text: inputValue,
-        lang: 'EN',
-      }
-      const resText = await axios.post('/api/translation', payload)
-
       const params = {
-        question: resText.data.result.text,
+        question: inputValue,
       }
 
       const resDataText = await axios.get(
@@ -74,16 +67,10 @@ const useHorongChatStore = create<HorongChatStore>()((set) => ({
         { params },
       )
 
-      payload = {
-        text: resDataText.data,
-        lang: transLanguageTypetoDeepL(lang),
-      }
-      const result = await axios.post('/api/translation', payload)
-
       set((state) => ({
         chatList: state.chatList.map((chat) =>
           chat === tempHorongChat
-            ? { ...chat, text: result.data.result.text, isLoading: false }
+            ? { ...chat, text: resDataText.data, isLoading: false }
             : chat,
         ),
       }))
