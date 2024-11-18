@@ -85,7 +85,7 @@ function SignupPassword({ setStep }: SignupProps) {
             type={passwordVisible ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
+            className="flex-1 bg-transparent pr-20 outline-none placeholder:text-text-disabled"
             placeholder={AUTH_CONSTANT[lang]['pw-placeholder']}
           />
           <div className="absolute right-0 mr-4 flex items-center gap-x-2">
@@ -125,7 +125,7 @@ function SignupPassword({ setStep }: SignupProps) {
                 type={confirmPwVisible ? 'text' : 'password'}
                 value={confirmPw}
                 onChange={(e) => setConfirmPw(e.target.value)}
-                className="flex-1 bg-transparent outline-none placeholder:text-text-disabled"
+                className="flex-1 bg-transparent pr-20 outline-none placeholder:text-text-disabled"
                 placeholder={
                   AUTH_CONSTANT[lang]['signup-pwconfirm-placeholder']
                 }

@@ -1,9 +1,11 @@
+'use client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
 import privateAPI from '@/api/privateAPI/index.ts'
-
+import { LEARN_CONSTANTS } from '@/constants/learn/index.ts'
+import useLangStore from '@/hooks/useLangStore.ts'
 interface ResponseType {
   audio: string
   cer: number
@@ -13,6 +15,7 @@ interface ResponseType {
   text: string
 }
 export const useRecordVoice = ({ word }: { word: string }) => {
+  const lang = useLangStore((state) => state.lang)
   //미디어 레코더 인스턴스
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
   const [recording, setRecording] = useState(false)
@@ -48,11 +51,11 @@ export const useRecordVoice = ({ word }: { word: string }) => {
         queryKey: ['record-list'],
       })
 
-      toast.success('audio sent successfully')
+      toast.success(LEARN_CONSTANTS[lang]['record-toast-success'])
     },
 
     onError: (error) => {
-      toast.error('Failed to send audio')
+      toast.error(LEARN_CONSTANTS[lang]['record-toast-error'])
       // eslint-disable-next-line no-console
       console.error(error)
     },

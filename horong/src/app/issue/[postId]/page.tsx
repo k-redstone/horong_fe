@@ -73,9 +73,11 @@ function IssueDetail({ params }: { params: { postId: string } }) {
     return () => {
       if (audio) {
         audio.pause()
+        audio.currentTime = 0
       }
     }
-  }, [audio])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const queryClient = useQueryClient()
   const { mutate: mutateScrap } = useMutation({
